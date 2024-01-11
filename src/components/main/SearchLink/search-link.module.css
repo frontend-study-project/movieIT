@@ -1,0 +1,49 @@
+.search-link {
+  margin-top: 50px;
+  background-color: rgba(0, 0, 0, 0.3);
+  position: relative;
+  padding: 20px 0;
+}
+
+.search-link > div {
+  flex: 1;
+  position: relative;
+}
+
+.search-link > div:not(:last-child):after {
+  content: '';
+  position: absolute;
+  width: 1px;
+  height: 80%;
+  background-color: #6a6a6a;
+  right: 0;
+  top: 10%;
+}
+
+.search-input input {
+  color: #fff;
+  font-size: 14px;
+}
+
+.search-link i {
+  display: block;
+  width: 30px;
+  height: 27px;
+  background-repeat: no-repeat;
+}
+
+.schedule {
+  background-image: url(/images/main/icon/ico-schedule-main.png);
+}
+
+.box {
+  background-image: url(/images/main/icon/ico-boxoffice-main.png);
+}
+
+.booking {
+  background-image: url(/images/main/icon/ico-quick-reserve-main.png);
+}
+
+.search {
+  background-image: url(/images/icon/ico-search-white.png);
+}
