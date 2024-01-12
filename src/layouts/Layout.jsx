@@ -1,13 +1,12 @@
+import { Outlet } from "react-router";
 import Header from "./Header";
 import styled from './layout.module.css';
 
-const Layout = ({ children }) => {
-  return (
-    <>
-      <Header />
-      <main className={styled.main}>{children}</main>
-    </>
-  )
-};
+const Layout = () => (
+  <>
+    <Header />
+    <main className={styled.main}><Outlet/></main>
+  </>
+);
 
 export default Layout;

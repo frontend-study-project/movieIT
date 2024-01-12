@@ -2,7 +2,7 @@
   width: 100%;
   max-width: var(--max-width);
   display: flex;
-  gap: 100px;
+  gap: 200px;
   justify-content: space-between;
 }
 

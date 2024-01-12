@@ -10,11 +10,8 @@ const Nav = () => {
       <ul className={styled.nav_list}>
         <li className={styled.nav_item}><a>영화</a></li>
         <li className={styled.nav_item}><a>예매</a></li>
-        <li className={styled.nav_item}><a>극장</a></li>
         <li className={`${styled.nav_item} ${styled.logo}`}><a><img src="/images/logo.png" /></a></li>
-        <li className={styled.nav_item}><a>이벤트</a></li>
-        <li className={styled.nav_item}><a>스토어</a></li>
-        <li className={styled.nav_item}><a>혜택</a></li>
+        <li className={styled.nav_item}><a>극장</a></li>
       </ul>
       <div className={styled.icons}>
         <i className={styled.schedule}></i>
