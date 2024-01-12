@@ -30,11 +30,9 @@
 .list_depth2{
   position: absolute;
   right: 10%;
-  /* left: 50%; */
   bottom: -44px;
   display: flex;
   padding: 0;
-  /* transform: translateX(-50%); */
   line-height: 44px;
 }
 .list_depth2 a{
