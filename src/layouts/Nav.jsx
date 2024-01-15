@@ -1,6 +1,31 @@
-import styled from './nav.module.css';
+import { useNavigate } from "react-router";
+import styled from "./nav.module.css";
 
 const Nav = () => {
+  const navigate = useNavigate();
+  const navList = [
+    {
+      id: 1,
+      name: "영화",
+      href: "/movie",
+    },
+    {
+      id: 2,
+      name: "예매",
+      href: "/ticket",
+    },
+    {
+      id: 3,
+      name: "",
+      href: "/",
+    },
+    {
+      id: 4,
+      name: "극장",
+      href: "/theater",
+    },
+  ];
+
   return (
     <nav className={styled.nav}>
       <div className={styled.icons}>
@@ -8,17 +33,32 @@ const Nav = () => {
         <i className={styled.search}></i>
       </div>
       <ul className={styled.nav_list}>
-        <li className={styled.nav_item}><a>영화</a></li>
-        <li className={styled.nav_item}><a>예매</a></li>
-        <li className={`${styled.nav_item} ${styled.logo}`}><a><img src="/images/logo.png" /></a></li>
-        <li className={styled.nav_item}><a>극장</a></li>
+        {navList.map((item, index) => {
+          return item.name === "" ? (
+            <li className={`${styled.nav_item} ${styled.logo}`}>
+              <a href={item.href}>
+                <img src="/images/logo.png" />
+              </a>
+            </li>
+          ) : (
+            <li
+              className={styled.nav_item}
+              key={index}
+              onClick={navigate(item.href)}
+            >
+              <a href={item.href}>{item.name}</a>
+            </li>
+          );
+        })}
       </ul>
       <div className={styled.icons}>
         <i className={styled.schedule}></i>
-        <i className={styled.mypage}></i>
+        <a href="/mypage">
+          <i className={styled.mypage}></i>
+        </a>
       </div>
     </nav>
-  )
+  );
 };
 
 export default Nav;
