@@ -1,0 +1,62 @@
+.poster_thumnail {
+  position: relative;
+  cursor: pointer;
+}
+
+.poster_thumnail-cover {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.poster_thumnail:hover .poster_thumnail-cover {
+  opacity: 1;
+}
+
+.poster_thumnail-cover_content {
+  flex: 1;
+}
+
+.poster_review {
+  height: 47px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.poster_review span:first-child {
+  color: #fff;
+  font-size: 14px;
+}
+
+.poster_review span:last-child {
+  color: #59bec9;
+  font-size: 30px;
+  font-weight: 400;
+}
+
+.buttons {
+  margin-top: 10px;
+}
+
+.heart {
+  width: 17px;
+  height: 15px;
+  display: block;
+  background: url(/images/icon/ico-heart-toggle-gray.png);
+}
+
+.heart-num {
+  margin-left: 5px;
+  font-size: 13px;
+  letter-spacing: -1px;
+}
