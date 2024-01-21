@@ -5,6 +5,8 @@ import Movie from "../pages/Movie";
 import Ticket from "../pages/Ticket";
 import Theater from "../pages/Theater";
 import Mypage from "../pages/Mypage";
+import Login from "../pages/Auth/Login/Login";
+import Join from "../pages/Auth/Join/Join";
 
 const routes = [
   {
@@ -30,6 +32,14 @@ const routes = [
         path: "/mypage",
         element: <Mypage />,
       },
+      {
+        path: "/login",
+        element: <Login />
+      },
+      {
+        path: "/join",
+        element: <Join />
+      }
     ],
   },
 ];
