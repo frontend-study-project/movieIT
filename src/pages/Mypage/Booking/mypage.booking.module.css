@@ -1,0 +1,37 @@
+.search {
+  display: block;
+  width: 18px;
+  height: 18px;
+  background-repeat: no-repeat;
+  background-image: url(/images/icon/ico-search-white.png);
+}
+
+.booking_tab {
+  box-shadow: 1px -1px 1px #d8d9db inset;
+  margin-bottom: 20px;
+}
+
+.booking_tab > div {
+  width: 166px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #555;
+  color: #fff;
+  font-size: 14px;
+  border-bottom: 1px solid #555;
+}
+
+.booking_search {
+  display: flex;
+  box-sizing: border-box;
+  padding: 20px 40px;
+  background-color: #f2f4f5;
+  gap: 30px;
+}
+
+.booking_search-radio-group span {
+  letter-spacing: -1px;
+  font-size: 15px;
+}
