@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router";
 import styled from "./nav.module.css";
+import { Link } from "react-router-dom";
 
 const Nav = () => {
   const navigate = useNavigate();
@@ -33,29 +34,29 @@ const Nav = () => {
         <i className={styled.search}></i>
       </div>
       <ul className={styled.nav_list}>
-        {navList.map((item, index) => {
+        {navList.map((item) => {
           return item.name === "" ? (
-            <li className={`${styled.nav_item} ${styled.logo}`}>
-              <a href={item.href}>
+            <li key={item.id} className={`${styled.nav_item} ${styled.logo}`}>
+              <Link href={item.href}>
                 <img src="/images/logo.png" />
-              </a>
+              </Link>
             </li>
           ) : (
             <li
+              key={item.id}
               className={styled.nav_item}
-              key={index}
-              onClick={navigate(item.href)}
+              onClick={() => navigate(item.href)}
             >
-              <a href={item.href}>{item.name}</a>
+              <Link href={item.href}>{item.name}</Link>
             </li>
           );
         })}
       </ul>
       <div className={styled.icons}>
         <i className={styled.schedule}></i>
-        <a href="/mypage">
+        <Link href="/mypage">
           <i className={styled.mypage}></i>
-        </a>
+        </Link>
       </div>
     </nav>
   );
