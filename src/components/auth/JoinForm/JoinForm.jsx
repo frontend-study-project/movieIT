@@ -3,15 +3,25 @@ import styled from './join.form.module.css';
 import { useForm } from "react-hook-form";
 import { useJoinMutation } from "../../../hooks/useAuth";
 import MInputText from "../../common/MInputText/MInputText";
+import ErrorTypography from "../../form/ErrorTypography/ErrorTypography";
 
 const JoinForm = () => {
   const join = useJoinMutation();
   const { 
     handleSubmit,
     control,
+    formState: { errors },
+    setError,
+    clearErrors,
   } = useForm({ mode: 'onChange' });
 
   const handleJoin = (form) => {
+    if (form.password !== form.passwordConfirm) {
+      setError('passwordConfirm', { type: 'validate' });
+      return;
+    }
+
+    clearErrors('passwordConfirm')
     join.mutate(form);
   };
 
@@ -36,6 +46,9 @@ const JoinForm = () => {
             variant="outlined"
             fullWidth
           />
+          {errors.id && (
+            <ErrorTypography>아이디를 입력해주세요.</ErrorTypography>
+          )}
         </Box>
         <Box width="150px" paddingLeft="10px">
           <Button variant="outlined" size="large" style={{ height: '56px' }} fullWidth>중복확인</Button>
@@ -56,6 +69,9 @@ const JoinForm = () => {
               maxLength: 20,
             }}
           />
+          {errors.nickname && (
+            <ErrorTypography>별명을 입력해주세요.</ErrorTypography>
+          )}
         </Box>
         <Box width="150px" paddingLeft="10px" />
       </Box>
@@ -75,6 +91,9 @@ const JoinForm = () => {
               maxLength: 20,
             }}
           />
+          {errors.password && (
+            <ErrorTypography>비밀번호를 입력해주세요.</ErrorTypography>
+          )}
         </Box>
         <Box width="150px" paddingLeft="10px" />
       </Box>
@@ -82,7 +101,7 @@ const JoinForm = () => {
         <Box className={styled.form_label} width="150px" display="flex" alignItems="center">비밀번호확인*</Box>
         <Box flex={1}>
           <MInputText
-            name="password"
+            name="passwordConfirm"
             control={control}
             type="password"
             label="비밀번호를 한번 더 입력해주세요"
@@ -94,6 +113,17 @@ const JoinForm = () => {
               maxLength: 20,
             }}
           />
+          {errors.passwordConfirm && (
+            <ErrorTypography>
+              {
+                errors.passwordConfirm.type === 'validate' ? (
+                  "비밀번호가 일치하지 않습니다."
+                ) : (
+                  "비밀번호를 입력해주세요."
+                )  
+              }
+            </ErrorTypography>
+          )}
         </Box>
         <Box width="150px" paddingLeft="10px" />
       </Box>

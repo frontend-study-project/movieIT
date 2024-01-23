@@ -4,12 +4,14 @@ import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { useLoginMutation } from '../../../hooks/useAuth';
 import MInputText from '../../common/MInputText/MInputText';
+import ErrorTypography from '../../form/ErrorTypography/ErrorTypography';
 
 const LoginForm = () => {
   const login = useLoginMutation();
   const { 
     handleSubmit,
     control,
+    formState: { errors }
   } = useForm({ mode: 'onChange' });
 
   const handleLogin = (form) => {
@@ -31,6 +33,9 @@ const LoginForm = () => {
             maxLength: 20,
           }}
         />
+        {errors.id && (
+          <ErrorTypography>아이디를 입력해주세요.</ErrorTypography>
+        )}
       </Box>
       <Box bgcolor="#fff">
         <MInputText 
@@ -46,6 +51,9 @@ const LoginForm = () => {
             maxLength: 20,
           }}
         />
+        {errors.password && (
+          <ErrorTypography>비밀번호를 입력해주세요.</ErrorTypography>
+        )}
       </Box>
 
       <Box marginBlock="20px">
