@@ -1,18 +1,24 @@
 import { Box, Button, Divider, Typography } from "@mui/material";
 import styled from './join.form.module.css';
 import { useForm } from "react-hook-form";
-import { useJoinMutation } from "../../../hooks/useAuth";
+import { useCheckDuplicateIdMutation, useJoinMutation } from "../../../hooks/useAuth";
 import MInputText from "../../common/MInputText/MInputText";
 import ErrorTypography from "../../form/ErrorTypography/ErrorTypography";
+import { useState } from "react";
+import { useMSnackbar } from "../../../hooks/useMSnackbar";
 
 const JoinForm = () => {
+  const snackbar = useMSnackbar();
+  const [duplicateCheck, setDuplicateCheck] = useState(false);
   const join = useJoinMutation();
+  const checkDuplicateId = useCheckDuplicateIdMutation();
   const { 
     handleSubmit,
     control,
     formState: { errors },
     setError,
     clearErrors,
+    getValues,
   } = useForm({ mode: 'onChange' });
 
   const handleJoin = (form) => {
@@ -23,6 +29,23 @@ const JoinForm = () => {
 
     clearErrors('passwordConfirm')
     join.mutate(form);
+  };
+
+  const handleCheckDuplicateId = async () => {
+    const id = getValues('id');
+
+    if (!id) {
+      snackbar('아이디를 입력해주세요.', { type: 'warning' });
+      return;
+    }
+
+    try {
+      await checkDuplicateId.mutateAsync(id);
+      snackbar('사용가능한 아이디입니다.');
+      setDuplicateCheck(true);
+    } catch {
+      snackbar('사용할 수 없는 아이디입니다.', { type: 'error' });
+    }
   };
 
   return (
@@ -45,13 +68,21 @@ const JoinForm = () => {
             label="아이디를 입력해주세요"
             variant="outlined"
             fullWidth
+            onInput={() => setDuplicateCheck(false)}
           />
           {errors.id && (
             <ErrorTypography>아이디를 입력해주세요.</ErrorTypography>
           )}
         </Box>
         <Box width="150px" paddingLeft="10px">
-          <Button variant="outlined" size="large" style={{ height: '56px' }} fullWidth>중복확인</Button>
+          <Button 
+            variant="outlined" 
+            size="large" 
+            style={{ height: '56px' }} 
+            fullWidth
+            disabled={duplicateCheck}
+            onClick={handleCheckDuplicateId}
+          >중복확인</Button>
         </Box>
       </Box>
       <Box bgcolor="#fff" display="flex">
@@ -133,7 +164,13 @@ const JoinForm = () => {
       </Box>
 
       <Box className={styled.form_buttons}>
-        <Button type="submit" variant="contained" size="large" fullWidth>회원가입</Button>
+        <Button 
+          type="submit" 
+          variant="contained" 
+          size="large" 
+          disabled={!duplicateCheck}
+          fullWidth
+        >회원가입</Button>
       </Box>
     </form>
   )

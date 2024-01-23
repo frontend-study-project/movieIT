@@ -20,6 +20,16 @@ export const join = (form) => (
   })
 );
 
-export const setAuthorization = (key) => {
-  localStorage.setItem('key', key);
+export const checkDuplicateId = (id) => (
+  fetch(`${AUTH}/duplication-check`, { 
+    method: 'post', 
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: id
+  })
+);
+
+export const setAuthorization = (token) => {
+  localStorage.setItem('token', token);
 };
