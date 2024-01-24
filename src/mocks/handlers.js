@@ -16,5 +16,9 @@ export const handlers = [
 
   http.post('/auth/duplication-check', async () => {
     return HttpResponse.json(undefined, { status: 201 });
-  })
+  }),
+
+  http.get('/auth/user', async () => {
+    return HttpResponse.json({ id: '아이디', nickname: '별명' }, { status: 201 });
+  }),
 ];

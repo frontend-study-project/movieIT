@@ -1,11 +1,29 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import * as authApi from '../api/auth.api';
 import { useMSnackbar } from "./useMSnackbar";
 import { useNavigate } from 'react-router-dom';
 
+export const useFetchUserQuery = () => (
+  useQuery({
+    queryKey: ['user'],
+    async queryFn() {
+      const response = await authApi.fetchUser();
+
+      if (!response.ok) {
+        throw new Error();
+      }
+
+      return response.json();
+    },
+
+    staleTime: 3 * 24 * 60 * 1000,
+  })
+);
+
 export const useLoginMutation = () => {
   const snackbar = useMSnackbar();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   
   return useMutation({
     async mutationFn(form) {
@@ -18,8 +36,10 @@ export const useLoginMutation = () => {
       return response.json();
     },
 
-    onSuccess({ token }) {
+    onSuccess({ token, user }) {
       authApi.setAuthorization(token);
+      queryClient.setQueryData(['user'], user, { updatedAt: Date.now() });
+
       snackbar('로그인 되었습니다.');
       navigate('/');
     },

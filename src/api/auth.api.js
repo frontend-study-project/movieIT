@@ -1,5 +1,15 @@
 const AUTH = '/auth';
 
+export const fetchUser = () => {
+  fetch(`${AUTH}/user`, { 
+    method: 'get', 
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${getAuthorization()}`,
+    },
+  })
+}
+
 export const login = (form) => (
   fetch(`${AUTH}/login`, { 
     method: 'post', 
@@ -32,4 +42,8 @@ export const checkDuplicateId = (id) => (
 
 export const setAuthorization = (token) => {
   localStorage.setItem('token', token);
+};
+
+export const getAuthorization = () => {
+  return localStorage.getItem('token');
 };
