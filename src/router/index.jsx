@@ -46,6 +46,10 @@ const routes = [
       {
         path: "booking",
         element: <MypageBooking />
+      },
+      {
+        path: "update",
+        element: <MypageBooking />
       }
     ]
   }

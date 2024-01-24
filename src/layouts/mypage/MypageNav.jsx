@@ -1,5 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import styled from './mypage.nav.module.css';
+import { Link } from "react-router-dom";
 
 const MypageNav = () => {
   return (
@@ -9,12 +10,12 @@ const MypageNav = () => {
       </Box>
       <Box className={styled.nav_list} component="ul">
         <Box className={styled["nav_main-link"]}>
-          <a>예매내역</a>
+          <Link to="/mypage/booking">예매내역</Link>
         </Box>
         <Box className={styled["nav_main-link"]}>
-          <a>회원정보</a>
+          <Link to="/mypage/update">회원정보</Link>
           <Box component="ul" className={styled["nav_sub-link"]}>
-            <a>개인정보 수정</a>
+            <Link to="/mypage/update">개인정보 수정</Link>
           </Box>
         </Box>
       </Box>
