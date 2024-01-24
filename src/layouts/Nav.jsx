@@ -12,12 +12,12 @@ const Nav = () => {
     {
       id: 2,
       name: "예매",
-      href: "/ticket",
+      href: "/book",
     },
     {
       id: 3,
       name: "",
-      href: "/",
+      href: "",
     },
     {
       id: 4,
