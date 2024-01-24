@@ -36,32 +36,35 @@ const BoxSeat = () => {
   };
 
   const makeSeatArr = useCallback(() => {
+    const seatRowArr = [], seatColArr = [];
     let rowIdx = 0;
     for (let i = 0; i < totalSeatInfo.row; i++) {
-      setSeatArr((prev) => {
-        return {
-          ...prev,
-          seatRowArr: [...prev.seatRowArr, {
-            order: String.fromCharCode(65 + i),
-            aisle: totalSeatInfo.aisle.y.includes(i) ? rowIdx++ : rowIdx
-          }],
-        };
-      });
+      seatRowArr.push({
+        order: String.fromCharCode(65 + i),
+        aisle: totalSeatInfo.aisle.y.includes(i) ? rowIdx++ : rowIdx
+      })
     }
+    setSeatArr((prev) => {
+      return {
+        ...prev,
+        seatRowArr: seatRowArr,
+      };
+    });
     let colIdx = 0;
     totalSeatInfo.col.map((ele, idx) => {
       for (let i = 1; i <= ele; i++) {
         const remodelIdx = (10 * idx) + i;
-        setSeatArr((prev) => {
-          return {
-            ...prev,
-            seatColArr: [...prev.seatColArr, {
-              order: remodelIdx,
-              aisle: totalSeatInfo.aisle.x[idx] === i ? colIdx++ : colIdx
-            }],
-          };
-        });
+        seatColArr.push({
+          order: remodelIdx,
+          aisle: totalSeatInfo.aisle.x[idx] === i ? colIdx++ : colIdx
+        })
       }
+      setSeatArr((prev) => {
+        return {
+          ...prev,
+          seatColArr: seatColArr,
+        };
+      });
     })
     
   }, [])
