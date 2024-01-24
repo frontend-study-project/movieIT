@@ -1,5 +1,5 @@
 import { Alert, Snackbar } from "@mui/material";
-import { SnackbarProvider } from "material-ui-snackbar-provider";
+import { SnackbarProvider as Provider } from "material-ui-snackbar-provider";
 
 const MAlert = ({ message, SnackbarProps, customParameters = {} }) => {
   const { type = 'success' } = customParameters;
@@ -13,7 +13,7 @@ const MAlert = ({ message, SnackbarProps, customParameters = {} }) => {
   )
 };
 
-const MSnackbarProvider = ({ children }) => {
+const SnackbarProvider = ({ children }) => {
   const SnackbarProps = { 
     autoHideDuration: 4000, 
     anchorOrigin: { 
@@ -23,10 +23,10 @@ const MSnackbarProvider = ({ children }) => {
   };
   
   return (
-    <SnackbarProvider SnackbarProps={SnackbarProps} SnackbarComponent={MAlert}>
+    <Provider SnackbarProps={SnackbarProps} SnackbarComponent={MAlert}>
       {children}
-    </SnackbarProvider>
+    </Provider>
   )
 };
 
-export default MSnackbarProvider;
+export default SnackbarProvider;
