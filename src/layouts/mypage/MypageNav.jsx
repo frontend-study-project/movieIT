@@ -10,12 +10,12 @@ const MypageNav = () => {
       </Box>
       <Box className={styled.nav_list} component="ul">
         <Box className={styled["nav_main-link"]}>
-          <Link to="/mypage/booking">예매내역</Link>
+          <Link className={styled.link} to="/mypage/booking">예매내역</Link>
         </Box>
         <Box className={styled["nav_main-link"]}>
-          <Link to="/mypage/update">회원정보</Link>
+          <Link className={styled.link} to="/mypage/update">회원정보</Link>
           <Box component="ul" className={styled["nav_sub-link"]}>
-            <Link to="/mypage/update">개인정보 수정</Link>
+            <Link className={styled.link} to="/mypage/update">개인정보 수정</Link>
           </Box>
         </Box>
       </Box>
