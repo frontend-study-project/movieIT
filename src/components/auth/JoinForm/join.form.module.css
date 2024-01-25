@@ -1,0 +1,26 @@
+.form {
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  display: flex;
+  gap: 15px;
+  flex-direction: column;
+}
+
+.form_buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.form_buttons button,
+.form_buttons a {
+  height: 56px;
+}
+
+.form_label {
+  font-size: 14px;
+  padding-left: 15px;
+  font-weight: 700;
+  box-sizing: border-box;
+}

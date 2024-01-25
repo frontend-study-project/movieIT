@@ -1,6 +1,7 @@
 import { Box, Button, TextField } from "@mui/material";
 import styled from './search-link.module.css';
 import { styled as mStyled } from '@mui/material/styles';
+import SearchIcon from "../../common/icon/SearchIcon";
 
 const CssTextField = mStyled(TextField)({
   '&': {
@@ -29,7 +30,7 @@ const SearchLink = () => {
           hiddenLabel
           InputProps={{
             endAdornment: (
-              <i className={styled.search} />
+              <SearchIcon width={30} height={27} />
             )
           }}
         />

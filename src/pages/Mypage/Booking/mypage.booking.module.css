@@ -1,0 +1,16 @@
+.booking_tab {
+  box-shadow: 1px -1px 1px #d8d9db inset;
+  margin-bottom: 20px;
+}
+
+.booking_tab > div {
+  width: 166px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #555;
+  color: #fff;
+  font-size: 14px;
+  border-bottom: 1px solid #555;
+}

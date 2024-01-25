@@ -1,5 +1,7 @@
 import { useNavigate } from "react-router";
 import styled from "./nav.module.css";
+import { Link } from "react-router-dom";
+import SearchIcon from "../components/common/icon/SearchIcon";
 
 const Nav = () => {
   const navigate = useNavigate();
@@ -30,32 +32,32 @@ const Nav = () => {
     <nav className={styled.nav}>
       <div className={styled.icons}>
         <i className={styled.menu}></i>
-        <i className={styled.search}></i>
+        <SearchIcon width={36} height={36} />
       </div>
       <ul className={styled.nav_list}>
-        {navList.map((item, index) => {
+        {navList.map((item) => {
           return item.name === "" ? (
-            <li className={`${styled.nav_item} ${styled.logo}`}>
-              <a href={item.href}>
+            <li key={item.id} className={`${styled.nav_item} ${styled.logo}`}>
+              <Link to={item.href}>
                 <img src="/images/logo.png" />
-              </a>
+              </Link>
             </li>
           ) : (
             <li
+              key={item.id}
               className={styled.nav_item}
-              key={index}
-              onClick={navigate(item.href)}
+              onClick={() => navigate(item.href)}
             >
-              <a href={item.href}>{item.name}</a>
+              <Link to={item.href}>{item.name}</Link>
             </li>
           );
         })}
       </ul>
       <div className={styled.icons}>
         <i className={styled.schedule}></i>
-        <a href="/mypage">
+        <Link to="/mypage/booking">
           <i className={styled.mypage}></i>
-        </a>
+        </Link>
       </div>
     </nav>
   );
