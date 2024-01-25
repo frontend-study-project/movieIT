@@ -1,6 +1,8 @@
-const AUTH = '/auth';
+import { API_PREFIX } from ".";
 
-export const fetchUser = () => {
+export const AUTH = `${API_PREFIX}/auth`;
+
+export const fetchUser = () => (
   fetch(`${AUTH}/user`, { 
     method: 'get', 
     headers: {
@@ -8,7 +10,7 @@ export const fetchUser = () => {
       'Authorization': `Bearer ${getAuthorization()}`,
     },
   })
-}
+);
 
 export const login = (form) => (
   fetch(`${AUTH}/login`, { 
