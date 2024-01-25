@@ -1,10 +1,10 @@
-import { useMutation, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import * as authApi from '../api/auth.api';
 import { useSnackbar } from "./useSnackbar";
 import { useNavigate } from 'react-router-dom';
 
 export const useFetchUserQuery = () => (
-  useSuspenseQuery({
+  useQuery({
     queryKey: ['user'],
     async queryFn() {
       const response = await authApi.fetchUser();

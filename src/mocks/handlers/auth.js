@@ -2,7 +2,7 @@ import { http, HttpResponse } from 'msw';
 import { AUTH } from '../../api/auth.api';
 
 export const authHandlers = [
-  http.post('${AUTH}/login', async ({ request }) => {
+  http.post(`${AUTH}/login`, async ({ request }) => {
     const user = await request.json();
     return HttpResponse.json({
       user,
@@ -28,7 +28,7 @@ export const authHandlers = [
       return HttpResponse.error().status(401);
     }
     
-    return HttpResponse.json({ id: '아이디', nickname: '별명' }, { status: 201 });
+    return HttpResponse.json({ id: '아이디1', nickname: '별명1' }, { status: 201 });
   }),
 
   http.patch(`${AUTH}/user/:id`, async ({ request }) => {

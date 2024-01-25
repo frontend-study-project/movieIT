@@ -1,8 +1,8 @@
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import * as bookingApi from '../api/booking.api';
 
 export const useFetchMyBookingListQuery = ({ id, page = 1, search = null }) => (
-  useSuspenseQuery({
+  useQuery({
     queryKey: ['booking', id, { page, search }],
     queryFn() {
       const searchParams = new URLSearchParams({ page, search })
@@ -13,6 +13,7 @@ export const useFetchMyBookingListQuery = ({ id, page = 1, search = null }) => (
       }
 
       return response.json();
-    }
+    },
+    enabled: !!id
   })
 );

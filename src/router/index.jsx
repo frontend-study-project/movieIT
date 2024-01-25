@@ -8,6 +8,8 @@ import Login from "../pages/Auth/Login/Login";
 import Join from "../pages/Auth/Join/Join";
 import MypageLayout from "../layouts/mypage/MypageLayout";
 import MypageBooking from "../pages/Mypage/Booking/MypageBooking";
+import MyUpdate from "../pages/Mypage/MyUpdate/MyUpdate";
+import PasswordChange from "../pages/Mypage/PasswordChange/PasswordChange";
 
 const routes = [
   {
@@ -49,8 +51,12 @@ const routes = [
       },
       {
         path: "update",
-        element: <MypageBooking />
-      }
+        element: <MyUpdate />
+      },
+      {
+        path: "password",
+        element: <PasswordChange />
+      },
     ]
   }
 ];

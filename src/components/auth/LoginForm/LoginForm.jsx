@@ -62,7 +62,7 @@ const LoginForm = () => {
 
       <Box className={styled.form_buttons}>
         <Button type="submit" variant="contained" size="large" fullWidth>로그인</Button>
-        <Button href="/join" LinkComponent={Link} variant="outlined" size="large" fullWidth>회원가입</Button>
+        <Button to="/join" LinkComponent={Link} variant="outlined" size="large" fullWidth>회원가입</Button>
       </Box>
     </form>
   )

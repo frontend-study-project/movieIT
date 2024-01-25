@@ -3,9 +3,11 @@ import { DataGrid } from '@mui/x-data-grid';
 import styled from './ticketlist.module.css';
 import { useFetchMyBookingListQuery } from '../../../hooks/useBooking';
 import TickListSkeleton from './TickListSkeleton';
+import { useFetchUserQuery } from '../../../hooks/useAuth';
 
 const TicketList = () => {
-  const { data: bookingList = [], isLoading } = useFetchMyBookingListQuery();
+  const { data } = useFetchUserQuery();
+  const { data: bookingList = [], isLoading } = useFetchMyBookingListQuery({ id: data?.id });
   const columns = [
     { field: 'id', headerName: '예매번호', width: 70 },
     { field: 'poster', headerName: '포스터', width: 70 },

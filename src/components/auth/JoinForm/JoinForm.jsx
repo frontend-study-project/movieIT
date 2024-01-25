@@ -65,13 +65,13 @@ const JoinForm = () => {
               minLength: 2,
               maxLength: 20,
             }}
-            label="아이디를 입력해주세요"
+            label="아이디를 입력해주세요(2 ~ 20자리)"
             variant="outlined"
             fullWidth
             onInput={() => setDuplicateCheck(false)}
           />
           {errors.id && (
-            <ErrorTypography>아이디를 입력해주세요.</ErrorTypography>
+            <ErrorTypography>아이디를 입력해주세요.(2 ~ 20자리)</ErrorTypography>
           )}
         </Box>
         <Box width="150px" paddingLeft="10px">
@@ -91,7 +91,7 @@ const JoinForm = () => {
           <MInputText
             name="nickname"
             control={control}
-            label="별명을 입력해주세요"
+            label="별명을 입력해주세요(2 ~ 20자리)"
             variant="outlined"
             fullWidth
             rules={{
@@ -101,7 +101,7 @@ const JoinForm = () => {
             }}
           />
           {errors.nickname && (
-            <ErrorTypography>별명을 입력해주세요.</ErrorTypography>
+            <ErrorTypography>별명을 입력해주세요.(2 ~ 20자리)</ErrorTypography>
           )}
         </Box>
         <Box width="150px" paddingLeft="10px" />

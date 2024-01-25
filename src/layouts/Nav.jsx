@@ -38,7 +38,7 @@ const Nav = () => {
         {navList.map((item) => {
           return item.name === "" ? (
             <li key={item.id} className={`${styled.nav_item} ${styled.logo}`}>
-              <Link href={item.href}>
+              <Link to={item.href}>
                 <img src="/images/logo.png" />
               </Link>
             </li>
@@ -48,14 +48,14 @@ const Nav = () => {
               className={styled.nav_item}
               onClick={() => navigate(item.href)}
             >
-              <Link href={item.href}>{item.name}</Link>
+              <Link to={item.href}>{item.name}</Link>
             </li>
           );
         })}
       </ul>
       <div className={styled.icons}>
         <i className={styled.schedule}></i>
-        <Link href="/mypage">
+        <Link to="/mypage/booking">
           <i className={styled.mypage}></i>
         </Link>
       </div>

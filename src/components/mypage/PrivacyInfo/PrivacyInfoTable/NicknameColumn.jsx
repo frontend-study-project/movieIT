@@ -21,7 +21,7 @@ const NicknameColumn = ({ control, value }) => {
         }}
       />
       {formState.errors.nickname && (
-        <ErrorTypography>별명을 입력해주세요.</ErrorTypography>
+        <ErrorTypography>별명을 입력해주세요.(2 ~ 20자리)</ErrorTypography>
       )}
     </>
   )
