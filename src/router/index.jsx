@@ -2,7 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import Layout from "../layouts/Layout";
 import Main from "../pages/Main/Main";
 import Movie from "../pages/Movie";
-import Ticket from "../pages/Ticket";
+import Book from "../pages/Book";
 import Theater from "../pages/Theater";
 import Mypage from "../pages/Mypage";
 
@@ -19,8 +19,8 @@ const routes = [
         element: <Movie />,
       },
       {
-        path: "/ticket",
-        element: <Ticket />,
+        path: "/book",
+        element: <Book />,
       },
       {
         path: "/theater",

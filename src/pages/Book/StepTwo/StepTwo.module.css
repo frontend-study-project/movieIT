@@ -1,0 +1,244 @@
+/**** 좌석 ****/
+.wrap_seat{
+  width: 770px;
+}
+.head_book{
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-top: 1px solid #444;
+}
+.head_book h4{
+  font-size: 18px;
+  line-height: 32px;
+  color: #222;
+}
+.head_book button{
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+  border-radius: 4px;
+  border: 1px solid #c1c1c1;
+  letter-spacing: 0;
+  line-height: 1.5;
+  font-size: 15px;
+  color: #444;
+}
+.head_book svg{
+  margin-right: 4px;
+}
+.box_select{
+  display: flex;
+  padding: 10px 0 10px 20px;
+  background-color: #f2f4f5;
+  border: 1px solid #d8d9db;
+  border-bottom: 0;
+}
+.box_select label{
+  padding-right: 10px;
+}
+.box_seat{
+  position: relative;
+  height: 454px;
+  padding: 30px 0;
+  box-sizing: border-box;
+}
+.area_screen{
+  display: block;
+  width: 100%;
+  height: 30px;
+  border-top: 1px solid #000;
+  border-radius: 70%;
+  text-align: center;
+  line-height: 35px;
+  font-weight: 700;
+}
+.ico_entry{
+  position: absolute;
+  left: 621px;
+  top: 45px;
+  height: 16px;
+}
+.ico_entry svg{
+  font-size: 16px;
+}
+.layout_seat{
+  height: 100%;
+}
+.layout_seat button{
+  position: absolute;
+  padding: 0;
+  border: 1px solid #02bfd3;
+}
+.layout_seat button span{
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  color: #fff;
+  font-size: 11px;
+  line-height: 18px;
+}
+.block_seat{
+  width: 20px;
+  height: 18px;
+}
+.block_row{
+  position: absolute;
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 1px solid #ccc;
+  vertical-align: middle;
+  text-align: center;
+  color: #000;
+}
+/**** 정보 ****/
+.box_result{
+  overflow: hidden;
+  width: 310px;
+  margin-left: 20px;
+  padding: 15px 20px 0 20px;
+  background-color: #333;
+  border-radius: 10px;
+  box-sizing: border-box;
+  color: #fff;
+}
+/* 영화정보 */
+.item_movie{
+  position: relative;
+  width: 100%;
+  border-bottom: 1px solid #434343;
+  line-height: 1.1;
+}
+.txt_tit{
+  display: block;
+  overflow: hidden;
+  padding-left: 28px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.txt_cate{
+  display: inline-block;
+  padding: 5px 0 10px 28px;
+  font-size: 13px;
+  color: #aaa;
+}
+/* 정보상세 */
+.item_info{
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #434343;
+}
+.inner_info{
+  font-size: 13px;
+  line-height: 1.5;
+  color: #c4c4c4;
+}
+.txt_time{
+  display: inline-block;
+  margin-top: 8px;
+  color: #fff;
+}
+.thumb_img{
+  width: 70px;
+  height: 100px;
+  background-color: red;
+}
+/* 좌석안내 */
+.item_seat{
+  display: flex;
+  min-height: 230px;
+  margin-top: 10px;
+  border-radius: 5px;
+  border: 1px solid #434343;
+}
+.info_seat{
+  width: calc(100% - 117px);
+  padding: 16px 0 0 20px;
+  border-right: 1px solid #434343;
+  font-size: 13px;
+  color: #c4c4c4;
+  letter-spacing: -1px;
+}
+.info_seat li{
+  display: flex;
+  align-items: center;
+  line-height: 22px;
+}
+.info_select{
+  width: 116px;
+  padding: 0 14px;
+  box-sizing: border-box;
+}
+.info_select em{
+  display: block;
+  padding: 14px 0;
+  font-size: 13px;
+  text-align: center;
+}
+.info_select ul{
+  display: flex;
+  flex-wrap: wrap;
+  width: 88px;
+}
+.info_select li{
+  width: 40px;
+  height: 35px;
+  margin-top: 7px;
+  border: 1px solid #5c5c5c;
+  line-height: 35px;
+  font-size: 14px;
+  text-align: center;
+}
+.info_select li:nth-child(2n){
+  margin-left: 4px;
+}
+.seat_selected{
+  background-color: #503396;
+}
+.seat_empty{
+  background-color: #53565b;
+}
+/* 결제금액 */
+.item_pay{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 80px;
+}
+.cate_pay{
+  font-size: 13px;
+  color: #c4c4c4;
+}
+.txt_pay{
+  display: flex;
+  justify-content: space-between;
+  line-height: 35px;
+}
+.num_pay{
+  font-size: 24px;
+}
+.num_pay em{
+  color: #59bec9;;
+}
+/* 버튼 */
+.item_btns{
+  width: calc(100% + 40px); 
+  height: 40px;
+  margin: 10px -20px 0;
+  line-height: 40px;
+}
+.item_btns button{
+  display: inline-block;
+  width: 50%;
+  height: 100%;
+  font-size: 18px;
+  color: inherit;
+}
+.btn_prev{
+  background-color: #53565b;
+}
+.btn_next{
+  background-color: #329eb1;
+}

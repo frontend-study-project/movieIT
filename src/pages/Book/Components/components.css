@@ -1,0 +1,177 @@
+/**** 좌석선택 ****/
+.seat_condition{
+  overflow: hidden;
+  position: relative;
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  margin-right: 4px;
+}
+.seat_condition.selected{
+  background-color: #553399;
+}
+.seat_condition.selected::after{
+  content: '';
+  display: block;
+  position: absolute;
+  right: 0;
+  top: 0;
+  border-right: 5px solid #fff;
+  border-bottom: 5px solid transparent;
+}
+.seat_condition.occupied{
+  background-color: #ccc;
+}
+.seat_condition.occupied::before{
+  content: '';
+  display: block;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 20px;
+  height: 1px;
+  margin-left: -9px;
+  background-color: #fff;
+  transform: rotate(45deg);
+}
+.seat_condition.occupied::after{
+  content: '';
+  display: block;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 20px;
+  height: 1px;
+  margin-left: -10px;
+  background-color: #fff;
+  transform: rotate(-45deg);
+}
+.seat_condition.impossible{
+  background-color: #ccc;
+}
+.seat_condition.impossible::after{
+  content: '';
+  display: block;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 20px;
+  height: 1px;
+  margin-left: -10px;
+  background-color: #fff;
+  transform: rotate(-45deg);
+}
+.seat_condition.common{
+  background-color: #777;
+}
+.seat_condition.challenged{
+  background-color: #338811;
+}
+.seat_condition.challenged::after{
+  content: '';
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  margin-left: -1px;
+  border-bottom: 4px solid #fff;
+  border-left: 2px solid transparent;
+  border-right: 2px solid transparent;
+}
+/**** 인원선택 ****/
+.cont_book .box_count button, .cont_book .box_count input{
+  width: 32px;
+  height: 32px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  font-size: 18px;
+  font-weight: 300;
+  color: #444;
+}
+.cont_book .box_count{
+  width: 187px;
+}
+.cont_book .btn_minus{
+  border-radius: 5px 0 0 5px;
+}
+.cont_book .btn_plus{
+  border-radius: 0 5px 5px 0;
+}
+.cont_book input.num_count{
+  width: 42px;
+  height: 32px;
+  border-left: none;
+  border-right: none;
+  vertical-align: top;
+  text-align: right;
+  font-size: 15px;
+}
+/**** 슬라이드 ****/
+.cont_book .wrap_slide{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.cont_book .btn_before, .cont_book  .btn_next{
+  width: 30px;
+  height: 100%;
+}
+.cont_book .inner_slide{
+  width: calc(100% - 60px);
+  height: 100%;
+  overflow: hidden;
+}
+.cont_book  .list_slide{
+  display: flex;
+  overflow-y: unset;
+  height: 100%;
+}
+.cont_book .item_slide{
+  flex-shrink: 0;
+}
+
+.cont_book [class*='box_date'] .item_slide{
+  width: 70px;
+}
+
+.cont_book [class*='box_time'] .item_slide{
+  width: 35px;
+}
+
+.cont_book  .item_slide button{
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.cont_book [class*='box_date']  .item_slide button:hover::before{
+  content: '';
+  display: block;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #503396;
+}
+.cont_book .item_slide .txt_num{
+  font-size: 15px;
+}
+.cont_book .item_slide .tit_txt{
+  position: relative;
+  display: inline-block;
+  padding-left: 9px;
+  font-size: 13px;
+}
+.cont_book .item_slide .tit_txt::before{
+  content: '';
+  display: block;
+  position: absolute;
+  left: 3px;
+  top: 50%;
+  width: 3px;
+  height: 3px;
+  background-color: #888;
+  transform: translateY(-50%);
+}
