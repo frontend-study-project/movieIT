@@ -1,10 +1,10 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
 import * as authApi from '../api/auth.api';
-import { useMSnackbar } from "./useMSnackbar";
+import { useSnackbar } from "./useSnackbar";
 import { useNavigate } from 'react-router-dom';
 
 export const useFetchUserQuery = () => (
-  useQuery({
+  useSuspenseQuery({
     queryKey: ['user'],
     async queryFn() {
       const response = await authApi.fetchUser();
@@ -21,7 +21,7 @@ export const useFetchUserQuery = () => (
 );
 
 export const useLoginMutation = () => {
-  const snackbar = useMSnackbar();
+  const snackbar = useSnackbar();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   
@@ -51,7 +51,7 @@ export const useLoginMutation = () => {
 };
 
 export const useJoinMutation = () => {
-  const snackbar = useMSnackbar();
+  const snackbar = useSnackbar();
   const navigate = useNavigate();
 
   return useMutation({
@@ -91,7 +91,7 @@ export const useCheckDuplicateIdMutation = () => {
 };
 
 export const useUpdateUserMutation = () => {
-  const snackbar = useMSnackbar();
+  const snackbar = useSnackbar();
   const queryClient = useQueryClient();
 
   return useMutation({

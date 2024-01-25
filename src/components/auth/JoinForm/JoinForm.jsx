@@ -5,10 +5,10 @@ import { useCheckDuplicateIdMutation, useJoinMutation } from "../../../hooks/use
 import MInputText from "../../common/MInputText/MInputText";
 import ErrorTypography from "../../form/ErrorTypography/ErrorTypography";
 import { useState } from "react";
-import { useMSnackbar } from "../../../hooks/useMSnackbar";
+import { useSnackbar } from "../../../hooks/useSnackbar";
 
 const JoinForm = () => {
-  const snackbar = useMSnackbar();
+  const snackbar = useSnackbar();
   const [duplicateCheck, setDuplicateCheck] = useState(false);
   const join = useJoinMutation();
   const checkDuplicateId = useCheckDuplicateIdMutation();
