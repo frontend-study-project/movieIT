@@ -6,7 +6,13 @@ const TickListSkeleton = () => {
   return (
     <>
       {Array.from({ length: SKELETON_LENGHT }).map((_, index) => (
-        <Skeleton key={index} variant="rounded" animation="wave" height={60} />
+        <Skeleton 
+          key={index} 
+          variant="rounded" 
+          animation="wave" 
+          height={60}
+          style={{ marginBottom: '5px' }}
+        />
       ))}
     </>
   )
