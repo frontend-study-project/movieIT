@@ -40,6 +40,17 @@ export const checkDuplicateId = (id) => (
   })
 );
 
+export const updateUser = (form) => (
+  fetch(`${AUTH}/user/${form.id}`, { 
+    method: 'patch', 
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${getAuthorization()}`,
+    },
+    body: JSON.stringify(form),
+  })
+);
+
 export const setAuthorization = (token) => {
   localStorage.setItem('token', token);
 };

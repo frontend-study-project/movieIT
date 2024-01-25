@@ -73,7 +73,7 @@ export const useJoinMutation = () => {
     onError() {
       snackbar('문제가 발생하였습니다. 관리자에게 문의해주세요.', { type: 'error' });
     }
-  })
+  });
 };
 
 export const useCheckDuplicateIdMutation = () => {
@@ -87,5 +87,31 @@ export const useCheckDuplicateIdMutation = () => {
 
       return true;
     },
+  })
+};
+
+export const useUpdateUserMutation = () => {
+  const snackbar = useMSnackbar();
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    async mutationFn(form) {
+      const response = await authApi.updateUser(form);
+
+      if (!response.ok) {
+        throw new Error();
+      }
+
+      return response.json();
+    },
+
+    onSuccess({ user }) {
+      snackbar('회원정보가 수정 되었습니다.');
+      queryClient.setQueryData(['user'], user, { updatedAt: Date.now() });
+    },
+    
+    onError() {
+      snackbar('문제가 발생하였습니다. 관리자에게 문의해주세요.', { type: 'error' });
+    }
   })
 }
