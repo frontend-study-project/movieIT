@@ -1,0 +1,12 @@
+.booking_search {
+  display: flex;
+  box-sizing: border-box;
+  padding: 20px 40px;
+  background-color: #f2f4f5;
+  gap: 30px;
+}
+
+.booking_search-radio-group span {
+  letter-spacing: -1px;
+  font-size: 15px;
+}

@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router";
 import styled from "./nav.module.css";
 import { Link } from "react-router-dom";
+import SearchIcon from "../components/common/icon/SearchIcon";
 
 const Nav = () => {
   const navigate = useNavigate();
@@ -31,7 +32,7 @@ const Nav = () => {
     <nav className={styled.nav}>
       <div className={styled.icons}>
         <i className={styled.menu}></i>
-        <i className={styled.search}></i>
+        <SearchIcon width={36} height={36} />
       </div>
       <ul className={styled.nav_list}>
         {navList.map((item) => {
