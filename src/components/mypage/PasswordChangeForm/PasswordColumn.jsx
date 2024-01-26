@@ -1,0 +1,42 @@
+import { useFormState } from "react-hook-form";
+import MInputText from "../../common/MInputText/MInputText";
+import ErrorTypography from "../../form/ErrorTypography/ErrorTypography";
+import { Box, Typography } from "@mui/material";
+
+const PasswordColumn = ({ control, value, name, notice = '' }) => {
+  const formState = useFormState({
+    control,
+    name,
+  });
+
+  return (
+    <>
+      <Box display="flex" gap="15px">
+        <MInputText 
+          type="password"
+          control={control}
+          name={name}
+          defaultValue={value}
+          rules={{
+            required: true,
+            minLength: 8,
+            maxLength: 20,
+          }}
+        />
+        <Typography 
+          display="flex" 
+          fontSize="14px" 
+          alignItems="center" 
+          style={{ color: '#8a8a8a' }}
+        >
+          {notice}
+        </Typography>
+      </Box>
+      {formState.errors.nickname && (
+        <ErrorTypography>비밀번호를 입력해주세요.</ErrorTypography>
+      )}
+    </>
+  )
+};
+
+export default PasswordColumn;
