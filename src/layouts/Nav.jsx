@@ -35,32 +35,20 @@ const Nav = () => {
         <SearchIcon width={36} height={36} />
       </div>
       <ul className={styled.nav_list}>
-<<<<<<< HEAD
         {navList.map((item) => {
           return item.name === "" ? (
             <li key={item.id} className={`${styled.nav_item} ${styled.logo}`}>
               <Link to={item.href}>
-=======
-        {navList.map((item, index) => {
-          return item.name === '' ? (
-            <li className={`${styled.nav_item} ${styled.logo}`}>
-              <a href={item.href}>
->>>>>>> ddb146cf58218b307f7d0b4ebcd924acbe01f6af
                 <img src="/images/logo.png" />
               </Link>
             </li>
           ) : (
-<<<<<<< HEAD
             <li
               key={item.id}
               className={styled.nav_item}
               onClick={() => navigate(item.href)}
             >
               <Link to={item.href}>{item.name}</Link>
-=======
-            <li className={styled.nav_item} key={index} onClick={navigate(item.href)}>
-              <a href={item.href}>{item.name}</a>
->>>>>>> ddb146cf58218b307f7d0b4ebcd924acbe01f6af
             </li>
           );
         })}
