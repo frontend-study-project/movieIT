@@ -1,0 +1,2 @@
+export const PASSWORD_NOT_EQUAL = 'PW001';
+export const CURRENT_PASSWORD_EQUAL = 'PW002';

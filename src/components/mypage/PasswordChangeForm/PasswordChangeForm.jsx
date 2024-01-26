@@ -1,5 +1,5 @@
 import { Box, Typography } from '@mui/material';
-import { useFetchUserQuery, useUpdateUserMutation } from '../../../hooks/useAuth';
+import { useFetchUserQuery, useChangePasswordMutation } from '../../../hooks/useAuth';
 import { Suspense } from 'react';
 import Loading from '../../common/Loading/Loading';
 import MypageForm from '../MypageForm/MypageForm';
@@ -7,7 +7,7 @@ import PasswordColumn from './PasswordColumn';
 import styled from './password.change.form.module.css';
 
 const PasswordChangeForm = () => {
-  const updateUser = useUpdateUserMutation();
+  const changePassword = useChangePasswordMutation();
   const { data } = useFetchUserQuery();
   const columns = [
     {
@@ -48,7 +48,7 @@ const PasswordChangeForm = () => {
   ];
 
   const handleUpdate = (form) => {
-    updateUser.mutate({
+    changePassword.mutate({
       ...form,
       id: data?.id
     });
