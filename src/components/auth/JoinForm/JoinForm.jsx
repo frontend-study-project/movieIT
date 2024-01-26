@@ -6,6 +6,7 @@ import MInputText from "../../common/MInputText/MInputText";
 import ErrorTypography from "../../form/ErrorTypography/ErrorTypography";
 import { useState } from "react";
 import { useSnackbar } from "../../../hooks/useSnackbar";
+import { passwordPattern } from "../../../lib/passwordPattern";
 
 const JoinForm = () => {
   const snackbar = useSnackbar();
@@ -117,13 +118,11 @@ const JoinForm = () => {
             variant="outlined"
             fullWidth
             rules={{
-              required: true,
-              minLength: 8,
-              maxLength: 20,
+              pattern: passwordPattern
             }}
           />
           {errors.password && (
-            <ErrorTypography>비밀번호를 입력해주세요.</ErrorTypography>
+            <ErrorTypography>비밀번호를 입력해주세요.(영문,숫자,특수문자 모두 1자리 이상 사용하여 최소 8자리 이상)</ErrorTypography>
           )}
         </Box>
         <Box width="150px" paddingLeft="10px" />
