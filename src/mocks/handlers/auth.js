@@ -16,6 +16,12 @@ const isAuthenticated = async (request) => {
 export const authHandlers = [
   http.post(`${AUTH}/login`, async ({ request }) => {
     const user = await request.json();
+
+    if (user.id !== 'admin'
+      || user.password !== 'admin12!') {
+      throw new HttpResponse(null, { status: 400 })
+    }
+
     return HttpResponse.json({
       user,
       token: 'access token'
