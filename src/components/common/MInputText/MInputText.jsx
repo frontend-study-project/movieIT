@@ -5,7 +5,7 @@ const MInputText = ({ name, rules, control, defaultValue, ...props }) => {
   const { field: { value = '', onChange } } = useController({ name, rules, control, defaultValue });
   return (
     <TextField 
-      value={value || defaultValue}
+      value={value}
       onChange={onChange}
       {...props}
     />

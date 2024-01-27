@@ -20,15 +20,17 @@ const JoinForm = () => {
     setError,
     clearErrors,
     getValues,
-  } = useForm({ mode: 'onChange' });
+  } = useForm({ 
+    mode: 'onChange',
+    defaultValues: {
+      id: '',
+      nickname: '',
+      password: '',
+      passwordConfirm: ''
+    }
+  });
 
   const handleJoin = (form) => {
-    if (form.password !== form.passwordConfirm) {
-      setError('passwordConfirm', { type: 'validate' });
-      return;
-    }
-
-    clearErrors('passwordConfirm')
     join.mutate(form);
   };
 
@@ -119,7 +121,17 @@ const JoinForm = () => {
             fullWidth
             rules={{
               required: true,
-              pattern: passwordPattern
+              pattern: passwordPattern,
+              onChange(event) {
+                const password = event.target.value;
+                const passwordConfirm = getValues('passwordConfirm');
+
+                if (passwordConfirm && password !== passwordConfirm) {
+                  setError('passwordConfirm', { type: 'validate' })
+                } else {
+                  clearErrors('passwordConfirm')
+                }
+              }
             }}
           />
           {errors.password && (
@@ -139,21 +151,14 @@ const JoinForm = () => {
             variant="outlined"
             fullWidth
             rules={{
-              required: true,
-              minLength: 8,
-              maxLength: 20,
+              validate(passwordConfirm) {
+                const password = getValues('password');
+                return passwordConfirm === password;
+              }
             }}
           />
           {errors.passwordConfirm && (
-            <ErrorTypography>
-              {
-                errors.passwordConfirm.type === 'validate' ? (
-                  "비밀번호가 일치하지 않습니다."
-                ) : (
-                  "비밀번호를 입력해주세요."
-                )  
-              }
-            </ErrorTypography>
+            <ErrorTypography>비밀번호가 일치하지 않습니다.</ErrorTypography>
           )}
         </Box>
         <Box width="150px" paddingLeft="10px" />
