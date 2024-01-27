@@ -42,7 +42,7 @@ export const useLoginMutation = () => {
       queryClient.setQueryData(['user'], user, { updatedAt: Date.now() });
 
       snackbar('로그인 되었습니다.');
-      navigate('/');
+      navigate('/', { replace: true });
     },
     
     onError() {
@@ -144,5 +144,21 @@ export const useChangePasswordMutation = () => {
         snackbar('현재 비밀번호와 동일합니다. 새로운 비밀번호를 입력해주세요.', { type: 'error' });
       }
     }
-  })
+  });
+}
+
+export const useLogoutMutation = () => {
+  const snackbar = useSnackbar();
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    async mutationFn() {
+      authApi.setAuthorization('');
+      queryClient.setQueryData(['user'], null, { updatedAt: Date.now() });
+
+      snackbar('로그아웃 되었습니다.');
+      navigate('/');
+    }
+  });
 }
