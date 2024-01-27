@@ -33,8 +33,14 @@ export const authHandlers = [
     return HttpResponse.json(user, { status: 201 });
   }),
 
-  http.post(`${AUTH}/duplication-check`, async () => {
-    return HttpResponse.json(undefined, { status: 201 });
+  http.post(`${AUTH}/duplication-check`, async ({ request }) => {
+    const id = await request.text();
+
+    if (id === 'admin') {
+      throw new HttpResponse(id, { status: 400 });
+    }
+
+    return HttpResponse.text(undefined, { status: 201 });
   }),
 
   http.get(`${AUTH}/user`, async ({ request }) => {
