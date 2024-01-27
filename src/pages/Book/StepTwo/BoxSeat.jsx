@@ -12,7 +12,7 @@ const BoxSeat = () => {
     seatColArr: [],
   });
 
-  const TOPBLANK = 60;
+  const TOPBLANK = 75;
 
   const totalSeatInfo = {
     row: 20,
@@ -26,8 +26,8 @@ const BoxSeat = () => {
   };
 
   const layout = {
-    width: 20 * seatsNum.x,
-    height: 18 * seatsNum.y,
+    width: 20 * (seatsNum.x + totalSeatInfo.aisle.x.length + 1), // 좌석수 + 통로수 + 알파벳 정보(열 정보)
+    height: 18 * (seatsNum.y + totalSeatInfo.aisle.y.length), // 좌석수 + 통로수 
   };
 
   const startPoint = {
@@ -59,14 +59,13 @@ const BoxSeat = () => {
           aisle: totalSeatInfo.aisle.x[idx] === i ? colIdx++ : colIdx
         })
       }
-      setSeatArr((prev) => {
-        return {
-          ...prev,
-          seatColArr: seatColArr,
-        };
-      });
     })
-    
+    setSeatArr((prev) => {
+      return {
+        ...prev,
+        seatColArr: seatColArr,
+      };
+    });
   }, [])
 
   useEffect(() => {
@@ -88,7 +87,7 @@ const BoxSeat = () => {
         <SelectItem id="seniorNum" label="경로" />
         <SelectItem id="challengedNum" label="우대" />
       </div>
-      <div className={styled.box_seat}>
+      <div className={`${styled.box_seat} scroll`}>
         <div className={styled.layout_seat}>
           <span className={styled.area_screen}>SCREEN</span>
           <span className={styled.ico_entry}>

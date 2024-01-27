@@ -1,4 +1,6 @@
 import RatingItem from '../Components/RatingItem';
+
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import styled from './StepOne.module.css';
 
 const BoxMovie = () => {
@@ -129,11 +131,14 @@ const BoxMovie = () => {
     영화<span className='screen_out'>선택</span>
   </h3>
   <ul className={`${styled.list_movie} scroll`}>
-    {dummyMovieList.map((item) => (
+    {dummyMovieList.map((item, idx) => (
       <li key={item.id}>
-        <button>
+        <button type='button' className={idx === 1 ? styled.on : null}>
           <RatingItem rating={item.rating} ratingDesc={item.ratingDesc} />
           <span>{item.name}</span>
+          <span className={styled.like_movie}>
+            <FavoriteBorderIcon fontSize="small" sx={{ fontSize: 14 }}>선호하는 영화</FavoriteBorderIcon>
+          </span>
         </button>
       </li>
     ))}

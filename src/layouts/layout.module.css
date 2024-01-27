@@ -1,5 +1,7 @@
 .main {
-  width: 100%;
-  max-width: var(--max-width);
+  /* 수경 임시 수정 코드 */
+  /* width: 100%; */
+  /* max-width: var(--max-width); */
+  width: 1100px;
   margin: 0 auto;
 }

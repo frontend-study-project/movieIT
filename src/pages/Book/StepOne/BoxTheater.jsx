@@ -112,11 +112,11 @@ const BoxTheater = () => {
   </h3>
   <div className={styled.inner_theater}>
     <ul className={styled.list_area}>
-      {dummyTheaterList.map((item) => (
+      {dummyTheaterList.map((item, index) => (
         <li key={item.id}>
-          <button type="button">{item.area_depth1}</button>
+          <button type="button" className={index === 2 ? styled.on : null}>{item.area_depth1}</button>
           <ul className={`${styled.list_theater} scroll`}>
-            {item.area_depth2.map(item2 => <li key={item2.id}><button type="button">{item2.txt}</button></li>)}
+            {item.area_depth2.map((item2, idx) => <li key={item2.id}><button type="button" className={idx === 2 ? styled.on : null}>{item2.txt}</button></li>)}
           </ul>
         </li>
       ))}

@@ -109,9 +109,11 @@
 }
 /**** 슬라이드 ****/
 .cont_book .wrap_slide{
+  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 0 20px;
 }
 .cont_book .btn_before, .cont_book  .btn_next{
   width: 30px;
@@ -121,6 +123,21 @@
   width: calc(100% - 60px);
   height: 100%;
   overflow: hidden;
+}
+.cont_book .txt_year{
+  position: absolute;
+  left: 30px;
+  top: 0;
+  width: 70px;
+  height: 20px;
+  margin-top: -10px;
+  line-height: 18px;
+  font-size: 13px;
+  font-weight: 300;
+  text-align: center;
+  border: 1px solid #d8d9db;
+  border-radius: 10px;
+  background-color: #fff;
 }
 .cont_book  .list_slide{
   display: flex;
@@ -144,7 +161,7 @@
   width: 100%;
   height: 100%;
 }
-.cont_book [class*='box_date']  .item_slide button:hover::before{
+.cont_book [class*='box_date'] .item_slide button:hover::before, .cont_book [class*='box_date'] .item_slide .on::before{
   content: '';
   display: block;
   position: absolute;
@@ -154,6 +171,15 @@
   width: 100%;
   height: 2px;
   background-color: #503396;
+}
+.cont_book [class*='box_time'] .item_slide button{
+  height: 30px;
+  font-size: 17px;
+}
+.cont_book [class*='box_time'] .item_slide button.on{
+  background-color: #555;
+  color: #fff;
+  font-weight: 700;
 }
 .cont_book .item_slide .txt_num{
   font-size: 15px;

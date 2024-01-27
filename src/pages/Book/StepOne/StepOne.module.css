@@ -1,6 +1,18 @@
 [class*="box_"]{
   box-sizing: border-box;
 }
+button.on{
+  color: #fff;
+  font-weight: 400;
+  background-color: #666;
+}
+.inner_theater button.on{
+  color: #fff;
+}
+.list_area > li > button.on{
+  color: #444;
+  background-color: #ebebeb;
+}
 /**** 날짜 ****/
 .box_date{
   width: 100%;
@@ -24,9 +36,14 @@
 .list_movie button{
   display: flex;
   align-items: center;
+  width: 100%;
   min-height: 28px;
   padding: 0 0 0 5px;
 
+}
+.like_movie{
+  margin-left: auto;
+  margin-right: 7px;
 }
 /**** 극장 ****/
 .box_theater{
@@ -38,7 +55,6 @@
 }
 .list_area{
   width: calc(50% - 5px);
-  padding-right: 5px;
   border-right: 1px solid #d8d9db;
   box-sizing: border-box;
   overflow-y: hidden;
@@ -52,6 +68,7 @@
 }
 .inner_theater button{
   width: 100%;
+  padding-right: 5px;
   color: #444;
   font-size: 14px;
   line-height: 28px;
@@ -62,7 +79,7 @@
   position: absolute;
   top: 0;
   right: 0;
-  width: 50%;
+  width: calc(50% + 5px);
 }
 .list_area li:nth-child(1) ul{
   display: block;
@@ -82,7 +99,7 @@
 }
 .list_movies{
   height: 320px;
-  margin: 0 -20px;
+  margin: 10px -20px 0;
 }
 .list_movies li + li{
   border-top: 1px solid #ebebeb;
