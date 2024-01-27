@@ -20,7 +20,7 @@ const LoginForm = () => {
 
   return (
     <form className={styled.form} onSubmit={handleSubmit(handleLogin)}>
-      <Box bgcolor="#fff">
+      <Box>
         <MInputText 
           control={control}
           name="id" 
@@ -32,12 +32,13 @@ const LoginForm = () => {
             minLength: 2,
             maxLength: 20,
           }}
+          style={{ background: '#fff' }}
         />
         {errors.id && (
           <ErrorTypography>아이디를 입력해주세요.</ErrorTypography>
         )}
       </Box>
-      <Box bgcolor="#fff">
+      <Box>
         <MInputText 
           control={control}
           name="password" 
@@ -50,6 +51,7 @@ const LoginForm = () => {
             minLength: 8,
             maxLength: 20,
           }}
+          style={{ background: '#fff' }}
         />
         {errors.password && (
           <ErrorTypography>비밀번호를 입력해주세요.</ErrorTypography>
