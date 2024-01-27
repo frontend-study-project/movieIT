@@ -69,5 +69,5 @@ export const setAuthorization = (token) => {
 };
 
 export const getAuthorization = () => {
-  return localStorage.getItem('token');
+  return localStorage.getItem('token') || '';
 };

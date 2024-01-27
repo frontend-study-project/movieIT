@@ -11,12 +11,13 @@ const AuthNav = ({ isSub }) => {
         {
           user ? (
             <>
-              <li><Link to="/login">로그인</Link></li>
-              <li><Link to="/join">회원가입</Link></li>
+              <li><Link to="#logout">로그아웃</Link></li>
+              <li><Link to="/book">빠른예매</Link></li>
             </>
           ) : (
             <>
-              <li><Link to="#logout">로그아웃</Link></li>
+              <li><Link to="/login">로그인</Link></li>
+              <li><Link to="/join">회원가입</Link></li>
             </>
           )
         }
