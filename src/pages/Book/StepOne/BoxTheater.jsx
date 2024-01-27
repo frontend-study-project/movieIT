@@ -1,3 +1,4 @@
+import styledCommon from '../book.module.css';
 import styled from './StepOne.module.css';
 
 const BoxTheater = () => {
@@ -107,15 +108,15 @@ const BoxTheater = () => {
     },
   ];
   return <div className={styled.box_theater}>
-  <h3 className='tit_box'>
-    극장<span className='screen_out'>선택</span>
+  <h3 className={styledCommon.tit_box}>
+    극장<span className={styledCommon.screen_out}>선택</span>
   </h3>
   <div className={styled.inner_theater}>
     <ul className={styled.list_area}>
       {dummyTheaterList.map((item, index) => (
         <li key={item.id}>
           <button type="button" className={index === 2 ? styled.on : null}>{item.area_depth1}</button>
-          <ul className={`${styled.list_theater} scroll`}>
+          <ul className={`${styled.list_theater} ${styledCommon.scroll}`}>
             {item.area_depth2.map((item2, idx) => <li key={item2.id}><button type="button" className={idx === 2 ? styled.on : null}>{item2.txt}</button></li>)}
           </ul>
         </li>

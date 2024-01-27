@@ -3,6 +3,7 @@ import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import SelectItem from "../Components/SelectItem";
 import SeatItem from "../Components/SeatItem";
 
+import styledCommon from "../book.module.css";
 import styled from "./StepTwo.module.css";
 import { useCallback, useEffect, useState } from "react";
 
@@ -87,7 +88,7 @@ const BoxSeat = () => {
         <SelectItem id="seniorNum" label="경로" />
         <SelectItem id="challengedNum" label="우대" />
       </div>
-      <div className={`${styled.box_seat} scroll`}>
+      <div className={`${styled.box_seat} ${styledCommon.scroll}`}>
         <div className={styled.layout_seat}>
           <span className={styled.area_screen}>SCREEN</span>
           <span className={styled.ico_entry}>

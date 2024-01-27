@@ -1,10 +1,10 @@
-import './components.css';
+import styled from './components.module.css';
 
 const SeatItem = ({
   seatType,
   seatDesc,
   seatNum
 }) => {
-  return <span className={`seat_condition ${seatType}`} title={seatDesc}>{seatNum}</span>
+  return <span className={`${styled.seat_condition} ${styled[seatType]}`} title={seatDesc}>{seatNum}</span>
 }
 export default SeatItem;

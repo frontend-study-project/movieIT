@@ -10,38 +10,38 @@ button{
 .cont_book{
   font-size: 15px;
 }
-.cont_book .tit_book{
+.tit_book{
   padding: 40px 0 25px; 
   font-size: 28px;
   color: #222;
 }
-.cont_book .wrap_book{
+.wrap_book{
   display: flex;
   flex-wrap: wrap;
 }
-.cont_book .tit_box{
+.tit_box{
   margin-bottom: 10px;
   padding: 0;
   border: none;
   font-size: 18px;
   line-height: 38px;
 }
-.cont_book .tit_box + ul{
+.tit_box + ul{
   height: 320px;
 }
 
 /**** 공통 스크롤 ****/
-.cont_book .scroll{
+.scroll{
   overflow-y: scroll;
 }
-.cont_book .scroll::-webkit-scrollbar {
+.scroll::-webkit-scrollbar {
   width: 5px;  
 }
-.cont_book .scroll::-webkit-scrollbar-thumb {
+.scroll::-webkit-scrollbar-thumb {
   background: #555;; 
   border-radius: 2px;
 }
-.cont_book .scroll::-webkit-scrollbar-track {
+.scroll::-webkit-scrollbar-track {
   background: #ebebeb;  
 }
 

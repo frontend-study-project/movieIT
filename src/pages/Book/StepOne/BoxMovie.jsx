@@ -1,6 +1,7 @@
 import RatingItem from '../Components/RatingItem';
 
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import styledCommon from '../book.module.css';
 import styled from './StepOne.module.css';
 
 const BoxMovie = () => {
@@ -127,10 +128,10 @@ const BoxMovie = () => {
     },
   ];
   return <div className={styled.box_movie}>
-  <h3 className='tit_box'>
-    영화<span className='screen_out'>선택</span>
+  <h3 className={styledCommon.tit_box}>
+    영화<span className={styledCommon.screen_out}>선택</span>
   </h3>
-  <ul className={`${styled.list_movie} scroll`}>
+  <ul className={`${styled.list_movie} ${styledCommon.scroll}`}>
     {dummyMovieList.map((item, idx) => (
       <li key={item.id}>
         <button type='button' className={idx === 1 ? styled.on : null}>

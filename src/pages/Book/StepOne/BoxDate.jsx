@@ -1,3 +1,4 @@
+import styledCommon from "../book.module.css";
 import styled from "./StepOne.module.css";
 import SlideList from "../Components/SlideList";
 
@@ -23,7 +24,7 @@ const BoxDate = () => {
   ];
   return (
     <div className={styled.box_date}>
-      <h3 className="screen_out">날짜 선택</h3>
+      <h3 className={styledCommon.screen_out}>날짜 선택</h3>
       <SlideList list={dummyDateList} yearInfo={true} />
     </div>
   );

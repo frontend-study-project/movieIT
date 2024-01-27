@@ -1,3 +1,4 @@
+import styledCommon from "../book.module.css";
 import styled from "./StepOne.module.css";
 import SlideList from "../Components/SlideList";
 
@@ -19,11 +20,11 @@ const BoxTime = () => {
   ];
   return (
     <div className={styled.box_time}>
-      <h3 className="tit_box">
-        시간<span className="screen_out">선택</span>
+      <h3 className={styledCommon.tit_box}>
+        시간<span className={styledCommon.screen_out}>선택</span>
       </h3>
       <SlideList list={dummyTimeList} />
-      <ul className={`${styled.list_movies} scroll`}>
+      <ul className={`${styled.list_movies} ${styledCommon.scroll}`}>
         <li>
           <button type="button">
             <div className={styled.item_time}>
