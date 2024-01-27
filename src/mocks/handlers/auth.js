@@ -5,7 +5,8 @@ import { CURRENT_PASSWORD_EQUAL, PASSWORD_NOT_EQUAL } from '../../api/error/auth
 const isAuthenticated = async (request) => {
   const Authorization = request.headers
     .get('Authorization')
-    .replace('Bearer ', '');
+    .replace('Bearer', '')
+    .trim();
 
   if (!Authorization) {
     throw new HttpResponse(null, { status: 401 })
@@ -31,7 +32,7 @@ export const authHandlers = [
   }),
 
   http.get(`${AUTH}/user`, async ({ request }) => {
-    isAuthenticated(request);
+    await isAuthenticated(request);
     
     return HttpResponse.json({ id: '아이디1', nickname: '별명1' }, { status: 201 });
   }),
