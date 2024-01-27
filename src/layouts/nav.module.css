@@ -40,10 +40,14 @@
   content: "";
   width: 100%;
   height: 4px;
-  bottom: -20px;
+  bottom: -15px;
   background: #fff;
   opacity: 0;
   transition: opacity 0.3s ease;
+}
+
+.sub .nav_item:not(.logo):after {
+  background: #464646;
 }
 
 .nav_item:hover:after {
