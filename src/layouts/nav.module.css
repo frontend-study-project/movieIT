@@ -17,16 +17,22 @@
   position: relative;
   display: flex;
   align-items: center;
-  color: #fff;
+  color: var(--nav-color);
   font-size: 18px;
   font-weight: 700;
   cursor: pointer;
+
   a {
-    color: #fff;
+    color: var(--nav-color);
     background-color: transparent;
     display: block;
     text-decoration: none;
   }
+}
+
+.logo img {
+  display: block;
+  height: 47px;
 }
 
 .nav_item:not(.logo):after {
@@ -68,4 +74,17 @@
 
 .mypage {
   background-image: url(/images/icon/ico-mymega-white.png);
+  margin-bottom: -8px;
+}
+
+.sub .menu {
+  background-image: url(/images/icon/ico-sitemap.png);
+}
+
+.sub .schedule {
+  background-image: url(/images/icon/ico-schedule.png);
+}
+
+.sub .mypage {
+  background-image: url(/images/icon/ico-mymega.png);
 }
