@@ -118,11 +118,12 @@ const JoinForm = () => {
             variant="outlined"
             fullWidth
             rules={{
+              required: true,
               pattern: passwordPattern
             }}
           />
           {errors.password && (
-            <ErrorTypography>비밀번호를 입력해주세요.(영문,숫자,특수문자 모두 1자리 이상 사용하여 최소 8자리 이상)</ErrorTypography>
+            <ErrorTypography>비밀번호를 입력해주세요.(영문,숫자,특수문자 모두 사용하여 최소 8자리 이상)</ErrorTypography>
           )}
         </Box>
         <Box width="150px" paddingLeft="10px" />

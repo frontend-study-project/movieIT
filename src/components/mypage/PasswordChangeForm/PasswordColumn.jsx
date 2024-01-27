@@ -19,6 +19,7 @@ const PasswordColumn = ({ control, value, name, notice = '' }) => {
           name={name}
           defaultValue={value}
           rules={{
+            required: true,
             pattern: passwordPattern
           }}
         />
@@ -32,7 +33,7 @@ const PasswordColumn = ({ control, value, name, notice = '' }) => {
         </Typography>
       </Box>
       {formState.errors.nickname && (
-        <ErrorTypography>비밀번호를 입력해주세요.(영문,숫자,특수문자 모두 1자리 이상 사용하여 최소 8자리 이상)</ErrorTypography>
+        <ErrorTypography>비밀번호를 입력해주세요.(영문,숫자,특수문자 모두 사용하여 최소 8자리 이상)</ErrorTypography>
       )}
     </>
   )
