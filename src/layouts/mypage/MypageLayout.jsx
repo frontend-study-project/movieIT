@@ -13,7 +13,7 @@ const MypageLayout = () => {
   const navigate = useNavigate();
 
   if (isFetched && !user) {
-    navigate('/');
+    navigate('/login');
   }
 
   return (
