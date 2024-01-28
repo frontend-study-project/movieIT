@@ -27,7 +27,7 @@ const PasswordColumn = ({ control, value, name, notice = '' }) => {
           display="flex" 
           fontSize="14px" 
           alignItems="center" 
-          style={{ color: '#8a8a8a' }}
+          style={{ color: '#8a8a8a', flex: 1, wordBreak: 'keep-all' }}
         >
           {notice}
         </Typography>
