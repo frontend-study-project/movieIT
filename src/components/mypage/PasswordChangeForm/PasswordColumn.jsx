@@ -32,7 +32,7 @@ const PasswordColumn = ({ control, value, name, notice = '' }) => {
           {notice}
         </Typography>
       </Box>
-      {formState.errors.nickname && (
+      {formState.errors[name] && (
         <ErrorTypography>비밀번호를 입력해주세요.(영문,숫자,특수문자 모두 사용하여 최소 8자리 이상)</ErrorTypography>
       )}
     </>
