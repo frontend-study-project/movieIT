@@ -119,6 +119,7 @@ export const useUpdateUserMutation = () => {
 
 export const useChangePasswordMutation = () => {
   const snackbar = useSnackbar();
+  const navigate = useNavigate();
 
   return useMutation({
     async mutationFn(form) {
@@ -133,6 +134,7 @@ export const useChangePasswordMutation = () => {
 
     onSuccess() {
       snackbar('비밀번호가 수정 되었습니다.');
+      navigate('/mypage/update');
     },
     
     onError({ message: errorCode }) {
