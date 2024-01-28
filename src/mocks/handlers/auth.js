@@ -23,7 +23,11 @@ export const authHandlers = [
     }
 
     return HttpResponse.json({
-      user,
+      user: {
+        ...user,
+        password: null,
+        nickname: '별명1'
+      },
       token: 'access token'
     }, { status: 201 });
   }),
