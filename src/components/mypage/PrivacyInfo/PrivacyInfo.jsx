@@ -34,9 +34,9 @@ const PrivacyInfo = () => {
     },
   ];
 
-  const handleUpdate = (form) => {
+  const handleUpdate = ({ nickname }) => {
     updateUser.mutate({
-      ...form,
+      nickname,
       id: data?.id
     });
   };
