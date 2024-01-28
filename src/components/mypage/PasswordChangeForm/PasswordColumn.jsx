@@ -32,9 +32,13 @@ const PasswordColumn = ({ control, value, name, notice = '' }) => {
           {notice}
         </Typography>
       </Box>
-      {formState.errors[name] && (
-        <ErrorTypography>비밀번호를 입력해주세요.(영문,숫자,특수문자 모두 사용하여 최소 8자리 이상)</ErrorTypography>
-      )}
+      {
+        formState.errors[name] && (formState.errors[name]?.type === 'validate' ? (
+          <ErrorTypography>비밀번호가 일치하지 않습니다.</ErrorTypography>
+        ) : (
+          <ErrorTypography>비밀번호를 입력해주세요.(영문,숫자,특수문자 모두 사용하여 최소 8자리 이상)</ErrorTypography>
+        ))
+      }
     </>
   )
 };

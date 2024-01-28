@@ -47,7 +47,12 @@ const PasswordChangeForm = () => {
     },
   ];
 
-  const handleUpdate = (form) => {
+  const handleUpdate = (form, setError) => {
+    if (form.newPasswordConfirm !== form.newPassword) {
+      setError('newPasswordConfirm', { type: 'validate' });
+      return;
+    }
+
     changePassword.mutate({
       ...form,
       id: data?.id
