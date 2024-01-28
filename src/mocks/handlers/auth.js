@@ -1,6 +1,6 @@
 import { http, HttpResponse } from 'msw';
 import { AUTH } from '../../api/auth.api';
-import { CURRENT_PASSWORD_EQUAL, PASSWORD_NOT_EQUAL } from '../../api/error/auth';
+import { CURRENT_PASSWORD_EQUAL, CURRENT_PASSWORD_NOT_EQUAL, NEW_PASSWORD_NOT_EQUAL } from '../../api/error/auth';
 
 const isAuthenticated = async (request) => {
   const Authorization = request.headers
@@ -65,14 +65,18 @@ export const authHandlers = [
 
     const { password, newPassword, newPasswordConfirm } = await request.json();
 
+    if (password !== 'admin12!') {
+      throw new HttpResponse(null,  { status: 400, statusText: CURRENT_PASSWORD_NOT_EQUAL });
+    }
+
     if (newPassword !== newPasswordConfirm) {
-      throw new HttpResponse({ errorCode: PASSWORD_NOT_EQUAL }, { status: 400,  });
+      throw new HttpResponse(null,  { status: 400, statusText: NEW_PASSWORD_NOT_EQUAL });
     }
 
     if (password === newPassword) {
-      throw new HttpResponse({ errorCode: CURRENT_PASSWORD_EQUAL }, { status: 400,  });
+      throw new HttpResponse(null, { status: 400, statusText: CURRENT_PASSWORD_EQUAL });
     }
 
-    return HttpResponse.json(true, { status: 201 });
+    return HttpResponse.json(password, { status: 201 });
   })
 ]

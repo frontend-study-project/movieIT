@@ -2,7 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import * as authApi from '../api/auth.api';
 import { useSnackbar } from "./useSnackbar";
 import { useNavigate } from 'react-router-dom';
-import { CURRENT_PASSWORD_EQUAL, PASSWORD_NOT_EQUAL } from "../api/error/auth";
+import { CURRENT_PASSWORD_EQUAL, CURRENT_PASSWORD_NOT_EQUAL, NEW_PASSWORD_NOT_EQUAL } from "../api/error/auth";
 
 export const useFetchUserQuery = () => (
   useQuery({
@@ -125,7 +125,7 @@ export const useChangePasswordMutation = () => {
       const response = await authApi.changePassword(form);
 
       if (!response.ok) {
-        throw new Error();
+        throw new Error(response.statusText);
       }
 
       return response.json();
@@ -135,13 +135,17 @@ export const useChangePasswordMutation = () => {
       snackbar('비밀번호가 수정 되었습니다.');
     },
     
-    onError({ errorCode }) {
-      if (errorCode === PASSWORD_NOT_EQUAL) {
-        snackbar('비밀번호가 일치하지 않습니다.', { type: 'error' });
+    onError({ message: errorCode }) {
+      if (errorCode === CURRENT_PASSWORD_NOT_EQUAL) {
+        snackbar('현재 비밀번호가 일치하지 않습니다.', { type: 'error' });
       }
 
       if (errorCode === CURRENT_PASSWORD_EQUAL) {
         snackbar('현재 비밀번호와 동일합니다. 새로운 비밀번호를 입력해주세요.', { type: 'error' });
+      }
+
+      if (errorCode === NEW_PASSWORD_NOT_EQUAL) {
+        snackbar('비밀번호가 일치하지 않습니다.', { type: 'error' });
       }
     }
   });
