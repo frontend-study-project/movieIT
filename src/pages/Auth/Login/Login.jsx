@@ -3,14 +3,17 @@ import styled from './login.module.css';
 import LoginForm from '../../../components/auth/LoginForm/LoginForm';
 import { useFetchUserQuery } from '../../../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 const Login = () => {
   const { data: user } = useFetchUserQuery();
   const navigate = useNavigate();
   
-  if (user) {
-    navigate('/', { replace: true });
-  }
+  useEffect(() => {
+    if (user) {
+      navigate('/', { replace: true });
+    }
+  }, [user, navigate]);
 
   return (
     <Box className={styled.login}>
