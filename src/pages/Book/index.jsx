@@ -10,7 +10,7 @@ const Ticket = () => {
       <h2 className={styled.tit_book}>예매</h2>
       <div className={styled.wrap_book}>
         <StepOne/>
-        <StepTwo/>
+        {/* <StepTwo/> */}
       </div>
     </div>
   );

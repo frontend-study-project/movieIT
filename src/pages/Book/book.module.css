@@ -26,9 +26,6 @@ button{
   font-size: 18px;
   line-height: 38px;
 }
-.tit_box + ul{
-  height: 320px;
-}
 
 /**** 공통 스크롤 ****/
 .scroll{
