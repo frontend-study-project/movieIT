@@ -1,0 +1,21 @@
+.authnav {
+  display: flex;
+  justify-content: flex-end;
+  /* margin-bottom: 20px; */
+  width: 100%;
+  max-width: var(--max-width);
+}
+
+.authnav ul {
+  display: flex;
+  gap: 30px;
+}
+
+.authnav a {
+  color: #888;
+  font-size: 13px;
+}
+
+.authnav.sub a {
+  color: #111;
+}

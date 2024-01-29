@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import * as authApi from '../api/auth.api';
 import { useSnackbar } from "./useSnackbar";
 import { useNavigate } from 'react-router-dom';
+import { CURRENT_PASSWORD_EQUAL, CURRENT_PASSWORD_NOT_EQUAL, NEW_PASSWORD_NOT_EQUAL } from "../api/error/auth";
 
 export const useFetchUserQuery = () => (
   useQuery({
@@ -41,7 +42,7 @@ export const useLoginMutation = () => {
       queryClient.setQueryData(['user'], user, { updatedAt: Date.now() });
 
       snackbar('로그인 되었습니다.');
-      navigate('/');
+      navigate('/', { replace: true });
     },
     
     onError() {
@@ -105,7 +106,7 @@ export const useUpdateUserMutation = () => {
       return response.json();
     },
 
-    onSuccess({ user }) {
+    onSuccess(user) {
       snackbar('회원정보가 수정 되었습니다.');
       queryClient.setQueryData(['user'], user, { updatedAt: Date.now() });
     },
@@ -114,4 +115,56 @@ export const useUpdateUserMutation = () => {
       snackbar('문제가 발생하였습니다. 관리자에게 문의해주세요.', { type: 'error' });
     }
   })
+}
+
+export const useChangePasswordMutation = () => {
+  const snackbar = useSnackbar();
+  const navigate = useNavigate();
+
+  return useMutation({
+    async mutationFn(form) {
+      const response = await authApi.changePassword(form);
+
+      if (!response.ok) {
+        throw new Error(response.statusText);
+      }
+
+      return response.json();
+    },
+
+    onSuccess() {
+      snackbar('비밀번호가 수정 되었습니다.');
+      navigate('/mypage/update');
+    },
+    
+    onError({ message: errorCode }) {
+      if (errorCode === CURRENT_PASSWORD_NOT_EQUAL) {
+        snackbar('현재 비밀번호가 일치하지 않습니다.', { type: 'error' });
+      }
+
+      if (errorCode === CURRENT_PASSWORD_EQUAL) {
+        snackbar('현재 비밀번호와 동일합니다. 새로운 비밀번호를 입력해주세요.', { type: 'error' });
+      }
+
+      if (errorCode === NEW_PASSWORD_NOT_EQUAL) {
+        snackbar('비밀번호가 일치하지 않습니다.', { type: 'error' });
+      }
+    }
+  });
+}
+
+export const useLogoutMutation = () => {
+  const snackbar = useSnackbar();
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    async mutationFn() {
+      authApi.setAuthorization('');
+      queryClient.setQueryData(['user'], null, { updatedAt: Date.now() });
+
+      snackbar('로그아웃 되었습니다.');
+      navigate('/');
+    }
+  });
 }

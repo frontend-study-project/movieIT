@@ -6,6 +6,7 @@ import MInputText from "../../common/MInputText/MInputText";
 import ErrorTypography from "../../form/ErrorTypography/ErrorTypography";
 import { useState } from "react";
 import { useSnackbar } from "../../../hooks/useSnackbar";
+import { passwordPattern } from "../../../lib/passwordPattern";
 
 const JoinForm = () => {
   const snackbar = useSnackbar();
@@ -19,15 +20,17 @@ const JoinForm = () => {
     setError,
     clearErrors,
     getValues,
-  } = useForm({ mode: 'onChange' });
+  } = useForm({ 
+    mode: 'onChange',
+    defaultValues: {
+      id: '',
+      nickname: '',
+      password: '',
+      passwordConfirm: ''
+    }
+  });
 
   const handleJoin = (form) => {
-    if (form.password !== form.passwordConfirm) {
-      setError('passwordConfirm', { type: 'validate' });
-      return;
-    }
-
-    clearErrors('passwordConfirm')
     join.mutate(form);
   };
 
@@ -118,12 +121,21 @@ const JoinForm = () => {
             fullWidth
             rules={{
               required: true,
-              minLength: 8,
-              maxLength: 20,
+              pattern: passwordPattern,
+              onChange(event) {
+                const password = event.target.value;
+                const passwordConfirm = getValues('passwordConfirm');
+
+                if (passwordConfirm && password !== passwordConfirm) {
+                  setError('passwordConfirm', { type: 'validate' })
+                } else {
+                  clearErrors('passwordConfirm')
+                }
+              }
             }}
           />
           {errors.password && (
-            <ErrorTypography>비밀번호를 입력해주세요.</ErrorTypography>
+            <ErrorTypography>비밀번호를 입력해주세요.(영문,숫자,특수문자 모두 사용하여 최소 8자리 이상)</ErrorTypography>
           )}
         </Box>
         <Box width="150px" paddingLeft="10px" />
@@ -139,21 +151,14 @@ const JoinForm = () => {
             variant="outlined"
             fullWidth
             rules={{
-              required: true,
-              minLength: 8,
-              maxLength: 20,
+              validate(passwordConfirm) {
+                const password = getValues('password');
+                return passwordConfirm === password;
+              }
             }}
           />
           {errors.passwordConfirm && (
-            <ErrorTypography>
-              {
-                errors.passwordConfirm.type === 'validate' ? (
-                  "비밀번호가 일치하지 않습니다."
-                ) : (
-                  "비밀번호를 입력해주세요."
-                )  
-              }
-            </ErrorTypography>
+            <ErrorTypography>비밀번호가 일치하지 않습니다.</ErrorTypography>
           )}
         </Box>
         <Box width="150px" paddingLeft="10px" />

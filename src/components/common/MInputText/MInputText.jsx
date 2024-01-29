@@ -3,11 +3,9 @@ import { useController } from "react-hook-form";
 
 const MInputText = ({ name, rules, control, defaultValue, ...props }) => {
   const { field: { value = '', onChange } } = useController({ name, rules, control, defaultValue });
-
-  console.log(defaultValue);
   return (
     <TextField 
-      value={value || defaultValue}
+      value={value}
       onChange={onChange}
       {...props}
     />
