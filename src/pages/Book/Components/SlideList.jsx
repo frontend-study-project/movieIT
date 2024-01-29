@@ -59,7 +59,7 @@ const SlideList = ({ list, year, moveX, yearHandler }) => {
           이전
         </ArrowBackIosIcon>
       </button>
-      {year && <strong className={styled.txt_year}>{yearHandler(list[count.date].id)}</strong>}
+      {year && <strong className={styled.txt_year}>{year}</strong>}
       <div className={styled.inner_slide}>
         <ul
           className={styled.list_slide}
