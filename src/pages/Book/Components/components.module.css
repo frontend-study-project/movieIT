@@ -115,9 +115,10 @@ input.num_count{
   align-items: center;
   padding: 0 20px;
 }
-.btn_before,  .btn_next{
+.btn_prev,  .btn_next{
   width: 30px;
   height: 100%;
+  margin-top: 4px;
 }
 .inner_slide{
   width: calc(100% - 60px);
@@ -126,7 +127,7 @@ input.num_count{
 }
 .txt_year{
   position: absolute;
-  left: 30px;
+  left: 50px;
   top: 0;
   width: 70px;
   height: 20px;
@@ -143,25 +144,27 @@ input.num_count{
   display: flex;
   overflow-y: unset;
   height: 100%;
+  transition: all 0.3s;
 }
 .item_slide{
   flex-shrink: 0;
 }
 
 [class*='box_date'] .item_slide{
-  width: 70px;
+  width: 71px;
 }
 
 [class*='box_time'] .item_slide{
   width: 35px;
 }
-
- .item_slide button{
+.item_slide{
   position: relative;
+}
+ .item_slide button{
   width: 100%;
   height: 100%;
 }
-[class*='box_date'] .item_slide button:hover::before, [class*='box_date'] .item_slide .on::before{
+[class*='box_date'] .item_slide:hover::before, [class*='box_date'] .on::before{
   content: '';
   display: block;
   position: absolute;

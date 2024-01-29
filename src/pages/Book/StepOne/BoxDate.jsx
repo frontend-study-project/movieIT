@@ -1,31 +1,39 @@
-import styledCommon from "../book.module.css";
-import styled from "./StepOne.module.css";
+import { useState, useEffect } from "react";
+
 import SlideList from "../Components/SlideList";
 
+import styledCommon from "../book.module.css";
+import styled from "./StepOne.module.css";
+
 const BoxDate = () => {
-  const dummyDateList = [
-    { num: "16", txt: "오늘" },
-    { num: "17", txt: "내일" },
-    { num: "18", txt: "목" },
-    { num: "19", txt: "금" },
-    { num: "20", txt: "토" },
-    { num: "21", txt: "일" },
-    { num: "22", txt: "월" },
-    { num: "23", txt: "화" },
-    { num: "24", txt: "수" },
-    { num: "25", txt: "목" },
-    { num: "26", txt: "금" },
-    { num: "27", txt: "토" },
-    { num: "28", txt: "일" },
-    { num: "29", txt: "월" },
-    { num: "30", txt: "화" },
-    { num: "31", txt: "수" },
-    { num: "1", txt: "목" },
-  ];
+  const [dates, setDates] = useState([]);
+  const [year, setYear] = useState(`${new Date().getFullYear()}.${new Date().getMonth() + 1}`);
+
+  const yearHandler = (date) => {
+    setYear(`${date.getFullYear()}.${date.getMonth() + 1}`);
+  }
+  
+  useEffect(() => {
+    const DAY = 1000 * 60 * 60 * 24;
+    const now = new Date().getTime();
+    const defaultDates = [];
+    for (let i = 0; i < 30; i++) {
+      const date = new Date(now + i * DAY);
+      const day = date.getDay();
+      const DayOfWeek = ['일','월','화','수','목','금','토'][day];
+      defaultDates.push({
+        id: date,
+        num: date.getDate(),
+        txt: DayOfWeek
+      })
+    }
+    setDates(defaultDates);
+  }, []);
+
   return (
     <div className={styled.box_date}>
       <h3 className={styledCommon.screen_out}>날짜 선택</h3>
-      <SlideList list={dummyDateList} yearInfo={true} />
+      <SlideList list={dates} year={year} yearHandler={yearHandler} moveX={70} />
     </div>
   );
 };

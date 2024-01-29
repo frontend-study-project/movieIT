@@ -33,6 +33,9 @@ button.on{
   border-left: 1px solid #d8d9db;
   border-bottom: 1px solid #d8d9db;
 }
+.list_movie{
+  height: 450px;
+}
 .list_movie button{
   display: flex;
   align-items: center;
@@ -61,7 +64,7 @@ button.on{
 }
 .inner_theater{
   position: relative;
-  height: 320px;
+  height: 450px;
 }
 .inner_theater ul {
   height: 100%;
@@ -98,7 +101,7 @@ button.on{
   border-bottom: 1px solid #f2f4f5;
 }
 .list_movies{
-  height: 320px;
+  height: 400px;
   margin: 10px -20px 0;
 }
 .list_movies li + li{
