@@ -5,7 +5,6 @@ import CardMedia from '@mui/material/CardMedia';
 import Divider from '@mui/material/Divider';
 
 const Poster = ({ image, rating, description, heart }) => {
-  console.log(image);
   return (
     <div className={styled.poster}>
       <Card className={styled.poster_thumnail}>

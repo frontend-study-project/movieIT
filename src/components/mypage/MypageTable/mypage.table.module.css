@@ -35,4 +35,5 @@
 .table input {
   height: 35px !important;
   box-sizing: border-box !important;
+  font-size: 14px;
 }

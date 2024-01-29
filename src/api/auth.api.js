@@ -53,10 +53,21 @@ export const updateUser = (form) => (
   })
 );
 
+export const changePassword = (form) => (
+  fetch(`${AUTH}/user/${form.id}/change-password`, { 
+    method: 'patch', 
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${getAuthorization()}`,
+    },
+    body: JSON.stringify(form),
+  })
+)
+
 export const setAuthorization = (token) => {
   localStorage.setItem('token', token);
 };
 
 export const getAuthorization = () => {
-  return localStorage.getItem('token');
+  return localStorage.getItem('token') || '';
 };
