@@ -179,10 +179,10 @@ input.num_count{
   height: 30px;
   font-size: 17px;
 }
-[class*='box_time'] .item_slide button.on{
+[class*='box_time'] .item_slide.on button{
   background-color: #555;
   color: #fff;
-  font-weight: 700;
+  font-weight: 600;
 }
 .item_slide .txt_num{
   font-size: 15px;

@@ -1,29 +1,24 @@
 import styledCommon from "../book.module.css";
 import styled from "./StepOne.module.css";
 import SlideList from "../Components/SlideList";
+import { useEffect } from "react";
 
 const BoxTime = () => {
-  const dummyTimeList = [
-    {id: '12', num: "12" },
-    {id: '13', num: "13" },
-    {id: '14', num: "14" },
-    {id: '15', num: "15" },
-    {id: '16', num: "16" },
-    {id: '17', num: "17" },
-    {id: '18', num: "18" },
-    {id: '19', num: "19" },
-    {id: '20', num: "20" },
-    {id: '21', num: "21" },
-    {id: '22', num: "22" },
-    {id: '23', num: "23" },
-    {id: '24', num: "24" },
-  ];
+  const hourList = [];
+  for(let i = 1; i <= 24;i++) {
+    hourList.push({
+      id: i,
+      num: i
+    })
+  }
+  useEffect(() => {
+  }, [])
   return (
     <div className={styled.box_time}>
       <h3 className={styledCommon.tit_box}>
         시간<span className={styledCommon.screen_out}>선택</span>
       </h3>
-      <SlideList list={dummyTimeList} moveX={35} />
+      {hourList && <SlideList list={hourList} moveX={35} />}
       <ul className={`${styled.list_movies} ${styledCommon.scroll}`}>
         <li>
           <button type="button">
