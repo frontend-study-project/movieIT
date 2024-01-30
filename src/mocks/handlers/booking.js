@@ -1,5 +1,6 @@
 import { http, HttpResponse } from 'msw';
 import { BOOKING } from '../../api/booking.api';
+import { isAuthenticated } from './auth';
 
 const bookingList = [
   {
@@ -14,18 +15,22 @@ const bookingList = [
 ];
 
 export const bookingHandlers = [
-  http.get(`${BOOKING}/user/:id`, ({ request, params }) => {
-    const Authorization = request.headers
-      .get('Authorization')
-      .replace('Bearer ', '');
+  http.get(`${BOOKING}/user/:id`, async ({ request, params }) => {
+    await isAuthenticated(request);
 
-    if (!Authorization) {
-      return HttpResponse.error().status(401);
-    }
-
-    const { page } = params;
+    const { page, type, date } = params;
     const currentBookingList = bookingList
-      .filter((booking) => booking)
+      .filter((booking) => {
+        if (type === 'B') {
+          return new Date(booking.date) > new Date();
+        }
+
+        const bookingDate = new Date(booking.date);
+        const [year, month] = [bookingDate.getFullYear(), bookingDate.getMonth() + 1];
+        const [, diffYear, diffMonth] = [...date.match(/(\d{4})년 (\d{1,2})월/)];
+
+        return year === parseInt(diffYear) && month === parseInt(diffMonth);
+      })
       .slice(0, page * 10);
     
     return HttpResponse.json(currentBookingList, { status: 201 });

@@ -4,10 +4,12 @@ import styled from './ticketlist.module.css';
 import { useFetchMyBookingListQuery } from '../../../hooks/useBooking';
 import TickListSkeleton from './TickListSkeleton';
 import { useFetchUserQuery } from '../../../hooks/useAuth';
+import { useSelector } from 'react-redux';
 
 const TicketList = () => {
-  const { data } = useFetchUserQuery();
-  const { data: bookingList = [], isLoading } = useFetchMyBookingListQuery({ id: data?.id });
+  const search = useSelector(({ search: { type, date } }) => ({ type, date }));
+  const { data: user } = useFetchUserQuery();
+  const { data: bookingList = [], isLoading } = useFetchMyBookingListQuery({ id: user?.id, search });
   const columns = [
     { field: 'id', headerName: '예매번호', width: 70 },
     { field: 'poster', headerName: '포스터', width: 70 },
