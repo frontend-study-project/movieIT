@@ -4,15 +4,15 @@ import * as bookingApi from '../api/booking.api';
 export const useFetchMyBookingListQuery = ({ id, page = 1, search = null }) => (
   useQuery({
     queryKey: ['booking', id, { page, search }],
-    queryFn() {
+    async queryFn() {
       const searchParams = new URLSearchParams({ page });
 
       if (search) {
-        searchParams.append('type', search.booking);
-        searchParams.append('date', search.bookingDate);
+        searchParams.append('type', search.type);
+        searchParams.append('date', search.date);
       }
 
-      const response = bookingApi.fetchMyBookingList(id, searchParams.toString());
+      const response = await bookingApi.fetchMyBookingList(id, searchParams.toString());
       
       if (!response.ok) {
         throw new Error();

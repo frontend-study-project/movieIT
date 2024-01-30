@@ -5,6 +5,7 @@ a {
 
 .nav {
   width: 200px;
+  min-width: 200px;
   height: 100%;
 }
 

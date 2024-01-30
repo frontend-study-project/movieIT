@@ -4,7 +4,8 @@ import { isAuthenticated } from './auth';
 
 const bookingList = [
   {
-    id: '005-0112-5289-295',
+    id: '005-0112',
+    user: '아이디1',
     poster : '',
     movie: '시민덕희',
     theater: '영등포 CGV',
@@ -15,11 +16,15 @@ const bookingList = [
 ];
 
 export const bookingHandlers = [
-  http.get(`${BOOKING}/user/:id`, async ({ request, params }) => {
+  http.get(`${BOOKING}/user/:id`, async ({ request, params: { id } }) => {
     await isAuthenticated(request);
 
-    const { page, type, date } = params;
+    const url = new URL(request.url);
+    const [type, date, page = 1] = ['type', 'date', 'page']
+      .map((key) => url.searchParams.get(key));
+
     const currentBookingList = bookingList
+      .filter(({ user }) => user === id)
       .filter((booking) => {
         if (type === 'B') {
           return new Date(booking.date) > new Date();
