@@ -20,7 +20,7 @@ const TicketList = () => {
       field: 'poster', 
       headerName: '포스터', 
       width: 100 ,
-      renderCell: ({ value }) => <img src={value} />
+      renderCell: ({ value }) => <img style={{ width: '100%' }} src={value} />
     },
     { 
       field: 'movie', 
@@ -45,7 +45,8 @@ const TicketList = () => {
     { 
       field: 'money', 
       headerName: '총 결제 금액', 
-      width: 100 
+      width: 100,
+      renderCell: ({ value }) => <span>{Number(value).toLocaleString()}원</span>
     },
   ];
 
@@ -57,12 +58,18 @@ const TicketList = () => {
     <>
       {bookingList.length ? (
         <DataGrid
+          className={styled.ticket_list}
+          classes={{
+            columnHeaders: styled.columnHeader
+          }}
+          rowHeight={100}
           rows={bookingList}
           columns={columns}
+          align="center"
           initialState={{
             pagination: {
               paginationModel: { page: 0, pageSize: 5 },
-            },
+            }
           }}
         />
       ) : (
