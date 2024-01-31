@@ -6,7 +6,7 @@ const bookingList = [
   {
     id: '005-0112',
     user: '아이디1',
-    poster : '',
+    poster : 'https://img.megabox.co.kr/SharedImg/2024/01/26/FOxTe9tC9RJ8eH1ZYIW3BE0o2fDEVNmW_420.jpg',
     movie: '시민덕희',
     theater: '영등포 CGV',
     date: '2024.02.12(금) 10:40',
