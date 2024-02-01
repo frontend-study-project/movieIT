@@ -1,7 +1,12 @@
+import { useState } from 'react';
 import styledCommon from '../book.module.css';
 import styled from './StepOne.module.css';
 
 const BoxTheater = () => {
+  const [selected, setselected] = useState({
+    area: '',
+    theater: ''
+  });
   const dummyTheaterList = [
     {
       id: 1,
@@ -107,17 +112,42 @@ const BoxTheater = () => {
       ],
     },
   ];
+
+  
+
+  const handleClickArea = (event) => {
+    const depth1DataAttribute = event.currentTarget.getAttribute('data-depth1');
+    const area = dummyTheaterList[depth1DataAttribute]['area_depth1'];
+    setselected(prev => {
+      return {
+        ...prev,
+        area
+      }
+    });
+  }
+  const handleClickTheater = (event) => {
+    const depth1DataAttribute = event.currentTarget.getAttribute('data-depth1');
+    const depth2DataAttribute = event.currentTarget.getAttribute('data-depth2');
+    const theater = dummyTheaterList[depth1DataAttribute]['area_depth2'][depth2DataAttribute].txt;
+    console.log(theater)
+    setselected(prev => {
+      return {
+        ...prev,
+        theater
+      }
+    });
+  }
   return <div className={styled.box_theater}>
   <h3 className={styledCommon.tit_box}>
     극장<span className={styledCommon.screen_out}>선택</span>
   </h3>
   <div className={styled.inner_theater}>
     <ul className={styled.list_area}>
-      {dummyTheaterList.map((item, index) => (
-        <li key={item.id}>
-          <button type="button" className={index === 2 ? styled.on : null}>{item.area_depth1}</button>
+      {dummyTheaterList.map((item, idx) => (
+        <li key={item.id} className={selected.area === item.area_depth1 ? `${styled.on}` : ''}>
+          <button type="button" data-depth1={idx} onClick={handleClickArea}>{item.area_depth1}</button>
           <ul className={`${styled.list_theater} ${styledCommon.scroll}`}>
-            {item.area_depth2.map((item2, idx) => <li key={item2.id}><button type="button" className={idx === 2 ? styled.on : null}>{item2.txt}</button></li>)}
+            {item.area_depth2.map((item2, idx2) => <li key={item2.id} className={selected.theater === item2.txt ? `${styled.on}` : ''}><button data-depth1={idx} data-depth2={idx2} type="button" onClick={handleClickTheater}>{item2.txt}</button></li>)}
           </ul>
         </li>
       ))}

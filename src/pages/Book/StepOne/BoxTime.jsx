@@ -1,18 +1,17 @@
 import styledCommon from "../book.module.css";
 import styled from "./StepOne.module.css";
-import SlideList from "../Components/SlideList";
+import SlideList from "../components/SlideList";
 import { useEffect } from "react";
 
 const BoxTime = () => {
   const hourList = [];
-  for(let i = 1; i <= 24;i++) {
+  for (let i = 1; i <= 24; i++) {
     hourList.push({
       id: i,
-      num: i
-    })
+      num: i,
+    });
   }
-  useEffect(() => {
-  }, [])
+  useEffect(() => {}, []);
   return (
     <div className={styled.box_time}>
       <h3 className={styledCommon.tit_box}>

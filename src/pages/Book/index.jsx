@@ -1,9 +1,15 @@
 
+import { useState } from "react";
 import styled from"./book.module.css";
 import StepOne from "./stepOne";
 import StepTwo from "./StepTwo";
 
 const Ticket = () => {
+  const [selectedMoiveInfo, setSelectedMovieInfo] = useState({
+    movie: '',
+    theater: {area: '', place: ''},
+    time: ''
+  })
   
   return (
     <div className={styled.cont_book}>
