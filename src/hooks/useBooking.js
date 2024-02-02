@@ -1,11 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import * as bookingApi from '../api/booking.api';
 
-export const useFetchMyBookingListQuery = ({ id, page = 1, search = null }) => (
+export const useFetchMyBookingListQuery = ({ id, search = null }) => (
   useQuery({
-    queryKey: ['booking', id, { page, search }],
+    queryKey: ['booking', id, { search }],
     async queryFn() {
-      const searchParams = new URLSearchParams({ page });
+      const searchParams = new URLSearchParams();
 
       if (search) {
         searchParams.append('type', search.type);
