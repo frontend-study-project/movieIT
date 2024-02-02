@@ -36,6 +36,7 @@ const SearchBar = ({ search, changeSearch, handleSearch }) => {
           value={search.date}
           style={{ height: '32px', background: '#fff', marginRight: '10px' }}
           onChange={changeSearch}
+          disabled={search.type === 'B'}
         >
           {getPreviousMonthsData().map((date, index) => (
             <MenuItem key={index} value={date}>{date}</MenuItem>
