@@ -4,15 +4,16 @@ import SearchIcon from '../../common/icon/SearchIcon';
 import { getPreviousMonthsData } from '../../../lib/date';
 
 const SearchBar = ({ search, changeSearch, handleSearch }) => {
-  return (
+    return (
     <Box className={styled.booking_search}>
       <Box component="span" fontWeight="bold" fontSize="13px" display="flex" alignItems="center">구분</Box>
       <Box>
         <RadioGroup
           className={styled["booking_search-radio-group"]}
           name="type"
-          defaultValue={search.type}
           row
+          defaultValue="B"
+          value={search.type}
           onChange={changeSearch}
         >
           <FormControlLabel 

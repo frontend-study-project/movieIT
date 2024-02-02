@@ -10,7 +10,7 @@ import { setSearch as setSearchValue } from '../../../store/slice/search';
 const MypageBooking = () => {
   const dispatch = useDispatch();
   const [search, setSearch] = useState({
-    type: '',
+    type: 'B',
     date: getPreviousMonthsData()[0],
   });
 
