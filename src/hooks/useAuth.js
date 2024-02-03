@@ -62,8 +62,6 @@ export const useJoinMutation = () => {
       if (!response.ok) {
         throw new Error();
       }
-
-      return response.json();
     },
 
     onSuccess() {
