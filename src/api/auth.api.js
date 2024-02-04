@@ -33,12 +33,11 @@ export const join = (form) => (
 );
 
 export const checkDuplicateId = (id) => (
-  fetch(`${AUTH}/duplication-check`, { 
-    method: 'post', 
+  fetch(`${AUTH}/duplication-check/${id}`, { 
+    method: 'get', 
     headers: {
       'Content-Type': 'application/json',
     },
-    body: id
   })
 );
 

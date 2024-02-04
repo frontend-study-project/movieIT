@@ -7,7 +7,7 @@ const QueryClientProvider = ({ children }) => {
       queries: {
         refetchOnReconnect: false,
         refetchOnWindowFocus: false,
-        retry: 1,
+        retry: 0,
       },
     }
   });

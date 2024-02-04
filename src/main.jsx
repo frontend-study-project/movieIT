@@ -9,8 +9,7 @@ import './styles/reset.css'
 import './index.css'
 
 const enableMocking = async () => {
-  // eslint-disable-next-line no-undef
-  if (process.env.NODE_ENV !== 'development') return;
+  if (import.meta.env.MODE !== 'development') return;
 
   const { worker } = await import('./mocks/browser');
 

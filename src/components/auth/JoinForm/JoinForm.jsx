@@ -23,7 +23,7 @@ const JoinForm = () => {
   } = useForm({ 
     mode: 'onChange',
     defaultValues: {
-      id: '',
+      userId: '',
       nickname: '',
       password: '',
       passwordConfirm: ''
@@ -35,15 +35,15 @@ const JoinForm = () => {
   };
 
   const handleCheckDuplicateId = async () => {
-    const id = getValues('id');
+    const userId = getValues('userId');
 
-    if (!id) {
+    if (!userId) {
       snackbar('아이디를 입력해주세요.', { type: 'warning' });
       return;
     }
 
     try {
-      await checkDuplicateId.mutateAsync(id);
+      await checkDuplicateId.mutateAsync(userId);
       snackbar('사용가능한 아이디입니다.');
       setDuplicateCheck(true);
     } catch {
@@ -61,7 +61,7 @@ const JoinForm = () => {
         <Box className={styled.form_label} width="150px" display="flex" alignItems="center">아이디*</Box>
         <Box flex={1}>
           <MInputText
-            name="id"
+            name="userId"
             control={control}
             rules={{
               required: true,
@@ -73,7 +73,7 @@ const JoinForm = () => {
             fullWidth
             onInput={() => setDuplicateCheck(false)}
           />
-          {errors.id && (
+          {errors.userId && (
             <ErrorTypography>아이디를 입력해주세요.(2 ~ 20자리)</ErrorTypography>
           )}
         </Box>
