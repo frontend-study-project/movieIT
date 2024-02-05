@@ -129,7 +129,7 @@ const BoxTheater = () => {
     const depth1DataAttribute = event.currentTarget.getAttribute('data-depth1');
     const depth2DataAttribute = event.currentTarget.getAttribute('data-depth2');
     const theater = dummyTheaterList[depth1DataAttribute]['area_depth2'][depth2DataAttribute].txt;
-    console.log(theater)
+
     setselected(prev => {
       return {
         ...prev,

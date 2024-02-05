@@ -131,10 +131,8 @@ const BoxMovie = () => {
   ];
 
   const handleClickMovie = (event) => {
-    // event.stopPropagation();
 
     setSelectedMovie(event.currentTarget.id)
-    console.log(event.currentTarget.id)
   };
   return (
     <div className={styled.box_movie}>

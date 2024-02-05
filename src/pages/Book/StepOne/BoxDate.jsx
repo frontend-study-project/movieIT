@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+// import {Provider, useSelector, useDispatch} from "react-redux";
 
 import SlideList from "../components/SlideList";
 
@@ -6,7 +7,10 @@ import styledCommon from "../book.module.css";
 import styled from "./StepOne.module.css";
 
 const BoxDate = () => {
+  // const dispatch = useDispatch();
+
   const [dates, setDates] = useState([]);
+
   const [year, setYear] = useState(
     `${new Date().getFullYear()}.${new Date().getMonth() + 1}`
   );

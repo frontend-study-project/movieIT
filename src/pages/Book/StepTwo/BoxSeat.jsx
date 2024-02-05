@@ -8,6 +8,32 @@ import styled from "./StepTwo.module.css";
 import { useCallback, useEffect, useState } from "react";
 
 const BoxSeat = () => {
+  const [count, setCount] = useState({
+    adult: 0,
+    teenager: 0,
+    senior: 0,
+    challenged: 0
+  });
+
+  const onAddCount = (id) => {
+    console.log(id);
+    setCount(prev => {
+      return {
+        ...prev,
+        [id]: prev[id] + 1
+      }
+    })
+  }
+
+  const handleResetCount = () => {
+    setCount({
+      adult: 0,
+      teenager: 0,
+      senior: 0,
+      challenged: 0
+    })
+  }
+
   const [seatArr, setSeatArr] = useState({
     seatRowArr: [],
     seatColArr: [],
@@ -73,21 +99,20 @@ const BoxSeat = () => {
   useEffect(() => {
     makeSeatArr();
   }, []);
-  console.log(seatArr);
 
   return (
     <div className={styled.wrap_seat}>
       <div className={styled.head_book}>
         <h4>관람인원선택</h4>
-        <button type="button">
+        <button type="button" onClick={handleResetCount}>
           <RestartAltIcon fontSize="small">이전</RestartAltIcon>초기화
         </button>
       </div>
       <div className={styled.box_select}>
-        <SelectItem id="adultNum" label="성인" />
-        <SelectItem id="teenagerNum" label="청소년" />
-        <SelectItem id="seniorNum" label="경로" />
-        <SelectItem id="challengedNum" label="우대" />
+        <SelectItem id="adult" label="성인" count={count} onAddCount={onAddCount}/>
+        <SelectItem id="teenager" label="청소년" count={count} onAddCount={onAddCount}/>
+        <SelectItem id="senior" label="경로" count={count} onAddCount={onAddCount}/>
+        <SelectItem id="challenged" label="우대" count={count} onAddCount={onAddCount}/>
       </div>
       <div className={`${styled.box_seat} ${styledCommon.scroll}`}>
         <div className={styled.layout_seat}>

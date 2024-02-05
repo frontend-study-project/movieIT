@@ -71,7 +71,7 @@ const BoxSeatInfo = () => {
           이전
         </button>
         <button type="button" className={styled.btn_next}>
-          다음
+          결제
         </button>
       </div>
     </div>

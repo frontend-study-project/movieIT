@@ -1,9 +1,9 @@
 import styled from "./components.module.css";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-const SlideList = ({ list, year, moveX, yearHandler }) => {
+const SlideList = ({ list, year, moveX }) => {
   const nowHour = new Date().getHours();
 
   const [count, setCount] = useState({
@@ -72,7 +72,7 @@ const SlideList = ({ list, year, moveX, yearHandler }) => {
       });
     } else {
       if (count.hour.move >= 0) return;
-      console.log(count.hour.move * moveX)
+
       setCount(prev => {
         return {
           ...prev,
@@ -101,8 +101,7 @@ const SlideList = ({ list, year, moveX, yearHandler }) => {
       });
     }
   };
-  console.log();
-  // console.log([...list]);
+
   return (
     <div className={styled.wrap_slide}>
       <button
