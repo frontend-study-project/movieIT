@@ -124,7 +124,8 @@ export const useChangePasswordMutation = () => {
       const response = await authApi.changePassword(form);
 
       if (!response.ok) {
-        throw new Error(response.statusText);
+        const { message } = await response.json();
+        throw new Error(message);
       }
 
       return response.json();
