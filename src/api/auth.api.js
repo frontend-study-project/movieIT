@@ -43,18 +43,18 @@ export const checkDuplicateId = (id) => (
 
 export const updateUser = (form) => (
   fetch(`${AUTH}/user/${form.id}`, { 
-    method: 'patch', 
+    method: 'PATCH', 
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${getAuthorization()}`,
     },
-    body: JSON.stringify(form),
+    body: JSON.stringify(form)
   })
 );
 
 export const changePassword = (form) => (
   fetch(`${AUTH}/user/${form.id}/change-password`, { 
-    method: 'patch', 
+    method: 'PATCH', 
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${getAuthorization()}`,
