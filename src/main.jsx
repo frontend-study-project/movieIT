@@ -23,7 +23,7 @@ enableMocking().then(() => {
         <SnackbarProvider>
           <RouterProvider router={router} />
         </SnackbarProvider>
-      </QueryClientProvider>,
+      </QueryClientProvider>
     </ReduxProvider>
   );
 });
