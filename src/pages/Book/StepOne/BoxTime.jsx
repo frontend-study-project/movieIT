@@ -6,6 +6,7 @@ import TheatersIcon from '@mui/icons-material/Theaters';
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { setBook } from "../../../store/slice/book";
+import { setPage } from "../../../store/slice/book";
 
 const BoxTime = () => {
   const dispatch = useDispatch();
@@ -166,6 +167,7 @@ const BoxTime = () => {
   const {movie, theater} = bookInfo;
 
   const handleHourClick = (event) => {
+    const screen = event.currentTarget.getAttribute('data-screen');
     const timeStart = event.currentTarget.getAttribute('data-timestart');
     const timeEnd = event.currentTarget.getAttribute('data-timeend');
 
@@ -177,7 +179,12 @@ const BoxTime = () => {
       }
     }))
 
-    
+    dispatch(setBook({
+      type: 'screen',
+      data: screen
+    }))
+
+    dispatch(setPage(2));
   }
 
   return (
@@ -195,7 +202,7 @@ const BoxTime = () => {
         <ul className={`${styled.list_movies} ${styledCommon.scroll}`}>
         {dummyHourList.map((ele, idx) => {
           return <li key={'hour' + idx}>
-          <button type="button" data-timestart={ele.timeStart} data-timeend={ele.timeEnd} onClick={handleHourClick}>
+          <button type="button" data-screen={ele.screen} data-timestart={ele.timeStart} data-timeend={ele.timeEnd} onClick={handleHourClick}>
             <div className={styled.item_time}>
               <span className={styled.emph_time}>{ele.timeStart}</span>
               <div className={styled.txt_time}>~{ele.timeEnd}</div>
