@@ -3,7 +3,7 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { useState } from "react";
 
-const SlideList = ({ list, year, moveX }) => {
+const SlideList = ({ list, year, moveX, onSlideItemClick }) => {
   const nowHour = new Date().getHours();
 
   const [count, setCount] = useState({
@@ -102,6 +102,16 @@ const SlideList = ({ list, year, moveX }) => {
     }
   };
 
+  const handleSlideItemClick = (event) => {
+    const idx = event.currentTarget.getAttribute('data-date');
+
+    moveToDirect(idx);
+
+    if (year) {
+      onSlideItemClick(list[idx].id);
+    } 
+  }
+
   return (
     <div className={styled.wrap_slide}>
       <button
@@ -125,10 +135,10 @@ const SlideList = ({ list, year, moveX }) => {
               key={item.id}
               className={`${styled.item_slide} ${idx === handleSelected() ? styled.on : ""}`}
             >
-              <button type="button" onClick={() => moveToDirect(idx)}>
-                {item.num && <em className={styled.txt_num}>{item.num}</em>}
-                {item.txt && <span className={styled.tit_txt}>{item.txt}</span>}
-              </button>
+              <button type="button" data-date={year ? idx : ''} onClick={handleSlideItemClick}>
+                  {item.num && <em className={styled.txt_num}>{item.num}</em>}
+                  {item.txt && <span className={styled.tit_txt}>{item.txt}</span>}
+                </button>
             </li>
           ))}
         </ul>

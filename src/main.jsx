@@ -6,6 +6,8 @@ import './styles/reset.css'
 import './index.css'
 import SnackbarProvider from './components/provider/SnackbarProvider.jsx'
 import QueryClientProvider from './components/provider/QueryClientProvider.jsx'
+import { Provider } from 'react-redux';
+import store from './store';
 
 const enableMocking = async () => {
   // eslint-disable-next-line no-undef
@@ -18,10 +20,12 @@ const enableMocking = async () => {
 
 enableMocking().then(() => {
   ReactDOM.createRoot(document.getElementById('root')).render(
-    <QueryClientProvider>
-      <SnackbarProvider>
-        <RouterProvider router={router} />
-      </SnackbarProvider>
-    </QueryClientProvider>,
+    <Provider store={store}>
+      <QueryClientProvider>
+        <SnackbarProvider>
+          <RouterProvider router={router} />
+        </SnackbarProvider>
+      </QueryClientProvider>,
+    </Provider>
   );
 });

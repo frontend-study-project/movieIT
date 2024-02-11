@@ -3,13 +3,18 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   date: '',
   movie: '',
-  theater: {area: '', place: ''},
-  hour: ''
+  area: '',
+  theater: '',
+  hour: {
+    timeStart: '',
+    timeEnd: ''
+  }
 }
 
 const reducers ={
-  setBook(state, action) {
-
+  setBook(state, {payload}) {
+    const {type, data} = payload;
+    state[type] = data;
   }
 }
 
@@ -19,4 +24,5 @@ const bookSlice = createSlice({
   reducers
 })
 
-export default bookSlice.reducers;
+export const { setBook } = bookSlice.actions;
+export default bookSlice.reducer;

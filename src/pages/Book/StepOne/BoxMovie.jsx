@@ -4,8 +4,11 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import styledCommon from "../book.module.css";
 import styled from "./StepOne.module.css";
 import { useState } from "react";
+import { useDispatch, useSelector } from 'react-redux';
+import { setBook } from '../../../store/slice/book';
 
 const BoxMovie = () => {
+  const dispatch = useDispatch();
   const [selectedMovie, setSelectedMovie] = useState('');
   const dummyMovieList = [
     {
@@ -130,9 +133,13 @@ const BoxMovie = () => {
     },
   ];
 
+  // const test = useSelector((state) => state)
+  // console.log(test);
   const handleClickMovie = (event) => {
 
     setSelectedMovie(event.currentTarget.id)
+
+    dispatch(setBook({type: 'movie', data: event.currentTarget.id}));
   };
   return (
     <div className={styled.box_movie}>
