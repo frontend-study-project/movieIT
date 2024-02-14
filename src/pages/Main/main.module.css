@@ -17,7 +17,7 @@
 }
 
 .cover::after {
-  content: '';
+  content: "";
   background-color: rgba(0, 0, 0, 0.7);
   position: absolute;
   top: 0;
@@ -44,7 +44,7 @@
 }
 
 .main_title:after {
-  content: '';
+  content: "";
   display: block;
   background-color: #b2b2b2;
   width: 100%;
@@ -55,6 +55,7 @@
 .more {
   position: absolute;
   right: 0;
+  cursor: pointer;
 }
 
 .more:hover {
