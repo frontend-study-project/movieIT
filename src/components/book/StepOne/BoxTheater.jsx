@@ -1,4 +1,4 @@
-import styledCommon from '../book.module.css';
+import styledCommon from '../../../pages/Book/book.module.css';
 import styled from './StepOne.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { setBook } from '../../../store/slice/book';

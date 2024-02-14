@@ -1,15 +1,15 @@
-import RatingItem from "../components/RatingItem";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { setBook } from "../../../store/slice/book";
+import RatingItem from "../BookItem/RatingItem";
 
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import styledCommon from "../book.module.css";
+import styledCommon from "../../../pages/Book/book.module.css";
 import styled from "./StepOne.module.css";
-import { useState } from "react";
-import { useDispatch, useSelector } from 'react-redux';
-import { setBook } from '../../../store/slice/book';
 
 const BoxMovie = () => {
   const dispatch = useDispatch();
-  const [selectedMovie, setSelectedMovie] = useState('');
+  const [selectedMovie, setSelectedMovie] = useState("");
   const dummyMovieList = [
     {
       id: 1,
@@ -133,13 +133,10 @@ const BoxMovie = () => {
     },
   ];
 
-  // const test = useSelector((state) => state)
-  // console.log(test);
   const handleClickMovie = (event) => {
+    setSelectedMovie(event.currentTarget.id);
 
-    setSelectedMovie(event.currentTarget.id)
-
-    dispatch(setBook({type: 'movie', data: event.currentTarget.id}));
+    dispatch(setBook({ type: "movie", data: event.currentTarget.id }));
   };
   return (
     <div className={styled.box_movie}>
@@ -148,7 +145,10 @@ const BoxMovie = () => {
       </h3>
       <ul className={`${styled.list_movie} ${styledCommon.scroll}`}>
         {dummyMovieList.map((item) => (
-          <li key={item.id} className={selectedMovie === String(item.id) ? styled.on : ""}>
+          <li
+            key={item.id}
+            className={selectedMovie === String(item.id) ? styled.on : ""}
+          >
             <button type="button" id={item.id} onClick={handleClickMovie}>
               <RatingItem rating={item.rating} ratingDesc={item.ratingDesc} />
               <span>{item.name}</span>

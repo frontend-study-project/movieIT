@@ -1,4 +1,4 @@
-import styled from "./components.module.css";
+import styled from "./bookItem.module.css";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { useState } from "react";

@@ -1,9 +1,9 @@
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
-import SelectItem from "../components/SelectItem";
-import SeatItem from "../components/SeatItem";
+import SelectItem from "../BookItem/SelectItem";
+import SeatItem from "../BookItem/SeatItem";
 
-import styledCommon from "../book.module.css";
+import styledCommon from "../../../pages/Book/book.module.css";
 import styled from "./StepTwo.module.css";
 import { useCallback, useEffect, useState } from "react";
 
@@ -12,27 +12,27 @@ const BoxSeat = () => {
     adult: 0,
     teenager: 0,
     senior: 0,
-    challenged: 0
+    challenged: 0,
   });
 
   const onAddCount = (id) => {
     console.log(id);
-    setCount(prev => {
+    setCount((prev) => {
       return {
         ...prev,
-        [id]: prev[id] + 1
-      }
-    })
-  }
+        [id]: prev[id] + 1,
+      };
+    });
+  };
 
   const handleResetCount = () => {
     setCount({
       adult: 0,
       teenager: 0,
       senior: 0,
-      challenged: 0
-    })
-  }
+      challenged: 0,
+    });
+  };
 
   const [seatArr, setSeatArr] = useState({
     seatRowArr: [],
@@ -109,10 +109,30 @@ const BoxSeat = () => {
         </button>
       </div>
       <div className={styled.box_select}>
-        <SelectItem id="adult" label="성인" count={count} onAddCount={onAddCount}/>
-        <SelectItem id="teenager" label="청소년" count={count} onAddCount={onAddCount}/>
-        <SelectItem id="senior" label="경로" count={count} onAddCount={onAddCount}/>
-        <SelectItem id="challenged" label="우대" count={count} onAddCount={onAddCount}/>
+        <SelectItem
+          id="adult"
+          label="성인"
+          count={count}
+          onAddCount={onAddCount}
+        />
+        <SelectItem
+          id="teenager"
+          label="청소년"
+          count={count}
+          onAddCount={onAddCount}
+        />
+        <SelectItem
+          id="senior"
+          label="경로"
+          count={count}
+          onAddCount={onAddCount}
+        />
+        <SelectItem
+          id="challenged"
+          label="우대"
+          count={count}
+          onAddCount={onAddCount}
+        />
       </div>
       <div className={`${styled.box_seat} ${styledCommon.scroll}`}>
         <div className={styled.layout_seat}>

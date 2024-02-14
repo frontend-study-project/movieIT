@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import styled from"./book.module.css";
-import StepOne from "./stepOne";
-import StepTwo from "./StepTwo";
+import StepOne from "../../components/book/StepOne";
+import StepTwo from "../../components/book/StepTwo";
 
 const Book = () => {
  const pageNum = useSelector(state => state.book.pageNum);

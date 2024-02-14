@@ -1,32 +1,35 @@
 import { useDispatch, useSelector } from "react-redux";
-import RatingItem from "../components/RatingItem";
-import SeatItem from "../components/SeatItem";
+import RatingItem from "../BookItem/RatingItem";
+import SeatItem from "../BookItem/SeatItem";
 import styled from "./StepTwo.module.css";
 import { setPage } from "../../../store/slice/book";
 
 const BoxSeatInfo = () => {
-  const {date, movie, area, theater, screen, hour} = useSelector(state => state.book);
+  const { date, movie, area, theater, screen, hour } = useSelector(
+    (state) => state.book
+  );
 
   const dispatch = useDispatch();
 
   const handlePrevClick = () => {
     dispatch(setPage(1));
-  }
+  };
   return (
     <div className={styled.box_result}>
       <div className={styled.item_movie}>
         <RatingItem rating={1} ratingDesc={"전체관람가"} />
-        <span className={styled.txt_tit}>
-          {movie}
-        </span>
+        <span className={styled.txt_tit}>{movie}</span>
         <span className={styled.txt_cate}>2D(자막)</span>
       </div>
       <div className={styled.item_info}>
         <div className={styled.inner_info}>
           {theater} <br />
-          {screen}<br />
+          {screen}
+          <br />
           {date.toLocaleString("ko-KR")} <br />
-          <span className={styled.txt_time}>{hour.timeStart} ~ {hour.timeEnd}</span>
+          <span className={styled.txt_time}>
+            {hour.timeStart} ~ {hour.timeEnd}
+          </span>
         </div>
         <div className={styled.thumb_img}></div>
       </div>
@@ -76,7 +79,11 @@ const BoxSeatInfo = () => {
         </div>
       </div>
       <div className={styled.item_btns}>
-        <button type="button" className={styled.btn_prev} onClick={handlePrevClick}>
+        <button
+          type="button"
+          className={styled.btn_prev}
+          onClick={handlePrevClick}
+        >
           이전
         </button>
         <button type="button" className={styled.btn_next}>

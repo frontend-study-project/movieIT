@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import { useDispatch} from "react-redux";
+import { useDispatch } from "react-redux";
 
-import SlideList from "../components/SlideList";
+import SlideList from "../BookItem/SlideList";
 
-import styledCommon from "../book.module.css";
+import styledCommon from "../../../pages/Book/book.module.css";
 import styled from "./StepOne.module.css";
 import { setBook } from "../../../store/slice/book";
 
@@ -11,11 +11,13 @@ const BoxDate = () => {
   const dispatch = useDispatch();
 
   const handleDateClick = (date) => {
-    dispatch(setBook({
-      type: 'date',
-      data: date.toDateString()
-    }))
-  }
+    dispatch(
+      setBook({
+        type: "date",
+        data: date.toDateString(),
+      })
+    );
+  };
 
   const [dates, setDates] = useState([]);
 
@@ -42,10 +44,12 @@ const BoxDate = () => {
       });
     }
     setDates(defaultDates);
-    dispatch(setBook({
-      type: 'date',
-      data: new Date().toDateString()
-    }))
+    dispatch(
+      setBook({
+        type: "date",
+        data: new Date().toDateString(),
+      })
+    );
   }, []);
 
   return (
