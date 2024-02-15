@@ -1,10 +1,10 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import * as authApi from '../api/auth.api';
-import { useSnackbar } from "./useSnackbar";
+import { useSnackbar } from './useSnackbar';
 import { useNavigate } from 'react-router-dom';
-import { CURRENT_PASSWORD_EQUAL, CURRENT_PASSWORD_NOT_EQUAL, NEW_PASSWORD_NOT_EQUAL } from "../api/error/auth";
+import { CURRENT_PASSWORD_EQUAL, CURRENT_PASSWORD_NOT_EQUAL, NEW_PASSWORD_NOT_EQUAL } from '../api/error/auth';
 
-export const useFetchUserQuery = () => (
+export const useFetchUserQuery = () =>
   useQuery({
     queryKey: ['user'],
     async queryFn() {
@@ -18,14 +18,13 @@ export const useFetchUserQuery = () => (
     },
 
     staleTime: 3 * 24 * 60 * 1000,
-  })
-);
+  });
 
 export const useLoginMutation = () => {
   const snackbar = useSnackbar();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  
+
   return useMutation({
     async mutationFn(form) {
       const response = await authApi.login(form);
@@ -44,11 +43,11 @@ export const useLoginMutation = () => {
       snackbar('로그인 되었습니다.');
       navigate('/', { replace: true });
     },
-    
+
     onError() {
       snackbar('아이디 또는 비밀번호를 확인해주세요.', { type: 'error' });
-    }
-  })
+    },
+  });
 };
 
 export const useJoinMutation = () => {
@@ -70,10 +69,10 @@ export const useJoinMutation = () => {
       snackbar('회원가입 되었습니다.');
       navigate('/login');
     },
-    
+
     onError() {
       snackbar('문제가 발생하였습니다. 관리자에게 문의해주세요.', { type: 'error' });
-    }
+    },
   });
 };
 
@@ -88,7 +87,7 @@ export const useCheckDuplicateIdMutation = () => {
 
       return true;
     },
-  })
+  });
 };
 
 export const useUpdateUserMutation = () => {
@@ -110,12 +109,12 @@ export const useUpdateUserMutation = () => {
       snackbar('회원정보가 수정 되었습니다.');
       queryClient.setQueryData(['user'], user, { updatedAt: Date.now() });
     },
-    
+
     onError() {
       snackbar('문제가 발생하였습니다. 관리자에게 문의해주세요.', { type: 'error' });
-    }
-  })
-}
+    },
+  });
+};
 
 export const useChangePasswordMutation = () => {
   const snackbar = useSnackbar();
@@ -136,7 +135,7 @@ export const useChangePasswordMutation = () => {
       snackbar('비밀번호가 수정 되었습니다.');
       navigate('/mypage/update');
     },
-    
+
     onError({ message: errorCode }) {
       if (errorCode === CURRENT_PASSWORD_NOT_EQUAL) {
         snackbar('현재 비밀번호가 일치하지 않습니다.', { type: 'error' });
@@ -149,9 +148,9 @@ export const useChangePasswordMutation = () => {
       if (errorCode === NEW_PASSWORD_NOT_EQUAL) {
         snackbar('비밀번호가 일치하지 않습니다.', { type: 'error' });
       }
-    }
+    },
   });
-}
+};
 
 export const useLogoutMutation = () => {
   const snackbar = useSnackbar();
@@ -165,6 +164,6 @@ export const useLogoutMutation = () => {
 
       snackbar('로그아웃 되었습니다.');
       navigate('/');
-    }
+    },
   });
-}
+};
