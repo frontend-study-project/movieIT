@@ -1,4 +1,4 @@
-import styledCommon from '../book.module.css';
+import styledCommon from '../../../pages/Book/book.module.css';
 
 const RatingItem = ({
   rating,
