@@ -1,3 +1,7 @@
+.columnHeader {
+  background-color: #f2f4f5;
+}
+
 .empty {
   height: 320px;
   border-top: 1px solid #ddd;

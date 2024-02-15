@@ -23,7 +23,7 @@ const LoginForm = () => {
       <Box>
         <MInputText 
           control={control}
-          name="id" 
+          name="userId" 
           label="아이디를 입력해주세요" 
           variant="outlined"
           fullWidth
@@ -34,7 +34,7 @@ const LoginForm = () => {
           }}
           style={{ background: '#fff' }}
         />
-        {errors.id && (
+        {errors.userId && (
           <ErrorTypography>아이디를 입력해주세요.</ErrorTypography>
         )}
       </Box>
