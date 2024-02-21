@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setBook } from "../../../store/slice/book";
 import RatingItem from "../BookItem/RatingItem";
@@ -9,6 +9,7 @@ import styled from "./StepOne.module.css";
 
 const BoxMovie = () => {
   const dispatch = useDispatch();
+  const [movieList, setMovieList] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState("");
   const dummyMovieList = [
     {
@@ -133,6 +134,25 @@ const BoxMovie = () => {
     },
   ];
 
+  useEffect(() => {
+    fetch('http://localhost:3000/api/movie/now_playing?page=1')
+    .then(res => res.json())
+    .then(res => {
+
+      let list = [];
+      list = res.map(ele => {
+        return {
+          id: ele.id,
+          rating: ele.adult ? 4 : 1,
+          ratingDesc: ele.adult ? '청소년 관람불가' : '전체 관람가',
+          name: ele.title
+        }
+      })
+
+      setMovieList(list);
+    })
+  }, []);
+
   const handleClickMovie = (event) => {
     setSelectedMovie(event.currentTarget.id);
 
@@ -144,7 +164,7 @@ const BoxMovie = () => {
         영화<span className={styledCommon.screen_out}>선택</span>
       </h3>
       <ul className={`${styled.list_movie} ${styledCommon.scroll}`}>
-        {dummyMovieList.map((item) => (
+        {movieList.map((item) => (
           <li
             key={item.id}
             className={selectedMovie === String(item.id) ? styled.on : ""}
