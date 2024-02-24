@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
-import RatingItem from "../BookItem/RatingItem";
-import SeatItem from "../BookItem/SeatItem";
+import RatingItem from "../CommonItem/RatingItem";
+import SeatItem from "../CommonItem/SeatItem";
 import styled from "./StepTwo.module.css";
 import { setPage } from "../../../store/slice/book";
 

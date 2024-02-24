@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 
-import SlideList from "../BookItem/SlideList";
+import SlideDate from "../SlideItem/SlideDate";
 
 import styledCommon from "../../../pages/Book/book.module.css";
 import styled from "./StepOne.module.css";
@@ -55,7 +55,7 @@ const BoxDate = () => {
   return (
     <div className={styled.box_date}>
       <h3 className={styledCommon.screen_out}>날짜 선택</h3>
-      <SlideList
+      <SlideDate
         list={dates}
         year={year}
         yearHandler={yearHandler}

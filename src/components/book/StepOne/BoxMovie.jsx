@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setBook } from "../../../store/slice/book";
-import RatingItem from "../BookItem/RatingItem";
+import RatingItem from "../CommonItem/RatingItem";
 
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import styledCommon from "../../../pages/Book/book.module.css";
@@ -137,10 +137,10 @@ const BoxMovie = () => {
   useEffect(() => {
     fetch('http://localhost:3000/api/movie/now_playing?page=1')
     .then(res => res.json())
-    .then(res => {
+    .then(data => {
 
       let list = [];
-      list = res.map(ele => {
+      list = data.map(ele => {
         return {
           id: ele.id,
           rating: ele.adult ? 4 : 1,

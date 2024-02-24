@@ -1,7 +1,7 @@
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
-import SelectItem from "../BookItem/SelectItem";
-import SeatItem from "../BookItem/SeatItem";
+import SelectItem from "../CommonItem/SelectItem";
+import SeatItem from "../CommonItem/SeatItem";
 
 import styledCommon from "../../../pages/Book/book.module.css";
 import styled from "./StepTwo.module.css";

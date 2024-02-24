@@ -1,6 +1,6 @@
 import styledCommon from "../../../pages/Book/book.module.css";
 import styled from "./StepOne.module.css";
-import SlideList from "../BookItem/SlideList";
+import SlideTime from "../SlideItem/SlideTime";
 
 import TheatersIcon from "@mui/icons-material/Theaters";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,8 +12,6 @@ const BoxTime = () => {
 
   const dummyHourList = [
     {
-      timeStart: "09:50",
-      timeEnd: "11:56",
       title: "웡카",
       titleDesc: "2D (자막)",
       theater: "코엑스",
@@ -22,8 +20,6 @@ const BoxTime = () => {
       seatTotal: 348,
     },
     {
-      timeStart: "09:50",
-      timeEnd: "11:56",
       title: "웡카",
       titleDesc: "2D (자막)",
       theater: "코엑스",
@@ -32,8 +28,6 @@ const BoxTime = () => {
       seatTotal: 348,
     },
     {
-      timeStart: "09:50",
-      timeEnd: "11:56",
       title: "웡카",
       titleDesc: "2D (자막)",
       theater: "코엑스",
@@ -42,8 +36,6 @@ const BoxTime = () => {
       seatTotal: 348,
     },
     {
-      timeStart: "09:50",
-      timeEnd: "11:56",
       title: "웡카",
       titleDesc: "2D (자막)",
       theater: "코엑스",
@@ -52,8 +44,6 @@ const BoxTime = () => {
       seatTotal: 348,
     },
     {
-      timeStart: "09:50",
-      timeEnd: "11:56",
       title: "웡카",
       titleDesc: "2D (자막)",
       theater: "코엑스",
@@ -62,8 +52,6 @@ const BoxTime = () => {
       seatTotal: 348,
     },
     {
-      timeStart: "09:50",
-      timeEnd: "11:56",
       title: "웡카",
       titleDesc: "2D (자막)",
       theater: "코엑스",
@@ -72,8 +60,6 @@ const BoxTime = () => {
       seatTotal: 348,
     },
     {
-      timeStart: "09:50",
-      timeEnd: "11:56",
       title: "웡카",
       titleDesc: "2D (자막)",
       theater: "코엑스",
@@ -82,8 +68,6 @@ const BoxTime = () => {
       seatTotal: 348,
     },
     {
-      timeStart: "09:50",
-      timeEnd: "11:56",
       title: "웡카",
       titleDesc: "2D (자막)",
       theater: "코엑스",
@@ -92,8 +76,6 @@ const BoxTime = () => {
       seatTotal: 348,
     },
     {
-      timeStart: "09:50",
-      timeEnd: "11:56",
       title: "웡카",
       titleDesc: "2D (자막)",
       theater: "코엑스",
@@ -102,8 +84,6 @@ const BoxTime = () => {
       seatTotal: 348,
     },
     {
-      timeStart: "09:50",
-      timeEnd: "11:56",
       title: "웡카",
       titleDesc: "2D (자막)",
       theater: "코엑스",
@@ -112,8 +92,6 @@ const BoxTime = () => {
       seatTotal: 348,
     },
     {
-      timeStart: "09:50",
-      timeEnd: "11:56",
       title: "웡카",
       titleDesc: "2D (자막)",
       theater: "코엑스",
@@ -122,8 +100,6 @@ const BoxTime = () => {
       seatTotal: 348,
     },
     {
-      timeStart: "09:50",
-      timeEnd: "11:56",
       title: "웡카",
       titleDesc: "2D (자막)",
       theater: "코엑스",
@@ -132,8 +108,6 @@ const BoxTime = () => {
       seatTotal: 348,
     },
     {
-      timeStart: "09:50",
-      timeEnd: "11:56",
       title: "웡카",
       titleDesc: "2D (자막)",
       theater: "코엑스",
@@ -142,8 +116,6 @@ const BoxTime = () => {
       seatTotal: 348,
     },
     {
-      timeStart: "09:50",
-      timeEnd: "11:56",
       title: "웡카",
       titleDesc: "2D (자막)",
       theater: "코엑스",
@@ -195,7 +167,7 @@ const BoxTime = () => {
       <h3 className={styledCommon.tit_box}>
         시간<span className={styledCommon.screen_out}>선택</span>
       </h3>
-      {hourList && <SlideList list={hourList} moveX={35} />}
+      {hourList && <SlideTime list={hourList} moveX={35} />}
       {movie === "" || theater === "" ? (
         <div className={styled.area_empty}>
           <TheatersIcon fontSize="large" color="disabled" />
@@ -218,8 +190,8 @@ const BoxTime = () => {
                   onClick={handleHourClick}
                 >
                   <div className={styled.item_time}>
-                    <span className={styled.emph_time}>{ele.timeStart}</span>
-                    <div className={styled.txt_time}>~{ele.timeEnd}</div>
+                    <span className={styled.emph_time}></span>
+                    <div className={styled.txt_time}>~</div>
                   </div>
                   <div className={styled.item_tit}>
                     <strong className={styled.txt_tit}>{ele.title}</strong>
