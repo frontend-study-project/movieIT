@@ -5,9 +5,8 @@ const initialState = {
   date: '',
   movie: '',
   area: '',
-  screen: '',
-  theaterNum: '',
-  hour: {
+  theater: '',
+  runningTime: {
     timeStart: '',
     timeEnd: ''
   }

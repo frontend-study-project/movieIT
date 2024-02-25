@@ -3,8 +3,7 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { useState } from "react";
 
-const SlideTime = ({ list, year, moveX, onSlideItemClick }) => {
-  const nowHour = new Date().getHours();
+const SlideTime = ({ list, year, moveX, nowHour, onChangeHour }) => {
 
   const [count, setCount] = useState({
     move: nowHour > 13 ? -13 : -nowHour, selected: -nowHour
@@ -49,9 +48,11 @@ const SlideTime = ({ list, year, moveX, onSlideItemClick }) => {
   };
 
   const handleSlideItemClick = (event) => {
-    const idx = event.currentTarget.getAttribute('data-date');
+    const idx = event.currentTarget.getAttribute('data-hour');
 
     moveToDirect(idx);
+
+    onChangeHour(+idx);
   }
 
   return (
@@ -77,7 +78,7 @@ const SlideTime = ({ list, year, moveX, onSlideItemClick }) => {
               key={item.id}
               className={`${styled.item_slide} ${idx === -count.selected ? styled.on : ""}`}
             >
-              <button type="button" data-date={idx} onClick={handleSlideItemClick}>
+              <button type="button" data-hour={idx} onClick={handleSlideItemClick}>
                 <em className={styled.txt_num}>{item.num}</em>
               </button>
             </li>

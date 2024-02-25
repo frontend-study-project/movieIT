@@ -3,17 +3,32 @@ import RatingItem from "../CommonItem/RatingItem";
 import SeatItem from "../CommonItem/SeatItem";
 import styled from "./StepTwo.module.css";
 import { setPage } from "../../../store/slice/book";
+import { useEffect, useState } from "react";
 
 const BoxSeatInfo = () => {
-  const { date, movie, area, theater, screen, hour } = useSelector(
+  const { date, movie, theater, screen, runningTime } = useSelector(
     (state) => state.book
   );
+
+  const [posterURL, setPosterURL] = useState('');
 
   const dispatch = useDispatch();
 
   const handlePrevClick = () => {
     dispatch(setPage(1));
   };
+
+  useEffect(() => {
+    fetch('http://localhost:3000/api/movie/now_playing?page=1')
+    .then(res => res.json())
+    .then(data => {
+      const [movieInfo] = data.filter(ele => ele.title === movie);
+
+      setPosterURL(movieInfo.poster_path)
+    })
+  }, [])
+
+  console.log(movie);
   return (
     <div className={styled.box_result}>
       <div className={styled.item_movie}>
@@ -28,10 +43,10 @@ const BoxSeatInfo = () => {
           <br />
           {date.toLocaleString("ko-KR")} <br />
           <span className={styled.txt_time}>
-            {hour.timeStart} ~ {hour.timeEnd}
+            {runningTime.timeStart} ~ {runningTime.timeEnd}
           </span>
         </div>
-        <div className={styled.thumb_img}></div>
+        <img src={`https://image.tmdb.org/t/p/original/${posterURL}`} alt=""  className={styled.thumb_img}/>
       </div>
       <div className={styled.item_seat}>
         <ul className={styled.info_seat}>
