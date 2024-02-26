@@ -4,7 +4,7 @@ import StepOne from "../../components/book/StepOne";
 import StepTwo from "../../components/book/StepTwo";
 
 const Book = () => {
- const pageNum = useSelector(state => state.book.pageNum);
+ const pageNum = useSelector(state => state.book.page);
   return (
     <div className={styled.cont_book}>
       <h2 className={styled.tit_book}>예매</h2>

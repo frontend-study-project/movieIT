@@ -84,7 +84,8 @@ const BoxTime = () => {
   
   const [nowHour, setNowHour] = useState(new Date().getHours());
 
-  const { movie, theater } = useSelector((state) => state.book);
+  const { movie, theater } = useSelector((state) => state.book.stepOne);
+  console.log(movie, theater);
 
   const onChangeHour = (hour) => {
     setNowHour(hour)
@@ -97,6 +98,7 @@ const BoxTime = () => {
 
     dispatch(
       setBook({
+        step: 'stepOne',
         type: "runningTime",
         data: {
           timeStart,
@@ -107,6 +109,7 @@ const BoxTime = () => {
 
     dispatch(
       setBook({
+        step: 'stepOne',
         type: "screen",
         data: screen,
       })

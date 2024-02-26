@@ -13,6 +13,7 @@ const BoxDate = () => {
   const handleDateClick = (date) => {
     dispatch(
       setBook({
+        step: 'stepOne',
         type: "date",
         data: date.toDateString(),
       })
@@ -46,6 +47,7 @@ const BoxDate = () => {
     setDates(defaultDates);
     dispatch(
       setBook({
+        step: 'stepOne',
         type: "date",
         data: new Date().toDateString(),
       })

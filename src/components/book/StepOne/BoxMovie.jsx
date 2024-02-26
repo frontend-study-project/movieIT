@@ -10,34 +10,32 @@ import styled from "./StepOne.module.css";
 const BoxMovie = () => {
   const dispatch = useDispatch();
   const [movieList, setMovieList] = useState([]);
-  const [selectedMovie, setSelectedMovie] = useState("");
-  const chosenMovie = useSelector(state => state.book.movie);
-  
+  const chosenMovie = useSelector((state) => state.book.stepOne.movie);
+
   useEffect(() => {
-    fetch('http://localhost:3000/api/movie/now_playing?page=1')
-    .then(res => res.json())
-    .then(data => {
+    fetch("http://localhost:3000/api/movie/now_playing?page=1")
+      .then((res) => res.json())
+      .then((data) => {
+        let list = [];
+        list = data.map((ele) => {
+          return {
+            id: ele.id,
+            rating: ele.adult ? 4 : 1,
+            ratingDesc: ele.adult ? "청소년 관람불가" : "전체 관람가",
+            name: ele.title,
+          };
+        });
 
-      let list = [];
-      list = data.map(ele => {
-        return {
-          id: ele.id,
-          rating: ele.adult ? 4 : 1,
-          ratingDesc: ele.adult ? '청소년 관람불가' : '전체 관람가',
-          name: ele.title
-        }
-      })
-
-      setMovieList(list);
-      setSelectedMovie(chosenMovie);
-    })
+        setMovieList(list);
+      });
   }, []);
 
   const handleClickMovie = (event) => {
-    const [movie] = movieList.filter(ele => ele.id === +event.currentTarget.id);
+    const [movie] = movieList.filter(
+      (ele) => ele.id === +event.currentTarget.id
+    );
 
-    setSelectedMovie(movie.name);
-    dispatch(setBook({ type: "movie", data: movie.name }));
+    dispatch(setBook({ step: "stepOne", type: "movie", data: movie.name }));
   };
 
   return (
@@ -49,7 +47,7 @@ const BoxMovie = () => {
         {movieList.map((item) => (
           <li
             key={item.id}
-            className={selectedMovie === item.name ? styled.on : ""}
+            className={chosenMovie === item.name ? styled.on : ""}
           >
             <button type="button" id={item.id} onClick={handleClickMovie}>
               <RatingItem rating={item.rating} ratingDesc={item.ratingDesc} />

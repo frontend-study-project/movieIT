@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 
 const BoxSeatInfo = () => {
   const { date, movie, theater, screen, runningTime } = useSelector(
-    (state) => state.book
+    (state) => state.book.stepOne
   );
 
   const [posterURL, setPosterURL] = useState("");
@@ -28,7 +28,6 @@ const BoxSeatInfo = () => {
       });
   }, []);
 
-  console.log(movie);
   return (
     <div className={styled.box_result}>
       <div className={styled.item_movie}>

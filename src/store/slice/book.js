@@ -1,25 +1,31 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  pageNum: 1,
-  date: '',
-  movie: '',
-  area: '',
-  theater: '',
-  runningTime: {
-    timeStart: '',
-    timeEnd: ''
+  page: 1,
+  stepOne: {
+    date: '',
+    movie: '',
+    area: '',
+    theater: '',
+    runningTime: {
+      timeStart: '',
+      timeEnd: ''
+    },
+  },
+  stepTwo: {
+    totalNum: 0,
+    selectedSeats: []
   }
 }
 
 const reducers ={
   setBook(state, {payload}) {
-    const {type, data} = payload;
-    state[type] = data;
+    const {step, type, data} = payload;
+    state[step][type] = data;
   },
   setPage(state, {payload: page}) {
-    state.pageNum = page;
-  }
+    state.page = page;
+  },
 }
 
 const bookSlice = createSlice({
