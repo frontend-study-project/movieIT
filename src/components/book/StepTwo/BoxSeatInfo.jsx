@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import RatingItem from "../CommonItem/RatingItem";
-import SeatItem from "../CommonItem/SeatItem";
+import SeatItem from "../SeatItem/SeatItem";
 import styled from "./StepTwo.module.css";
 import { setPage } from "../../../store/slice/book";
 import { useEffect, useState } from "react";
@@ -10,7 +10,7 @@ const BoxSeatInfo = () => {
     (state) => state.book
   );
 
-  const [posterURL, setPosterURL] = useState('');
+  const [posterURL, setPosterURL] = useState("");
 
   const dispatch = useDispatch();
 
@@ -19,14 +19,14 @@ const BoxSeatInfo = () => {
   };
 
   useEffect(() => {
-    fetch('http://localhost:3000/api/movie/now_playing?page=1')
-    .then(res => res.json())
-    .then(data => {
-      const [movieInfo] = data.filter(ele => ele.title === movie);
+    fetch("http://localhost:3000/api/movie/now_playing?page=1")
+      .then((res) => res.json())
+      .then((data) => {
+        const [movieInfo] = data.filter((ele) => ele.title === movie);
 
-      setPosterURL(movieInfo.poster_path)
-    })
-  }, [])
+        setPosterURL(movieInfo.poster_path);
+      });
+  }, []);
 
   console.log(movie);
   return (
@@ -46,7 +46,11 @@ const BoxSeatInfo = () => {
             {runningTime.timeStart} ~ {runningTime.timeEnd}
           </span>
         </div>
-        <img src={`https://image.tmdb.org/t/p/original/${posterURL}`} alt=""  className={styled.thumb_img}/>
+        <img
+          src={`https://image.tmdb.org/t/p/original/${posterURL}`}
+          alt=""
+          className={styled.thumb_img}
+        />
       </div>
       <div className={styled.item_seat}>
         <ul className={styled.info_seat}>
