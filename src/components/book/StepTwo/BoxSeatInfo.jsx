@@ -44,7 +44,6 @@ const BoxSeatInfo = () => {
 
   const [posterURL, setPosterURL] = useState("");
 
-
   const handlePrevClick = () => {
     dispatch(setPage(1));
   };
@@ -146,7 +145,7 @@ const BoxSeatInfo = () => {
           이전
         </button>
         <button type="button" className={styled.btn_next}>
-          결제
+          예매
         </button>
       </div>
     </div>
