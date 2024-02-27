@@ -79,17 +79,27 @@ const SeatArrange = () => {
   const handleClickSeat = (event) => {
     const seatNum = event.currentTarget.getAttribute("title");
 
-    if (selectedSeats.length < totalNum) {
+    if (selectedSeats.includes(seatNum)) {
+      const deletedSeatList = [...selectedSeats].filter(ele => ele !== seatNum);
       dispatch(setBook({
         step: "stepTwo",
         type: "selectedSeats",
-        data: [...selectedSeats, seatNum],
+        data: deletedSeatList,
       }));
-    } else if (totalNum === 0) {
-      alert("관람하실 인원을 먼저 선택해주세요.");
     } else {
-      alert("좌석 선택이 완료되었습니다.");
+      if (selectedSeats.length < totalNum) {
+        dispatch(setBook({
+          step: "stepTwo",
+          type: "selectedSeats",
+          data: [...selectedSeats, seatNum],
+        }));
+      } else if (totalNum === 0) {
+        alert("관람하실 인원을 먼저 선택해주세요.");
+      } else {
+        alert("좌석 선택이 완료되었습니다.");
+      }
     }
+    
   };
   console.log(selectedSeats, totalNum);
   useEffect(() => {

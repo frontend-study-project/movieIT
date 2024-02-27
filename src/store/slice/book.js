@@ -14,6 +14,7 @@ const initialState = {
   },
   stepTwo: {
     totalNum: 0,
+    seatCategory: {adult: 0, teenager: 0, senior: 0, challenged: 0},
     selectedSeats: []
   }
 }
@@ -26,6 +27,14 @@ const reducers ={
   setPage(state, {payload: page}) {
     state.page = page;
   },
+  setAddCate(state, {payload}) {
+    const {step, type, dataId} = payload;
+    state[step][type][dataId] += 1;
+  },
+  setMinusCate(state, {payload}) {
+    const {step, type, dataId} = payload;
+    state[step][type][dataId] -= 1;
+  },
 }
 
 const bookSlice = createSlice({
@@ -34,5 +43,5 @@ const bookSlice = createSlice({
   reducers
 })
 
-export const { setBook, setPage } = bookSlice.actions;
+export const { setBook, setPage, setAddCate, setMinusCate } = bookSlice.actions;
 export default bookSlice.reducer;

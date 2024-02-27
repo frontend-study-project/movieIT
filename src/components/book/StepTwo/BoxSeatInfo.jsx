@@ -10,6 +10,12 @@ const BoxSeatInfo = () => {
     (state) => state.book.stepOne
   );
 
+  const listSelectedSeats = new Array(8).fill(0);
+
+  const { totalNum, selectedSeats, seatCategory } = useSelector(
+    (state) => state.book.stepTwo
+  );
+
   const [posterURL, setPosterURL] = useState("");
 
   const dispatch = useDispatch();
@@ -72,23 +78,33 @@ const BoxSeatInfo = () => {
         <div className={styled.info_select}>
           <em>선택좌석</em>
           <ul>
-            <li className={styled.seat_selected} title="선택한 좌석">
-              E18
-            </li>
-            <li className={styled.seat_empty} title="선택할 수 있는 좌석">
-              -
-            </li>
-            <li title="구매가능 좌석">-</li>
-            <li title="구매가능 좌석">-</li>
-            <li title="구매가능 좌석">-</li>
-            <li title="구매가능 좌석">-</li>
-            <li title="구매가능 좌석">-</li>
-            <li title="구매가능 좌석">-</li>
+            {
+              listSelectedSeats.map((ele, idx) => {
+                if (idx < totalNum) {
+                  if (idx < selectedSeats.length) {
+                    return <li className={styled.seat_selected} title="선택한 좌석">
+                      {selectedSeats[idx]}
+                    </li>
+                  } else {
+                    return <li className={styled.seat_empty} title="선택할 수 있는 좌석">
+                    -
+                  </li>
+                  }
+                } else {
+                  return <li title="구매가능 좌석">-</li>
+                }
+              })
+            }
           </ul>
         </div>
       </div>
       <div className={styled.item_pay}>
-        <em className={styled.cate_pay}>성인2</em>
+        <em className={styled.cate_pay}>
+          {seatCategory.adult === 0 ? '' : `성인 ${Math.min(seatCategory.adult , selectedSeats.length)}`}
+          {seatCategory.teenager === 0 ? '' : `청소년 ${Math.min(seatCategory.teenager , Math.max(selectedSeats.length - seatCategory.adult, 0))}`}
+          {seatCategory.senior === 0 ? '' : `경로 ${Math.min(seatCategory.senior , Math.max(selectedSeats.length - seatCategory.adult - seatCategory.teenager, 0))}`}
+          {seatCategory.challenged === 0 ? '' : `우대 ${Math.min(seatCategory.challenged , Math.max(selectedSeats.length - seatCategory.adult - seatCategory.teenager - seatCategory.senior, 0))}`}
+        </em>
         <div className={styled.txt_pay}>
           <em>최종결제금액</em>
           <strong className={styled.num_pay}>

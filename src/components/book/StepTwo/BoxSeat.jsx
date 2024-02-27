@@ -3,7 +3,7 @@ import SelectItem from "../CommonItem/SelectItem";
 
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setBook } from "../../../store/slice/book";
+import { setBook, setAddCate, setMinusCate } from "../../../store/slice/book";
 import styledCommon from "../../../pages/Book/book.module.css";
 import styled from "./StepTwo.module.css";
 import SeatArrange from "../SeatItem/SeatArrange";
@@ -13,8 +13,6 @@ const BoxSeat = () => {
   const dispatch = useDispatch();
 
   const {totalNum} = useSelector(state => state.book.stepTwo);
-
-  const [isCountSelected, setIsCountSelected] = useState(false);
 
   const [count, setCount] = useState({
     adult: 0,
@@ -42,7 +40,7 @@ const BoxSeat = () => {
       };
     });
 
-    setIsCountSelected(true);
+    dispatch(setAddCate({ step: "stepTwo", type: "seatCategory", dataId: id}))
   };
 
   const onMinusCount = (id) => {
@@ -52,6 +50,8 @@ const BoxSeat = () => {
         [id]: prev[id] > 0 ? prev[id] - 1 : 0,
       };
     });
+
+    dispatch(setMinusCate({ step: "stepTwo", type: "seatCategory", dataId: id}))
   };
 
   const handleResetCount = () => {
@@ -62,12 +62,15 @@ const BoxSeat = () => {
       challenged: 0,
     });
 
-    dispatch({ step: "stepTwo", type: "selectedSeats", data: [] });
+    dispatch(setBook({ step: "stepTwo", type: "selectedSeats", data: [] }));
+    dispatch(setBook({ step: "stepTwo", type: "seatCategory", data: {adult: 0, teenager: 0, senior: 0, challenged: 0} }));
   };
 
   useEffect(() => {
     return () => {
-      setIsCountSelected(false);
+      dispatch(setBook({ step: "stepTwo", type: "selectedSeats", data: [] }));
+
+      dispatch(setBook({ step: "stepTwo", type: "seatCategory", data: {adult: 0, teenager: 0, senior: 0, challenged: 0} }));
     };
   }, []);
 
@@ -111,9 +114,9 @@ const BoxSeat = () => {
       </div>
       <div
         className={`${styled.box_seat} ${styledCommon.scroll}`}
-        style={{ overflowY: isCountSelected ? "scroll" : "hidden" }}
+        style={{ overflowY: totalNum ? "hidden" : "scroll" }}
       >
-        {!isCountSelected && <SeatDimmed />}
+        {totalNum === 0 && <SeatDimmed />}
         <SeatArrange />
       </div>
     </div>
