@@ -101,7 +101,7 @@ const SeatArrange = () => {
     }
     
   };
-  console.log(selectedSeats, totalNum);
+  
   useEffect(() => {
     return () => {
       dispatch({ step: "stepTwo", type: "selectedSeats", data: [] });

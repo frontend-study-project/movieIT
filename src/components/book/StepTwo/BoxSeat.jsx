@@ -12,7 +12,7 @@ import SeatDimmed from "../SeatItem/SeatDimmed";
 const BoxSeat = () => {
   const dispatch = useDispatch();
 
-  const {totalNum} = useSelector(state => state.book.stepTwo);
+  const {totalNum, selectedSeats} = useSelector(state => state.book.stepTwo);
 
   const [count, setCount] = useState({
     adult: 0,
@@ -51,6 +51,18 @@ const BoxSeat = () => {
       };
     });
 
+    if (totalNum <= selectedSeats.length) {
+      if (confirm('선택하신 좌석을 모두 취소하고 다시 선택하시겠습니까?')) { 
+        setCount({
+          adult: 0,
+          teenager: 0,
+          senior: 0,
+          challenged: 0,
+        });
+        dispatch(setBook({ step: "stepTwo", type: "selectedSeats", data: [] }));
+        dispatch(setBook({ step: "stepTwo", type: "seatCategory", data: {adult: 0, teenager: 0, senior: 0, challenged: 0} }));
+      }
+    }
     dispatch(setMinusCate({ step: "stepTwo", type: "seatCategory", dataId: id}))
   };
 

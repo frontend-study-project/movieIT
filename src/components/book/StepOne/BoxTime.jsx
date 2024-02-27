@@ -85,7 +85,6 @@ const BoxTime = () => {
   const [nowHour, setNowHour] = useState(new Date().getHours());
 
   const { movie, theater } = useSelector((state) => state.book.stepOne);
-  console.log(movie, theater);
 
   const onChangeHour = (hour) => {
     setNowHour(hour)

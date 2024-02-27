@@ -6,19 +6,44 @@ import { setPage } from "../../../store/slice/book";
 import { useEffect, useState } from "react";
 
 const BoxSeatInfo = () => {
+  const dispatch = useDispatch();
+
   const { date, movie, theater, screen, runningTime } = useSelector(
     (state) => state.book.stepOne
   );
-
-  const listSelectedSeats = new Array(8).fill(0);
 
   const { totalNum, selectedSeats, seatCategory } = useSelector(
     (state) => state.book.stepTwo
   );
 
+  const listSelectedSeats = new Array(8).fill(0);
+
+  const ageCate = {
+    adult: {
+      num: Math.min(seatCategory.adult , selectedSeats.length),
+      price: 15000
+    },
+    teenager: {
+      num: Math.min(seatCategory.teenager , Math.max(selectedSeats.length - seatCategory.adult, 0)),
+      price: 12000
+    },
+    senior: {
+      num: Math.min(seatCategory.senior , Math.max(selectedSeats.length - seatCategory.adult - seatCategory.teenager, 0)),
+      price: 5000
+    },
+    challenged: {
+      num: Math.min(seatCategory.challenged , Math.max(selectedSeats.length - seatCategory.adult - seatCategory.teenager - seatCategory.senior, 0)),
+      price: 5000
+    },
+  }
+
+  const totalPrice = Object.values(ageCate).reduce((acc, cur) => {
+    acc += cur.num * cur.price;
+    return acc
+  }, 0);
+
   const [posterURL, setPosterURL] = useState("");
 
-  const dispatch = useDispatch();
 
   const handlePrevClick = () => {
     dispatch(setPage(1));
@@ -82,16 +107,16 @@ const BoxSeatInfo = () => {
               listSelectedSeats.map((ele, idx) => {
                 if (idx < totalNum) {
                   if (idx < selectedSeats.length) {
-                    return <li className={styled.seat_selected} title="선택한 좌석">
+                    return <li key={`좌석선택${idx}`} className={styled.seat_selected} title="선택한 좌석">
                       {selectedSeats[idx]}
                     </li>
                   } else {
-                    return <li className={styled.seat_empty} title="선택할 수 있는 좌석">
+                    return <li key={`좌석선택${idx}`} className={styled.seat_empty} title="선택할 수 있는 좌석">
                     -
                   </li>
                   }
                 } else {
-                  return <li title="구매가능 좌석">-</li>
+                  return <li key={`좌석선택${idx}`} title="구매가능 좌석">-</li>
                 }
               })
             }
@@ -100,15 +125,15 @@ const BoxSeatInfo = () => {
       </div>
       <div className={styled.item_pay}>
         <em className={styled.cate_pay}>
-          {seatCategory.adult === 0 ? '' : `성인 ${Math.min(seatCategory.adult , selectedSeats.length)}`}
-          {seatCategory.teenager === 0 ? '' : `청소년 ${Math.min(seatCategory.teenager , Math.max(selectedSeats.length - seatCategory.adult, 0))}`}
-          {seatCategory.senior === 0 ? '' : `경로 ${Math.min(seatCategory.senior , Math.max(selectedSeats.length - seatCategory.adult - seatCategory.teenager, 0))}`}
-          {seatCategory.challenged === 0 ? '' : `우대 ${Math.min(seatCategory.challenged , Math.max(selectedSeats.length - seatCategory.adult - seatCategory.teenager - seatCategory.senior, 0))}`}
+          {seatCategory.adult === 0 ? '' : `성인 ${ageCate.adult.num}`}
+          {seatCategory.teenager === 0 ? '' : `청소년 ${ageCate.teenager.num}`}
+          {seatCategory.senior === 0 ? '' : `경로 ${ageCate.senior.num}`}
+          {seatCategory.challenged === 0 ? '' : `우대 ${ageCate.challenged.num}`}
         </em>
         <div className={styled.txt_pay}>
           <em>최종결제금액</em>
           <strong className={styled.num_pay}>
-            <em>24,000</em>원
+            <em>{totalPrice}</em>원
           </strong>
         </div>
       </div>

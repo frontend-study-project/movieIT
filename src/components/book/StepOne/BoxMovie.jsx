@@ -25,7 +25,7 @@ const BoxMovie = () => {
             name: ele.title,
           };
         });
-
+        console.log(data);
         setMovieList(list);
       });
   }, []);
