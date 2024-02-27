@@ -11,21 +11,27 @@ const BoxMovie = () => {
   const dispatch = useDispatch();
   const [movieList, setMovieList] = useState([]);
   const chosenMovie = useSelector((state) => state.book.stepOne.movie);
-
+  const ratingList = {
+    'All': '전체 관람가',
+    '12': '12세 이상 관람가',
+    '15': '15세 이상 관람가',
+    '18': '청소년 관람불가',
+  }
   useEffect(() => {
     fetch("http://localhost:3000/api/movie/now_playing?page=1")
       .then((res) => res.json())
       .then((data) => {
         let list = [];
         list = data.map((ele) => {
+          console.log(ele.certification)
           return {
             id: ele.id,
-            rating: ele.adult ? 4 : 1,
-            ratingDesc: ele.adult ? "청소년 관람불가" : "전체 관람가",
+            rating: ele.certification,
+            ratingDesc: ratingList[ele.certification],
             name: ele.title,
           };
         });
-        console.log(data);
+
         setMovieList(list);
       });
   }, []);
