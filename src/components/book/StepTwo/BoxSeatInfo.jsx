@@ -4,13 +4,22 @@ import SeatItem from "../SeatItem/SeatItem";
 import styled from "./StepTwo.module.css";
 import { setPage } from "../../../store/slice/book";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const BoxSeatInfo = () => {
+  const navigate = useNavigate();
+
   const dispatch = useDispatch();
 
   const { date, movie, theater, screen, runningTime } = useSelector(
     (state) => state.book.stepOne
   );
+
+  const selectedDate = new Date(date);
+
+  const dayList = ['일','월','화','수','목','금','토'];
+
+  const layoutDate = `${selectedDate.getFullYear()}.${selectedDate.getMonth() + 1}.${selectedDate.getDate()} (${dayList[selectedDate.getDay()]})`
 
   const { totalNum, selectedSeats, seatCategory } = useSelector(
     (state) => state.book.stepTwo
@@ -48,6 +57,12 @@ const BoxSeatInfo = () => {
     dispatch(setPage(1));
   };
 
+  const handleCompleteBook = () => {
+    alert('예매가 완료되었습니다!');
+
+    navigate('/mypage/booking')
+  }
+
   useEffect(() => {
     fetch("http://localhost:3000/api/movie/now_playing?page=1")
       .then((res) => res.json())
@@ -70,7 +85,7 @@ const BoxSeatInfo = () => {
           {theater} <br />
           {screen}
           <br />
-          {date.toLocaleString("ko-KR")} <br />
+          {layoutDate} <br />
           <span className={styled.txt_time}>
             {runningTime.timeStart} ~ {runningTime.timeEnd}
           </span>
@@ -144,7 +159,7 @@ const BoxSeatInfo = () => {
         >
           이전
         </button>
-        <button type="button" className={styled.btn_next}>
+        <button type="button" className={styled.btn_next} onClick={handleCompleteBook}>
           예매
         </button>
       </div>

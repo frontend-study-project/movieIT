@@ -91,6 +91,7 @@
   display: inline-block;
   margin-top: 8px;
   color: #fff;
+  letter-spacing: -1px;
 }
 .thumb_img{
   width: 70px;
