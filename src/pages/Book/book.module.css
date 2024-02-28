@@ -45,6 +45,7 @@ button{
 /**** 공통 이미지 ****/
 /* 영상물 등급 */
 .img_rating{
+  flex-shrink: 0;
   display: inline-block;
   width: 20px;
   height: 20px;
@@ -54,13 +55,13 @@ button{
   font-size: 0;
   vertical-align: top;
 }
-.img_rating1{
+.img_ratingAll{
   background-position: -60px 0;
 }
-.img_rating2{
+.img_rating12{
   background-position: -40px 0;
 }
-.img_rating3{
+.img_rating15{
   background-position: -20px 0;
 }
 /* 예매 두번쨰 단계 */

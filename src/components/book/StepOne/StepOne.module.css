@@ -37,6 +37,9 @@ li.on > button{
   padding: 0 0 0 5px;
 
 }
+.txt_movie{
+  text-align: left;
+}
 .like_movie{
   margin-left: auto;
   margin-right: 7px;
@@ -117,6 +120,7 @@ li.on > button{
 }
 .item_time{
   width: 60px;
+  letter-spacing: -1px;
 }
 .emph_time{
   font-size: 18px;
