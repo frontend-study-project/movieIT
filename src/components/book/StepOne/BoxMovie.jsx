@@ -39,8 +39,10 @@ const BoxMovie = () => {
     const [movie] = movieList.filter(
       (ele) => ele.id === +event.currentTarget.id
     );
+    
 
     dispatch(setBook({ step: "stepOne", type: "movie", data: movie.name }));
+    dispatch(setBook({ step: "stepOne", type: "rating", data: movie.rating }))
   };
 
   return (

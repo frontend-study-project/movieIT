@@ -13,6 +13,7 @@ import { setAlert } from "../../../store/slice/alert";
 const BoxSeat = () => {
   const dispatch = useDispatch();
 
+  const {rating} = useSelector(state => state.book.stepOne);
   const {totalNum, selectedSeats} = useSelector(state => state.book.stepTwo);
 
   const [count, setCount] = useState({
@@ -107,13 +108,13 @@ const BoxSeat = () => {
           onAddCount={onAddCount}
           onMinusCount={onMinusCount}
         />
-        <SelectItem
+        {rating !== '18' && <SelectItem
           id="teenager"
           label="청소년"
           count={count}
           onAddCount={onAddCount}
           onMinusCount={onMinusCount}
-        />
+        />}
         <SelectItem
           id="senior"
           label="경로"

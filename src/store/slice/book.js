@@ -5,6 +5,7 @@ const initialState = {
   stepOne: {
     date: '',
     movie: '',
+    rating: '',
     area: '',
     theater: '',
     runningTime: {
