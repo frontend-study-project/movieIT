@@ -23,7 +23,6 @@ const BoxMovie = () => {
       .then((data) => {
         let list = [];
         list = data.map((ele) => {
-          console.log(ele.certification)
           return {
             id: ele.id,
             rating: ele.certification,

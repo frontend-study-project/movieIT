@@ -8,6 +8,7 @@ import styledCommon from "../../../pages/Book/book.module.css";
 import styled from "./StepTwo.module.css";
 import SeatArrange from "../SeatItem/SeatArrange";
 import SeatDimmed from "../SeatItem/SeatDimmed";
+import { setAlert } from "../../../store/slice/alert";
 
 const BoxSeat = () => {
   const dispatch = useDispatch();
@@ -29,7 +30,11 @@ const BoxSeat = () => {
 
   const onAddCount = (id) => {
     if (totalNum >= 8) {
-      alert("인원선택은 총 8명까지 가능합니다.");
+      dispatch(setAlert({
+        open: true,
+        title: '인원선택은 총 8명까지 가능합니다.',
+        btnList: [{autoFocus: true, txt: '확인'}]
+      }))
       return;
     }
 

@@ -2,6 +2,7 @@ import styledCommon from "../../../pages/Book/book.module.css";
 import styled from "./StepOne.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { setBook } from "../../../store/slice/book";
+import { useEffect, useState } from "react";
 
 const BoxTheater = () => {
   const dummyTheaterList = [
@@ -109,6 +110,15 @@ const BoxTheater = () => {
       ],
     },
   ];
+  const [theaterList, setTheaterList] = useState([]);
+  useEffect(() => {
+    fetch('http://localhost:3000/api/theater')
+    .then(res => res.json())
+    .then(data => {
+      console.log(data);
+      setTheaterList(data)
+    })
+  }, []);
 
   const dispatch = useDispatch();
 
@@ -149,7 +159,7 @@ const BoxTheater = () => {
       </h3>
       <div className={styled.inner_theater}>
         <ul className={styled.list_area}>
-          {dummyTheaterList.map((item, idx) => (
+          {theaterList.map((item, idx) => (
             <li
               key={item.id}
               className={

@@ -5,6 +5,7 @@ import styled from "./StepTwo.module.css";
 import { setPage } from "../../../store/slice/book";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { setAlert } from "../../../store/slice/alert";
 
 const BoxSeatInfo = () => {
   const navigate = useNavigate();
@@ -58,7 +59,11 @@ const BoxSeatInfo = () => {
   };
 
   const handleCompleteBook = () => {
-    alert('예매가 완료되었습니다!');
+    dispatch(setAlert({
+      open: true,
+      title: '예매가 완료되었습니다!',
+      btnList: [{autoFocus: true, txt: '확인'}]
+    }))
 
     navigate('/mypage/booking')
   }

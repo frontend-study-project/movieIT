@@ -5,6 +5,7 @@ import styled from "./seatItem.module.css";
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setBook } from "../../../store/slice/book";
+import { setAlert } from "../../../store/slice/alert";
 
 const SeatArrange = () => {
   const [seatArr, setSeatArr] = useState({
@@ -94,9 +95,17 @@ const SeatArrange = () => {
           data: [...selectedSeats, seatNum],
         }));
       } else if (totalNum === 0) {
-        alert("관람하실 인원을 먼저 선택해주세요.");
+        dispatch(setAlert({
+          open: true,
+          title: '관람하실 인원을 먼저 선택해주세요.',
+          btnList: [{autoFocus: true, txt: '확인'}]
+        }))
       } else {
-        alert("좌석 선택이 완료되었습니다.");
+        dispatch(setAlert({
+          open: true,
+          title: "좌석 선택이 완료되었습니다.",
+          btnList: [{autoFocus: true, txt: '확인'}]
+        }))
       }
     }
     
@@ -110,45 +119,45 @@ const SeatArrange = () => {
 
   return (
     <div className={styled.layout_seat}>
-      <span className={styled.area_screen}>SCREEN</span>
-      <span className={styled.ico_entry}>
-        <ExitToAppIcon fontSize="small">입구</ExitToAppIcon>
-      </span>
-      {seatArr.seatRowArr.map((row, rowIdx) => {
-        return seatArr.seatColArr.map((col, colIdx) => {
-          const key = `${row.order}${col.order}`;
-          const leftIdx = colIdx + col.aisle;
-          const topIdx = rowIdx + row.aisle;
-          const left = startPoint.x + leftIdx * 20;
-          const top = startPoint.y + topIdx * 20;
-          return (
-            <div key={key}>
-              {colIdx === 0 && (
-                <span
-                  className={styled.block_row}
-                  style={{ left: left - 40, top: top }}
+        <span className={styled.area_screen}>SCREEN</span>
+        <span className={styled.ico_entry}>
+          <ExitToAppIcon fontSize="small">입구</ExitToAppIcon>
+        </span>
+        {seatArr.seatRowArr.map((row, rowIdx) => {
+          return seatArr.seatColArr.map((col, colIdx) => {
+            const key = `${row.order}${col.order}`;
+            const leftIdx = colIdx + col.aisle;
+            const topIdx = rowIdx + row.aisle;
+            const left = startPoint.x + leftIdx * 20;
+            const top = startPoint.y + topIdx * 20;
+            return (
+              <div key={key}>
+                {colIdx === 0 && (
+                  <span
+                    className={styled.block_row}
+                    style={{ left: left - 40, top: top }}
+                  >
+                    {row.order}
+                  </span>
+                )}
+                <button
+                  type="button"
+                  className={styled.block_seat}
+                  title={`${row.order}${col.order}`}
+                  style={{ left: left, top: top }}
+                  onClick={handleClickSeat}
                 >
-                  {row.order}
-                </span>
-              )}
-              <button
-                type="button"
-                className={styled.block_seat}
-                title={`${row.order}${col.order}`}
-                style={{ left: left, top: top }}
-                onClick={handleClickSeat}
-              >
-                <SeatItem
-                  seatType={selectedSeats.includes(key) ? "selected" : "common"}
-                  seatDesc={`${row.order}${col.order}`}
-                  seatNum={col.order}
-                />
-              </button>
-            </div>
-          );
-        });
-      })}
-    </div>
+                  <SeatItem
+                    seatType={selectedSeats.includes(key) ? "selected" : "common"}
+                    seatDesc={`${row.order}${col.order}`}
+                    seatNum={col.order}
+                  />
+                </button>
+              </div>
+            );
+          });
+        })}
+      </div>
   );
 };
 export default SeatArrange;
