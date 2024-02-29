@@ -3,12 +3,18 @@ import styled from "./StepOne.module.css";
 import SlideTime from "../SlideItem/SlideTime";
 
 import TheatersIcon from "@mui/icons-material/Theaters";
+import { useFetchUserQuery } from "../../../hooks/useAuth";
 import { useDispatch, useSelector } from "react-redux";
 import { setBook } from "../../../store/slice/book";
 import { setPage } from "../../../store/slice/book";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const BoxTime = () => {
+  const navigate = useNavigate();
+
+  const {data} = useFetchUserQuery();
+  
   const dispatch = useDispatch();
 
   const hourList = [];
@@ -113,8 +119,9 @@ const BoxTime = () => {
         data: screen,
       })
     );
-
-    dispatch(setPage(2));
+    
+    data ? dispatch(setPage(2)) : navigate('/login');
+    ;
   };
   return (
     <div className={styled.box_time}>

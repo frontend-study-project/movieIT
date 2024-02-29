@@ -12,7 +12,7 @@ const BoxSeatInfo = () => {
 
   const dispatch = useDispatch();
 
-  const { date, movie, theater, screen, runningTime } = useSelector(
+  const { date, movie, theater, screen, runningTime, rating } = useSelector(
     (state) => state.book.stepOne
   );
 
@@ -81,7 +81,7 @@ const BoxSeatInfo = () => {
   return (
     <div className={styled.box_result}>
       <div className={styled.item_movie}>
-        <RatingItem rating={1} ratingDesc={"전체관람가"} />
+        <RatingItem rating={rating} ratingDesc={"전체관람가"} />
         <span className={styled.txt_tit}>{movie}</span>
         <span className={styled.txt_cate}>2D(자막)</span>
       </div>

@@ -111,14 +111,14 @@ const BoxTheater = () => {
     },
   ];
   const [theaterList, setTheaterList] = useState([]);
-  useEffect(() => {
-    fetch('http://localhost:3000/api/theater')
-    .then(res => res.json())
-    .then(data => {
-      console.log(data);
-      setTheaterList(data)
-    })
-  }, []);
+  // useEffect(() => {
+  //   fetch('http://localhost:3000/api/theater')
+  //   .then(res => res.json())
+  //   .then(data => {
+  //     console.log(data);
+  //     setTheaterList(data)
+  //   })
+  // }, []);
 
   const dispatch = useDispatch();
 
@@ -159,7 +159,7 @@ const BoxTheater = () => {
       </h3>
       <div className={styled.inner_theater}>
         <ul className={styled.list_area}>
-          {theaterList.map((item, idx) => (
+          {dummyTheaterList.map((item, idx) => (
             <li
               key={item.id}
               className={
