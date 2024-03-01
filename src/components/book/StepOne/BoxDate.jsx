@@ -15,7 +15,7 @@ const BoxDate = () => {
       setBook({
         step: 'stepOne',
         type: "date",
-        data: date.toDateString(),
+        data: date.toISOString(),
       })
     );
   };
@@ -49,7 +49,7 @@ const BoxDate = () => {
       setBook({
         step: 'stepOne',
         type: "date",
-        data: new Date().toDateString(),
+        data: new Date().toISOString(),
       })
     );
   }, []);

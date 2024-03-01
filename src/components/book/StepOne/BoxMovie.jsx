@@ -10,7 +10,7 @@ import styled from "./StepOne.module.css";
 const BoxMovie = () => {
   const dispatch = useDispatch();
   const [movieList, setMovieList] = useState([]);
-  const chosenMovie = useSelector((state) => state.book.stepOne.movie);
+  const {movie, date} = useSelector((state) => state.book.stepOne);
   const ratingList = {
     'All': '전체 관람가',
     '12': '12세 이상 관람가',
@@ -21,8 +21,8 @@ const BoxMovie = () => {
     fetch("http://localhost:3000/api/movie/now_playing?page=1")
       .then((res) => res.json())
       .then((data) => {
-        let list = [];
-        list = data.map((ele) => {
+        let list = data.filter(ele => new Date(ele.release_date) <= new Date(date));
+        list = [...list].map((ele) => {
           return {
             id: ele.id,
             rating: ele.certification,
@@ -30,10 +30,9 @@ const BoxMovie = () => {
             name: ele.title,
           };
         });
-        console.log(data)
         setMovieList(list);
       });
-  }, []);
+  }, [date]);
 
   const handleClickMovie = (event) => {
     const [movie] = movieList.filter(
@@ -54,7 +53,7 @@ const BoxMovie = () => {
         {movieList.map((item) => (
           <li
             key={item.id}
-            className={chosenMovie === item.name ? styled.on : ""}
+            className={movie === item.name ? styled.on : ""}
           >
             <button type="button" id={item.id} onClick={handleClickMovie}>
               <RatingItem rating={item.rating} ratingDesc={item.ratingDesc} />
