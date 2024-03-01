@@ -35,14 +35,13 @@ const BoxTheater = () => {
     const depth1DataAttribute = event.currentTarget.getAttribute("data-depth1");
     const depth2DataAttribute = event.currentTarget.getAttribute("data-depth2");
     const theater =
-    theaterList[depth1DataAttribute]["area_depth2"][depth2DataAttribute]
-        .txt;
+    theaterList[depth1DataAttribute]["area_depth2"][depth2DataAttribute].txt;
 
     dispatch(
       setBook({
         step: "stepOne",
         type: "theater",
-        data: theater,
+        data: {id: depth2DataAttribute, txt: theater},
       })
     );
   };

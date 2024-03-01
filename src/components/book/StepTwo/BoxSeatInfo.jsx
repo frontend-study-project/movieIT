@@ -45,7 +45,6 @@ const BoxSeatInfo = () => {
       price: 5000
     },
   }
-  console.log(ageCate);
 
   const totalPrice = Object.values(ageCate).reduce((acc, cur) => {
     acc += cur.num * cur.price;
@@ -65,14 +64,27 @@ const BoxSeatInfo = () => {
       btnList: [{autoFocus: true, txt: '확인'}]
     }))
 
-    navigate('/mypage/booking')
+    fetch('http://localhost:3000/api/reservation', {
+      method: 'POST',
+      body: JSON.stringify({
+        "movieId" : movie.id,
+        "theaterId" : theater.id,
+        "auditorium" : '',
+        "people" : totalNum,
+        "seat" : selectedSeats,
+        "date": date + runningTime.timeStart,
+        "money": totalPrice
+    })
+    })
+
+    navigate('/mypage/booking');
   }
 
   useEffect(() => {
     fetch("http://localhost:3000/api/movie/now_playing?page=1")
       .then((res) => res.json())
       .then((data) => {
-        const [movieInfo] = data.filter((ele) => ele.title === movie);
+        const [movieInfo] = data.filter((ele) => ele.title === movie.txt);
 
         setPosterURL(movieInfo.poster_path);
       });
@@ -82,12 +94,12 @@ const BoxSeatInfo = () => {
     <div className={styled.box_result}>
       <div className={styled.item_movie}>
         <RatingItem rating={rating} ratingDesc={"전체관람가"} />
-        <span className={styled.txt_tit}>{movie}</span>
+        <span className={styled.txt_tit}>{movie.txt}</span>
         <span className={styled.txt_cate}>2D(자막)</span>
       </div>
       <div className={styled.item_info}>
         <div className={styled.inner_info}>
-          {theater} <br />
+          {theater.txt} <br />
           {screen}
           <br />
           {layoutDate} <br />

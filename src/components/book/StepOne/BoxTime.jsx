@@ -129,7 +129,7 @@ const BoxTime = () => {
         시간<span className={styledCommon.screen_out}>선택</span>
       </h3>
       {hourList && <SlideTime list={hourList} moveX={35} nowHour={nowHour} onChangeHour={onChangeHour}/>}
-      {movie === "" || theater === "" ? (
+      {movie.txt === "" || theater.txt === "" ? (
         <div className={styled.area_empty}>
           <TheatersIcon fontSize="large" color="disabled" />
           <p>
@@ -155,12 +155,12 @@ const BoxTime = () => {
                     <div className={styled.txt_time}>~ {+nowHour + 2} : {ele.minute}</div>
                   </div>
                   <div className={styled.item_tit}>
-                    <strong className={styled.txt_tit}>{movie}</strong>
+                    <strong className={styled.txt_tit}>{movie.txt}</strong>
                     <span className={styled.txt_desc}>2D (자막)</span>
                   </div>
                   <div className={styled.item_info}>
                     <span className={styled.txt_theater}>
-                      {theater}
+                      {theater.txt}
                       <br /> {ele.screen}
                     </span>
                     <span className={styled.wrap_seat}>

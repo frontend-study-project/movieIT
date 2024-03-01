@@ -21,6 +21,7 @@ const BoxMovie = () => {
     fetch("http://localhost:3000/api/movie/now_playing?page=1")
       .then((res) => res.json())
       .then((data) => {
+        console.log(data);
         let list = data.filter(ele => new Date(ele.release_date) <= new Date(date));
         list = [...list].map((ele) => {
           return {
@@ -40,7 +41,7 @@ const BoxMovie = () => {
     );
     
 
-    dispatch(setBook({ step: "stepOne", type: "movie", data: movie.name }));
+    dispatch(setBook({ step: "stepOne", type: "movie", data: {id: movie.id, txt: movie.name} }));
     dispatch(setBook({ step: "stepOne", type: "rating", data: movie.rating }))
   };
 
@@ -53,7 +54,7 @@ const BoxMovie = () => {
         {movieList.map((item) => (
           <li
             key={item.id}
-            className={movie === item.name ? styled.on : ""}
+            className={movie.txt === item.name ? styled.on : ""}
           >
             <button type="button" id={item.id} onClick={handleClickMovie}>
               <RatingItem rating={item.rating} ratingDesc={item.ratingDesc} />
