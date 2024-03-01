@@ -50,12 +50,6 @@ const BoxSeat = () => {
   };
 
   const onMinusCount = (id) => {
-    setCount((prev) => {
-      return {
-        ...prev,
-        [id]: prev[id] > 0 ? prev[id] - 1 : 0,
-      };
-    });
 
     if (totalNum <= selectedSeats.length) {
       if (confirm('선택하신 좌석을 모두 취소하고 다시 선택하시겠습니까?')) { 
@@ -67,8 +61,18 @@ const BoxSeat = () => {
         });
         dispatch(setBook({ step: "stepTwo", type: "selectedSeats", data: [] }));
         dispatch(setBook({ step: "stepTwo", type: "seatCategory", data: {adult: 0, teenager: 0, senior: 0, challenged: 0} }));
+        return;
+      } else {
+        return 
       }
     }
+
+    setCount((prev) => {
+      return {
+        ...prev,
+        [id]: prev[id] > 0 ? prev[id] - 1 : 0,
+      };
+    });
     dispatch(setMinusCate({ step: "stepTwo", type: "seatCategory", dataId: id}))
   };
 

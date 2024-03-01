@@ -25,9 +25,8 @@ const BoxSeatInfo = () => {
   const { totalNum, selectedSeats, seatCategory } = useSelector(
     (state) => state.book.stepTwo
   );
-
   const listSelectedSeats = new Array(8).fill(0);
-
+  
   const ageCate = {
     adult: {
       num: Math.min(seatCategory.adult , selectedSeats.length),
@@ -46,6 +45,7 @@ const BoxSeatInfo = () => {
       price: 5000
     },
   }
+  console.log(ageCate);
 
   const totalPrice = Object.values(ageCate).reduce((acc, cur) => {
     acc += cur.num * cur.price;
