@@ -17,7 +17,7 @@ const BoxTheater = () => {
   const dispatch = useDispatch();
 
   const selectedArea = useSelector((state) => state.book.stepOne.area);
-  const selectedTheater = useSelector((state) => state.book.stepOne.theater);
+  const {id: selectedTheaterId} = useSelector((state) => state.book.stepOne.theater);
 
   const handleClickArea = (event) => {
     const depth1DataAttribute = event.currentTarget.getAttribute("data-depth1");
@@ -30,20 +30,25 @@ const BoxTheater = () => {
         data: area,
       })
     );
-  };
-  const handleClickTheater = (event) => {
-    const depth1DataAttribute = event.currentTarget.getAttribute("data-depth1");
-    const depth2DataAttribute = event.currentTarget.getAttribute("data-depth2");
-    const theater =
-    theaterList[depth1DataAttribute]["area_depth2"][depth2DataAttribute].txt;
 
     dispatch(
       setBook({
         step: "stepOne",
         type: "theater",
-        data: {id: depth2DataAttribute, txt: theater},
+        data: {id: '', txt: ''},
       })
     );
+  };
+  const handleClickTheater = (id, txt) => {
+
+    dispatch(
+      setBook({
+        step: "stepOne",
+        type: "theater",
+        data: {id, txt},
+      })
+    );
+
   };
   return (
     <div className={styled.box_theater}>
@@ -67,14 +72,12 @@ const BoxTheater = () => {
                   <li
                     key={item2.id}
                     className={
-                      selectedTheater === item2.txt ? `${styled.on}` : ""
+                      parseInt(selectedTheaterId) === parseInt(idx2) ? `${styled.on}` : ""
                     }
                   >
                     <button
-                      data-depth1={idx}
-                      data-depth2={idx2}
                       type="button"
-                      onClick={handleClickTheater}
+                      onClick={() => handleClickTheater(idx2, item2.txt)}
                     >
                       {item2.txt}
                     </button>
