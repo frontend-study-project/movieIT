@@ -5,8 +5,7 @@ import SlideTime from "../SlideItem/SlideTime";
 import TheatersIcon from "@mui/icons-material/Theaters";
 import { useFetchUserQuery } from "../../../hooks/useAuth";
 import { useDispatch, useSelector } from "react-redux";
-import { setBook } from "../../../store/slice/book";
-import { setPage } from "../../../store/slice/book";
+import { setBook, setPage } from "../../../store/slice/book";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -19,10 +18,7 @@ const BoxTime = () => {
 
   const hourList = [];
   for (let i = 1; i <= 24; i++) {
-    hourList.push({
-      id: i,
-      num: i,
-    });
+    hourList.push(i);
   }
 
   const screenList = [
@@ -146,12 +142,12 @@ const BoxTime = () => {
                 <button
                   type="button"
                   data-screen={ele.screen}
-                  data-timestart={`${+nowHour + 1} : ${ele.minute}`}
+                  data-timestart={`${+nowHour} : ${ele.minute}`}
                   data-timeend={`${+nowHour + 2} : ${ele.minute}`}
                   onClick={handleHourClick}
                 >
                   <div className={styled.item_time}>
-                    <span className={styled.emph_time}>{+nowHour + 1} : {ele.minute}</span>
+                    <span className={styled.emph_time}>{+nowHour} : {ele.minute}</span>
                     <div className={styled.txt_time}>~ {+nowHour + 2} : {ele.minute}</div>
                   </div>
                   <div className={styled.item_tit}>
