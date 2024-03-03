@@ -23,6 +23,18 @@ const BoxSeat = () => {
     challenged: 0,
   });
 
+  const resetCountsAndSeats = () => {
+    setCount({
+      adult: 0,
+      teenager: 0,
+      senior: 0,
+      challenged: 0,
+    });
+
+    dispatch(setBook({ step: "stepTwo", type: "selectedSeats", data: [] }));
+    dispatch(setBook({ step: "stepTwo", type: "seatCategory", data: {adult: 0, teenager: 0, senior: 0, challenged: 0} }));
+  };
+
   useEffect(() => {
     const total = count.adult + count.teenager + count.senior + count.challenged;
 
@@ -53,14 +65,7 @@ const BoxSeat = () => {
 
     if (totalNum <= selectedSeats.length) {
       if (confirm('선택하신 좌석을 모두 취소하고 다시 선택하시겠습니까?')) { 
-        setCount({
-          adult: 0,
-          teenager: 0,
-          senior: 0,
-          challenged: 0,
-        });
-        dispatch(setBook({ step: "stepTwo", type: "selectedSeats", data: [] }));
-        dispatch(setBook({ step: "stepTwo", type: "seatCategory", data: {adult: 0, teenager: 0, senior: 0, challenged: 0} }));
+        resetCountsAndSeats();
         return;
       } else {
         return 
@@ -76,23 +81,10 @@ const BoxSeat = () => {
     dispatch(setMinusCate({ step: "stepTwo", type: "seatCategory", dataId: id}))
   };
 
-  const handleResetCount = () => {
-    setCount({
-      adult: 0,
-      teenager: 0,
-      senior: 0,
-      challenged: 0,
-    });
-
-    dispatch(setBook({ step: "stepTwo", type: "selectedSeats", data: [] }));
-    dispatch(setBook({ step: "stepTwo", type: "seatCategory", data: {adult: 0, teenager: 0, senior: 0, challenged: 0} }));
-  };
-
+  
   useEffect(() => {
     return () => {
-      dispatch(setBook({ step: "stepTwo", type: "selectedSeats", data: [] }));
-
-      dispatch(setBook({ step: "stepTwo", type: "seatCategory", data: {adult: 0, teenager: 0, senior: 0, challenged: 0} }));
+      resetCountsAndSeats();
     };
   }, []);
 
@@ -100,7 +92,7 @@ const BoxSeat = () => {
     <div className={styled.wrap_seat}>
       <div className={styled.head_book}>
         <h4>관람인원선택</h4>
-        <button type="button" onClick={handleResetCount}>
+        <button type="button" onClick={resetCountsAndSeats}>
           <RestartAltIcon fontSize="small">이전</RestartAltIcon>초기화
         </button>
       </div>
