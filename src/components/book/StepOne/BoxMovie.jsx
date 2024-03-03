@@ -10,7 +10,8 @@ import styled from "./StepOne.module.css";
 const BoxMovie = () => {
   const dispatch = useDispatch();
   const [movieList, setMovieList] = useState([]);
-  const {movie, date} = useSelector((state) => state.book.stepOne);
+  const [selectedMovieId, setSelectedMovieId] = useState(null);
+  const {date} = useSelector((state) => state.book.stepOne);
   const ratingList = {
     'All': '전체 관람가',
     '12': '12세 이상 관람가',
@@ -34,11 +35,8 @@ const BoxMovie = () => {
       });
   }, [date]);
 
-  const handleClickMovie = (event) => {
-    const [movie] = movieList.filter(
-      (ele) => ele.id === +event.currentTarget.id
-    );
-    
+  const handleClickMovie = (movie) => {
+    setSelectedMovieId(movie.id);
 
     dispatch(setBook({ step: "stepOne", type: "movie", data: {id: movie.id, txt: movie.name} }));
     dispatch(setBook({ step: "stepOne", type: "rating", data: movie.rating }))
@@ -53,9 +51,9 @@ const BoxMovie = () => {
         {movieList.map((item) => (
           <li
             key={item.id}
-            className={movie.txt === item.name ? styled.on : ""}
+            className={selectedMovieId && (selectedMovieId === item.id) ? styled.on : ""}
           >
-            <button type="button" id={item.id} onClick={handleClickMovie}>
+            <button type="button" id={item.id} onClick={() => handleClickMovie(item)}>
               <RatingItem rating={item.rating} ratingDesc={item.ratingDesc} />
               <span className={styled.txt_movie}>{item.name}</span>
               <span className={styled.like_movie}>
