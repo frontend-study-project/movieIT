@@ -25,7 +25,21 @@ const BoxSeatInfo = () => {
   const { totalNum, selectedSeats, seatCategory } = useSelector(
     (state) => state.book.stepTwo
   );
-  const listSelectedSeats = new Array(8).fill(0);
+  const listSelectedSeats = Array.from({length: 8}, (_,idx) => {
+    if (idx < totalNum) {
+      if (idx < selectedSeats.length) {
+        return <li key={`좌석선택${idx}`} className={styled.seat_selected} title="선택한 좌석">
+          {selectedSeats[idx]}
+        </li>
+      } else {
+        return <li key={`좌석선택${idx}`} className={styled.seat_empty} title="선택할 수 있는 좌석">
+        -
+      </li>
+      }
+    } else {
+      return <li key={`좌석선택${idx}`} title="구매가능 좌석">-</li>
+    }
+  });
   
   const ageCate = {
     adult: {
@@ -134,23 +148,7 @@ const BoxSeatInfo = () => {
         <div className={styled.info_select}>
           <em>선택좌석</em>
           <ul>
-            {
-              listSelectedSeats.map((ele, idx) => {
-                if (idx < totalNum) {
-                  if (idx < selectedSeats.length) {
-                    return <li key={`좌석선택${idx}`} className={styled.seat_selected} title="선택한 좌석">
-                      {selectedSeats[idx]}
-                    </li>
-                  } else {
-                    return <li key={`좌석선택${idx}`} className={styled.seat_empty} title="선택할 수 있는 좌석">
-                    -
-                  </li>
-                  }
-                } else {
-                  return <li key={`좌석선택${idx}`} title="구매가능 좌석">-</li>
-                }
-              })
-            }
+            {listSelectedSeats}
           </ul>
         </div>
       </div>
