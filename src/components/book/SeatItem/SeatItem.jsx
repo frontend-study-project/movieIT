@@ -1,4 +1,4 @@
-import styled from './components.module.css';
+import styled from './seatItem.module.css';
 
 const SeatItem = ({
   seatType,

@@ -1,83 +1,3 @@
-/**** 좌석선택 ****/
-.seat_condition{
-  overflow: hidden;
-  position: relative;
-  display: inline-block;
-  width: 14px;
-  height: 14px;
-  margin-right: 4px;
-}
-.seat_condition.selected{
-  background-color: #553399;
-}
-.seat_condition.selected::after{
-  content: '';
-  display: block;
-  position: absolute;
-  right: 0;
-  top: 0;
-  border-right: 5px solid #fff;
-  border-bottom: 5px solid transparent;
-}
-.seat_condition.occupied{
-  background-color: #ccc;
-}
-.seat_condition.occupied::before{
-  content: '';
-  display: block;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 20px;
-  height: 1px;
-  margin-left: -9px;
-  background-color: #fff;
-  transform: rotate(45deg);
-}
-.seat_condition.occupied::after{
-  content: '';
-  display: block;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 20px;
-  height: 1px;
-  margin-left: -10px;
-  background-color: #fff;
-  transform: rotate(-45deg);
-}
-.seat_condition.impossible{
-  background-color: #ccc;
-}
-.seat_condition.impossible::after{
-  content: '';
-  display: block;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 20px;
-  height: 1px;
-  margin-left: -10px;
-  background-color: #fff;
-  transform: rotate(-45deg);
-}
-.seat_condition.common{
-  background-color: #777;
-}
-.seat_condition.challenged{
-  background-color: #338811;
-}
-.seat_condition.challenged::after{
-  content: '';
-  display: block;
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  margin-left: -1px;
-  border-bottom: 4px solid #fff;
-  border-left: 2px solid transparent;
-  border-right: 2px solid transparent;
-}
 /**** 인원선택 ****/
 .box_count button, .box_count input{
   width: 32px;
@@ -179,10 +99,10 @@ input.num_count{
   height: 30px;
   font-size: 17px;
 }
-[class*='box_time'] .item_slide button.on{
+[class*='box_time'] .item_slide.on button{
   background-color: #555;
   color: #fff;
-  font-weight: 700;
+  font-weight: 600;
 }
 .item_slide .txt_num{
   font-size: 15px;

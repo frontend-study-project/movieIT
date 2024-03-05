@@ -1,4 +1,5 @@
 import { QueryClient, QueryClientProvider as Provider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 const QueryClientProvider = ({ children }) => {
   const queryClient = new QueryClient({
@@ -6,7 +7,7 @@ const QueryClientProvider = ({ children }) => {
       queries: {
         refetchOnReconnect: false,
         refetchOnWindowFocus: false,
-        retry: 1,
+        retry: 0,
       },
     }
   });
@@ -14,6 +15,7 @@ const QueryClientProvider = ({ children }) => {
   return (
     <Provider client={queryClient}>
       {children}
+      <ReactQueryDevtools initialIsOpen={false} />
     </Provider>
   );
 }

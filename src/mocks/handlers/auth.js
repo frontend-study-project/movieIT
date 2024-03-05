@@ -2,7 +2,7 @@ import { http, HttpResponse } from 'msw';
 import { AUTH } from '../../api/auth.api';
 import { CURRENT_PASSWORD_EQUAL, CURRENT_PASSWORD_NOT_EQUAL, NEW_PASSWORD_NOT_EQUAL } from '../../api/error/auth';
 
-const isAuthenticated = async (request) => {
+export const isAuthenticated = async (request) => {
   const Authorization = request.headers
     .get('Authorization')
     .replace('Bearer', '')

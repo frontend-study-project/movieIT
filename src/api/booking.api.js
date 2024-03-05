@@ -3,7 +3,7 @@ import { getAuthorization } from "./auth.api";
 
 export const BOOKING = `${API_PREFIX}/booking`;
 
-export const fetchMyBookingList = (id, param) => {
+export const fetchMyBookingList = (id, param) => (
   fetch(`${BOOKING}/user/${id}?${param}`, { 
     method: 'get', 
     headers: {
@@ -11,4 +11,4 @@ export const fetchMyBookingList = (id, param) => {
       'Authorization': `Bearer ${getAuthorization()}`,
     },
   })
-}
+);

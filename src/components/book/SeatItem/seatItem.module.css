@@ -1,0 +1,149 @@
+/* 좌석선택 레이아웃 */
+.area_screen{
+  display: block;
+  width: 100%;
+  height: 30px;
+  border-top: 1px solid #000;
+  border-radius: 70%;
+  text-align: center;
+  line-height: 35px;
+  font-weight: 700;
+}
+.ico_entry{
+  position: absolute;
+  left: 621px;
+  top: 45px;
+  height: 16px;
+}
+.ico_entry svg{
+  font-size: 16px;
+}
+.layout_seat{
+  height: 100%;
+}
+.layout_seat button{
+  position: absolute;
+  padding: 0;
+  border: 1px solid #02bfd3;
+}
+.layout_seat button span{
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  color: #fff;
+  font-size: 11px;
+  line-height: 18px;
+}
+.block_seat{
+  width: 20px;
+  height: 18px;
+}
+.block_row{
+  position: absolute;
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 1px solid #ccc;
+  vertical-align: middle;
+  text-align: center;
+  color: #000;
+}
+/**** 좌석선택 ****/
+.seat_condition{
+  overflow: hidden;
+  position: relative;
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  margin-right: 4px;
+}
+.seat_condition.selected{
+  background-color: #553399;
+}
+.seat_condition.selected::after{
+  content: '';
+  display: block;
+  position: absolute;
+  right: 0;
+  top: 0;
+  border-right: 5px solid #fff;
+  border-bottom: 5px solid transparent;
+}
+.seat_condition.occupied{
+  background-color: #ccc;
+}
+.seat_condition.occupied::before{
+  content: '';
+  display: block;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 20px;
+  height: 1px;
+  margin-left: -9px;
+  background-color: #fff;
+  transform: rotate(45deg);
+}
+.seat_condition.occupied::after{
+  content: '';
+  display: block;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 20px;
+  height: 1px;
+  margin-left: -10px;
+  background-color: #fff;
+  transform: rotate(-45deg);
+}
+.seat_condition.impossible{
+  background-color: #ccc;
+}
+.seat_condition.impossible::after{
+  content: '';
+  display: block;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 20px;
+  height: 1px;
+  margin-left: -10px;
+  background-color: #fff;
+  transform: rotate(-45deg);
+}
+.seat_condition.common{
+  background-color: #777;
+}
+.seat_condition.challenged{
+  background-color: #338811;
+}
+.seat_condition.challenged::after{
+  content: '';
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  margin-left: -1px;
+  border-bottom: 4px solid #fff;
+  border-left: 2px solid transparent;
+  border-right: 2px solid transparent;
+}
+
+/* 딤드 */
+.dimmed_seat{
+  z-index: 10;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  padding-top: 10px;
+  background-color: rgba(0,0,0,.6);
+  color: #fff;
+  text-align: center;
+}
+.txt_dimmed{
+  display: block;
+  padding-top: 10px;
+  font-size: 18px;
+}
