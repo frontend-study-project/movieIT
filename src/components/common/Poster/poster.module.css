@@ -44,6 +44,23 @@
   font-weight: 400;
 }
 
+.poster_overview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.poster_overview span:first-child {
+  color: #fff;
+  font-size: 17px;
+}
+
+.poster_overview span:last-child {
+  color: #fff;
+  font-size: 17px;
+  font-weight: 400;
+}
+
 .buttons {
   margin-top: 10px;
 }
@@ -58,5 +75,15 @@
 .heart-num {
   margin-left: 5px;
   font-size: 13px;
+  letter-spacing: -1px;
+}
+
+.title{
+  font-size: 20px;
+  letter-spacing: -1px;
+}
+.vote-avr {
+  margin-left: 5px;
+  font-size: 15px;
   letter-spacing: -1px;
 }
