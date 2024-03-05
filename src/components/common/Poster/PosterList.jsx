@@ -3,14 +3,15 @@ import styled from './poster.module.css';
 import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 import Divider from '@mui/material/Divider';
+import { getImageUrl } from '../../../hooks/useImageUrl';
 
-const Poster = ({ image, rating, description, heart }) => {
+const Poster = ({ poster_path, image, rating, description, heart }) => {
   return (
     <div className={styled.poster}>
       <Card className={styled.poster_thumnail}>
         <CardMedia
           component="img"
-          image={image}
+          image={poster_path? getImageUrl(poster_path) : image}
           alt="Paella dish"
         />
         <CardContent style={{ padding: '25px' }} className={styled['poster_thumnail-cover']}>
