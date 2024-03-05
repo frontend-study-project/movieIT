@@ -14,19 +14,19 @@ const MovieList = () => {
         fetch("http://localhost:3000/api/movie/now_playing?page=1")
           .then((res) => res.json())
           .then((data) => {
-            console.log(data);
             let list = [];
             list = data.map((ele) => {
-              console.log(ele)
               return {
-                poster_path: ele.poster_path,
                 id: ele.id,
-                rating: ele.vote_average,
+                poster_path: ele.poster_path,
+                certification: ele.certification,
                 ratingDesc: ratingList[ele.certification],
                 name: ele.title,
+                voteAverage: ele.vote_average,
+                releaseDate: ele.release_date,
+                description: ele.overview
               };
             });
-            console.log("list", list);
             setMovieList(list);
           });
       }, []);

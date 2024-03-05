@@ -3,9 +3,11 @@ import styled from './poster.module.css';
 import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 import Divider from '@mui/material/Divider';
+import moment from 'moment';
 import { getImageUrl } from '../../../hooks/useImageUrl';
+import RatingItem from '../../book/CommonItem/RatingItem';
 
-const Poster = ({ poster_path, image, rating, description, heart }) => {
+const Poster = ({ image, rating, certification, heart, description, poster_path, voteAverage, releaseDate, name }) => {
   return (
     <div className={styled.poster}>
       <Card className={styled.poster_thumnail}>
@@ -32,6 +34,29 @@ const Poster = ({ poster_path, image, rating, description, heart }) => {
           </div>
         </CardContent>
       </Card>
+      {certification && name ?
+        <Box className={styled.buttons} display="flex" gap={0} >
+          <Box variant="outlined" style={{ color: "black", borderColor: "#787878" }}>
+            <RatingItem rating={certification}/>
+          </Box>
+          <Box variant="outlined" style={{ color: "black", borderColor: "#787878" }}>
+            <span className={styled['title']}>{name}</span>
+          </Box>
+        </Box> : null
+      }
+      {voteAverage && releaseDate ? 
+        <Box className={styled.buttons} display="flex" gap={2} >
+          <Box variant="outlined" style={{ color: "black", borderColor: "#787878" }}>
+            <span>예매율</span>
+            <span className={styled['vote-avr']}>{voteAverage}%</span>
+          </Box>
+          |
+          <Box variant="outlined" style={{ color: "black", borderColor: "#787878" }}>
+            <span>개봉일</span>
+            <span className={styled['vote-avr']}>{moment(releaseDate).format("YYYY.MM.DD")}</span>
+          </Box>
+        </Box> : null
+      }
       <Box className={styled.buttons} display="flex" gap={2} justifyContent="space-between">
         <Button variant="outlined" style={{ backgroundColor: "#2b2b2b", color: "#fff", borderColor: "#787878" }}>
           <i className={styled.heart} />
@@ -44,6 +69,7 @@ const Poster = ({ poster_path, image, rating, description, heart }) => {
 };
 
 const PostList = ({ data }) => {
+  console.log("data", data);
   return (
     <Grid container spacing={{ xs: 4 }} columns={{ xs: 4 }}>
       {
