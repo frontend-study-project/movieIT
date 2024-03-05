@@ -86,7 +86,7 @@ const BoxSeatInfo = () => {
         "auditorium" : '',
         "people" : totalNum,
         "seat" : selectedSeats,
-        "date": date + runningTime.timeStart,
+        "date": date.slice(0,9) + runningTime.timeStart,
         "money": totalPrice
     })
     })
