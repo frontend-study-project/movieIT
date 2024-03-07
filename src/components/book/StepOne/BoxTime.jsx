@@ -7,9 +7,11 @@ import { useFetchUserQuery } from "../../../hooks/useAuth";
 import { useDispatch, useSelector } from "react-redux";
 import { setBook, setPage } from "../../../store/slice/book";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const BoxTime = () => {
+  const {pathname} = useLocation();
+
   const navigate = useNavigate();
 
   const {data} = useFetchUserQuery();
@@ -116,7 +118,7 @@ const BoxTime = () => {
       })
     );
     
-    data ? dispatch(setPage(2)) : navigate('/login');
+    data ? dispatch(setPage(2)) : navigate('/login', {state: pathname});
     ;
   };
   return (
