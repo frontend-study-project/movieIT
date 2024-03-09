@@ -6,6 +6,8 @@ import { setPage } from "../../../store/slice/book";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { setAlert } from "../../../store/slice/alert";
+import { useQuery } from "@tanstack/react-query";
+import SkeletonBox from "../../common/Skeleton/Skeleton";
 
 const BoxSeatInfo = () => {
   const navigate = useNavigate();
@@ -15,6 +17,23 @@ const BoxSeatInfo = () => {
   const { date, movie, theater, screen, runningTime, rating } = useSelector(
     (state) => state.book.stepOne
   );
+
+  const [posterURL, setPosterURL] = useState("");
+  
+  const {isLoading, error, data} = useQuery({
+    queryKey: 'theaterList',
+    async queryFn() {
+      const response = await fetch("http://localhost:3000/api/movie/now_playing?page=1")
+      
+      return response.json();
+    }
+  })
+  
+  useEffect(() => {
+    const [movieInfo] = isLoading ? 'null' : data?.filter((ele) => ele.title === movie.txt);
+
+    setPosterURL(movieInfo.poster_path);
+  }, [data]);
 
   const selectedDate = new Date(date);
 
@@ -65,8 +84,6 @@ const BoxSeatInfo = () => {
     return acc
   }, 0);
 
-  const [posterURL, setPosterURL] = useState("");
-
   const handlePrevClick = () => {
     dispatch(setPage(1));
   };
@@ -94,16 +111,6 @@ const BoxSeatInfo = () => {
     navigate('/mypage/booking');
   }
 
-  useEffect(() => {
-    fetch("http://localhost:3000/api/movie/now_playing?page=1")
-      .then((res) => res.json())
-      .then((data) => {
-        const [movieInfo] = data.filter((ele) => ele.title === movie.txt);
-
-        setPosterURL(movieInfo.poster_path);
-      });
-  }, []);
-
   return (
     <div className={styled.box_result}>
       <div className={styled.item_movie}>
@@ -121,11 +128,13 @@ const BoxSeatInfo = () => {
             {runningTime.timeStart} ~ {runningTime.timeEnd}
           </span>
         </div>
-        <img
+        {isLoading ? (<SkeletonBox width={70} height={100} color={700}/>) : (
+          <img
           src={`https://image.tmdb.org/t/p/original/${posterURL}`}
           alt=""
           className={styled.thumb_img}
         />
+        )}
       </div>
       <div className={styled.item_seat}>
         <ul className={styled.info_seat}>
