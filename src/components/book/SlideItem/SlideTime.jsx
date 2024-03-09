@@ -6,7 +6,7 @@ import { useState } from "react";
 const SlideTime = ({ list, moveX, nowHour, onChangeHour }) => {
 
   const [count, setCount] = useState({
-    move: nowHour > 13 ? -13 : -nowHour, selected: -nowHour
+    move: nowHour > 13 ? -13 : -nowHour + 1, selected: -nowHour
   });
 
   const handleDisabledPrev = () => {

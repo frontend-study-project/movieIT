@@ -111,13 +111,13 @@ const BoxTheater = () => {
     },
   ];
   const [theaterList, setTheaterList] = useState([]);
-  // useEffect(() => {
-  //   fetch('http://localhost:3000/api/theater')
-  //   .then(res => res.json())
-  //   .then(data => {
-  //     setTheaterList(data)
-  //   })
-  // }, []);
+  useEffect(() => {
+    fetch('http://localhost:3000/api/theater')
+    .then(res => res.json())
+    .then(data => {
+      setTheaterList(data)
+    })
+  }, []);
 
   const dispatch = useDispatch();
 

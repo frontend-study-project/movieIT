@@ -6,7 +6,7 @@ import TheatersIcon from "@mui/icons-material/Theaters";
 import { useFetchUserQuery } from "../../../hooks/useAuth";
 import { useDispatch, useSelector } from "react-redux";
 import { setBook, setPage } from "../../../store/slice/book";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const BoxTime = () => {
@@ -119,8 +119,16 @@ const BoxTime = () => {
     );
     
     data ? dispatch(setPage(2)) : navigate('/login', {state: pathname});
-    ;
+    
   };
+
+  useEffect(() => {
+    fetch(`http://localhost:3000/api/booking/movie/${movie.id}/theater/${theater.id}?time=12:10`)
+    .then(res => res.json())
+    .then(data => {
+      console.log(data);
+    })
+  }, [])
   return (
     <div className={styled.box_time}>
       <h3 className={styledCommon.tit_box}>
