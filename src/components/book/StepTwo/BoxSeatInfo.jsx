@@ -5,13 +5,14 @@ import styled from "./StepTwo.module.css";
 import { setPage } from "../../../store/slice/book";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { setAlert } from "../../../store/slice/alert";
 
 const BoxSeatInfo = () => {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
 
-  const { date, movie, theater, screen, runningTime } = useSelector(
+  const { date, movie, theater, screen, runningTime, rating } = useSelector(
     (state) => state.book.stepOne
   );
 
@@ -24,9 +25,22 @@ const BoxSeatInfo = () => {
   const { totalNum, selectedSeats, seatCategory } = useSelector(
     (state) => state.book.stepTwo
   );
-
-  const listSelectedSeats = new Array(8).fill(0);
-
+  const listSelectedSeats = Array.from({length: 8}, (_,idx) => {
+    if (idx < totalNum) {
+      if (idx < selectedSeats.length) {
+        return <li key={`좌석선택${idx}`} className={styled.seat_selected} title="선택한 좌석">
+          {selectedSeats[idx]}
+        </li>
+      } else {
+        return <li key={`좌석선택${idx}`} className={styled.seat_empty} title="선택할 수 있는 좌석">
+        -
+      </li>
+      }
+    } else {
+      return <li key={`좌석선택${idx}`} title="구매가능 좌석">-</li>
+    }
+  });
+  
   const ageCate = {
     adult: {
       num: Math.min(seatCategory.adult , selectedSeats.length),
@@ -58,16 +72,33 @@ const BoxSeatInfo = () => {
   };
 
   const handleCompleteBook = () => {
-    alert('예매가 완료되었습니다!');
+    dispatch(setAlert({
+      open: true,
+      title: '예매가 완료되었습니다!',
+      btnList: [{autoFocus: true, txt: '확인'}]
+    }))
 
-    navigate('/mypage/booking')
+    fetch('http://localhost:3000/api/reservation', {
+      method: 'POST',
+      body: JSON.stringify({
+        "movieId" : movie.id,
+        "theaterId" : theater.id,
+        "auditorium" : '',
+        "people" : totalNum,
+        "seat" : selectedSeats,
+        "date": date.slice(0,10) + ' '  + runningTime.timeStart,
+        "money": totalPrice
+    })
+    })
+
+    navigate('/mypage/booking');
   }
 
   useEffect(() => {
     fetch("http://localhost:3000/api/movie/now_playing?page=1")
       .then((res) => res.json())
       .then((data) => {
-        const [movieInfo] = data.filter((ele) => ele.title === movie);
+        const [movieInfo] = data.filter((ele) => ele.title === movie.txt);
 
         setPosterURL(movieInfo.poster_path);
       });
@@ -76,13 +107,13 @@ const BoxSeatInfo = () => {
   return (
     <div className={styled.box_result}>
       <div className={styled.item_movie}>
-        <RatingItem rating={1} ratingDesc={"전체관람가"} />
-        <span className={styled.txt_tit}>{movie}</span>
+        <RatingItem rating={rating} ratingDesc={"전체관람가"} />
+        <span className={styled.txt_tit}>{movie.txt}</span>
         <span className={styled.txt_cate}>2D(자막)</span>
       </div>
       <div className={styled.item_info}>
         <div className={styled.inner_info}>
-          {theater} <br />
+          {theater.txt} <br />
           {screen}
           <br />
           {layoutDate} <br />
@@ -117,23 +148,7 @@ const BoxSeatInfo = () => {
         <div className={styled.info_select}>
           <em>선택좌석</em>
           <ul>
-            {
-              listSelectedSeats.map((ele, idx) => {
-                if (idx < totalNum) {
-                  if (idx < selectedSeats.length) {
-                    return <li key={`좌석선택${idx}`} className={styled.seat_selected} title="선택한 좌석">
-                      {selectedSeats[idx]}
-                    </li>
-                  } else {
-                    return <li key={`좌석선택${idx}`} className={styled.seat_empty} title="선택할 수 있는 좌석">
-                    -
-                  </li>
-                  }
-                } else {
-                  return <li key={`좌석선택${idx}`} title="구매가능 좌석">-</li>
-                }
-              })
-            }
+            {listSelectedSeats}
           </ul>
         </div>
       </div>

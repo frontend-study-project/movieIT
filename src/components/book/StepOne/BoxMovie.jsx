@@ -10,7 +10,8 @@ import styled from "./StepOne.module.css";
 const BoxMovie = () => {
   const dispatch = useDispatch();
   const [movieList, setMovieList] = useState([]);
-  const chosenMovie = useSelector((state) => state.book.stepOne.movie);
+  const [selectedMovieId, setSelectedMovieId] = useState(null);
+  const {date} = useSelector((state) => state.book.stepOne);
   const ratingList = {
     'All': '전체 관람가',
     '12': '12세 이상 관람가',
@@ -21,9 +22,8 @@ const BoxMovie = () => {
     fetch("http://localhost:3000/api/movie/now_playing?page=1")
       .then((res) => res.json())
       .then((data) => {
-        let list = [];
-        list = data.map((ele) => {
-          console.log(ele.certification)
+        let list = data.filter(ele => new Date(ele.release_date) <= new Date(date));
+        list = [...list].map((ele) => {
           return {
             id: ele.id,
             rating: ele.certification,
@@ -31,17 +31,15 @@ const BoxMovie = () => {
             name: ele.title,
           };
         });
-
         setMovieList(list);
       });
-  }, []);
+  }, [date]);
 
-  const handleClickMovie = (event) => {
-    const [movie] = movieList.filter(
-      (ele) => ele.id === +event.currentTarget.id
-    );
+  const handleClickMovie = (movie) => {
+    setSelectedMovieId(movie.id);
 
-    dispatch(setBook({ step: "stepOne", type: "movie", data: movie.name }));
+    dispatch(setBook({ step: "stepOne", type: "movie", data: {id: movie.id, txt: movie.name} }));
+    dispatch(setBook({ step: "stepOne", type: "rating", data: movie.rating }))
   };
 
   return (
@@ -53,9 +51,9 @@ const BoxMovie = () => {
         {movieList.map((item) => (
           <li
             key={item.id}
-            className={chosenMovie === item.name ? styled.on : ""}
+            className={selectedMovieId && (selectedMovieId === item.id) ? styled.on : ""}
           >
-            <button type="button" id={item.id} onClick={handleClickMovie}>
+            <button type="button" id={item.id} onClick={() => handleClickMovie(item)}>
               <RatingItem rating={item.rating} ratingDesc={item.ratingDesc} />
               <span className={styled.txt_movie}>{item.name}</span>
               <span className={styled.like_movie}>

@@ -3,20 +3,24 @@ import styled from "./StepOne.module.css";
 import SlideTime from "../SlideItem/SlideTime";
 
 import TheatersIcon from "@mui/icons-material/Theaters";
+import { useFetchUserQuery } from "../../../hooks/useAuth";
 import { useDispatch, useSelector } from "react-redux";
-import { setBook } from "../../../store/slice/book";
-import { setPage } from "../../../store/slice/book";
-import { useEffect, useState } from "react";
+import { setBook, setPage } from "../../../store/slice/book";
+import { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const BoxTime = () => {
+  const {pathname} = useLocation();
+
+  const navigate = useNavigate();
+
+  const {data} = useFetchUserQuery();
+  
   const dispatch = useDispatch();
 
   const hourList = [];
   for (let i = 1; i <= 24; i++) {
-    hourList.push({
-      id: i,
-      num: i,
-    });
+    hourList.push(i);
   }
 
   const screenList = [
@@ -113,8 +117,9 @@ const BoxTime = () => {
         data: screen,
       })
     );
-
-    dispatch(setPage(2));
+    
+    data ? dispatch(setPage(2)) : navigate('/login', {state: pathname});
+    ;
   };
   return (
     <div className={styled.box_time}>
@@ -122,7 +127,7 @@ const BoxTime = () => {
         시간<span className={styledCommon.screen_out}>선택</span>
       </h3>
       {hourList && <SlideTime list={hourList} moveX={35} nowHour={nowHour} onChangeHour={onChangeHour}/>}
-      {movie === "" || theater === "" ? (
+      {movie.txt === "" || theater.txt === "" ? (
         <div className={styled.area_empty}>
           <TheatersIcon fontSize="large" color="disabled" />
           <p>
@@ -139,21 +144,21 @@ const BoxTime = () => {
                 <button
                   type="button"
                   data-screen={ele.screen}
-                  data-timestart={`${+nowHour + 1} : ${ele.minute}`}
+                  data-timestart={`${+nowHour} : ${ele.minute}`}
                   data-timeend={`${+nowHour + 2} : ${ele.minute}`}
                   onClick={handleHourClick}
                 >
                   <div className={styled.item_time}>
-                    <span className={styled.emph_time}>{+nowHour + 1} : {ele.minute}</span>
+                    <span className={styled.emph_time}>{+nowHour} : {ele.minute}</span>
                     <div className={styled.txt_time}>~ {+nowHour + 2} : {ele.minute}</div>
                   </div>
                   <div className={styled.item_tit}>
-                    <strong className={styled.txt_tit}>{movie}</strong>
+                    <strong className={styled.txt_tit}>{movie.txt}</strong>
                     <span className={styled.txt_desc}>2D (자막)</span>
                   </div>
                   <div className={styled.item_info}>
                     <span className={styled.txt_theater}>
-                      {theater}
+                      {theater.txt}
                       <br /> {ele.screen}
                     </span>
                     <span className={styled.wrap_seat}>
