@@ -10,12 +10,12 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const BoxTime = () => {
-  const {pathname} = useLocation();
+  const { pathname } = useLocation();
 
   const navigate = useNavigate();
 
-  const {data} = useFetchUserQuery();
-  
+  const { data } = useFetchUserQuery();
+
   const dispatch = useDispatch();
 
   const hourList = [];
@@ -23,76 +23,22 @@ const BoxTime = () => {
     hourList.push(i);
   }
 
-  const screenList = [
-    {
-      minute: 10,
-      screen: "컴포트3관",
-      seatLeft: 253,
-      seatTotal: 348,
-    },
-    {
-      minute: 15,
-      screen: "컴포트7관",
-      seatLeft: 253,
-      seatTotal: 348,
-    },
-    {
-      minute: 20,
-      screen: "컴포트4관",
-      seatLeft: 253,
-      seatTotal: 348,
-    },
-    {
-      minute: 25,
-      screen: "컴포트9관",
-      seatLeft: 253,
-      seatTotal: 348,
-    },
-    {
-      minute: 30,
-      screen: "컴포트2관",
-      seatLeft: 253,
-      seatTotal: 348,
-    },
-    {
-      minute: 35,
-      screen: "컴포트11관",
-      seatLeft: 253,
-      seatTotal: 348,
-    },
-    {
-      minute: 40,
-      screen: "컴포트5관",
-      seatLeft: 253,
-      seatTotal: 348,
-    },
-    {
-      minute: 45,
-      screen: "컴포트6관",
-      seatLeft: 253,
-      seatTotal: 348,
-    },
-    {
-      minute: 50,
-      screen: "컴포트10관",
-      seatLeft: 253,
-      seatTotal: 348,
-    },
-    {
-      minute: 55,
-      screen: "컴포트8관",
-      seatLeft: 253,
-      seatTotal: 348,
-    },
-  ];
-  
+  const screenList = Array.from({ length: 10 }).map((_, idx) => {
+    return {
+      minute: 10 + idx * 5,
+      screen: `컴포트${parseInt(Math.random() * 12 + 1)}관`,
+    };
+  });
+
+  const [seatLeftList, setSeatList] = useState([]);
+
   const [nowHour, setNowHour] = useState(new Date().getHours());
 
   const { movie, theater } = useSelector((state) => state.book.stepOne);
 
   const onChangeHour = (hour) => {
-    setNowHour(hour)
-  }
+    setNowHour(hour);
+  };
 
   const handleHourClick = (event) => {
     const screen = event.currentTarget.getAttribute("data-screen");
@@ -101,7 +47,7 @@ const BoxTime = () => {
 
     dispatch(
       setBook({
-        step: 'stepOne',
+        step: "stepOne",
         type: "runningTime",
         data: {
           timeStart,
@@ -112,29 +58,40 @@ const BoxTime = () => {
 
     dispatch(
       setBook({
-        step: 'stepOne',
+        step: "stepOne",
         type: "screen",
         data: screen,
       })
     );
-    
-    data ? dispatch(setPage(2)) : navigate('/login', {state: pathname});
-    
+
+    data ? dispatch(setPage(2)) : navigate("/login", { state: pathname });
   };
 
   useEffect(() => {
-    fetch(`http://localhost:3000/api/booking/movie/${movie.id}/theater/${theater.id}?time=12:10`)
-    .then(res => res.json())
-    .then(data => {
-      console.log(data);
-    })
-  }, [])
+    if (movie.id !== "" && theater.id !== "") {
+      fetch(
+        `http://localhost:3000/api/booking/movie/${movie.id}/theater/${theater.id}?time=${nowHour}`
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          setSeatList(data);
+          console.log(data)
+        });
+    }
+  }, [movie, theater]);
   return (
     <div className={styled.box_time}>
       <h3 className={styledCommon.tit_box}>
         시간<span className={styledCommon.screen_out}>선택</span>
       </h3>
-      {hourList && <SlideTime list={hourList} moveX={35} nowHour={nowHour} onChangeHour={onChangeHour}/>}
+      {hourList && (
+        <SlideTime
+          list={hourList}
+          moveX={35}
+          nowHour={nowHour}
+          onChangeHour={onChangeHour}
+        />
+      )}
       {movie.txt === "" || theater.txt === "" ? (
         <div className={styled.area_empty}>
           <TheatersIcon fontSize="large" color="disabled" />
@@ -157,8 +114,12 @@ const BoxTime = () => {
                   onClick={handleHourClick}
                 >
                   <div className={styled.item_time}>
-                    <span className={styled.emph_time}>{+nowHour} : {ele.minute}</span>
-                    <div className={styled.txt_time}>~ {+nowHour + 2} : {ele.minute}</div>
+                    <span className={styled.emph_time}>
+                      {+nowHour} : {ele.minute}
+                    </span>
+                    <div className={styled.txt_time}>
+                      ~ {+nowHour + 2} : {ele.minute}
+                    </div>
                   </div>
                   <div className={styled.item_tit}>
                     <strong className={styled.txt_tit}>{movie.txt}</strong>
@@ -170,8 +131,10 @@ const BoxTime = () => {
                       <br /> {ele.screen}
                     </span>
                     <span className={styled.wrap_seat}>
-                      <span className={styled.num_left}>{ele.seatLeft}</span>/
-                      <span className={styled.num_total}>{ele.seatTotal}</span>
+                      <span className={styled.num_left}>
+                        {440 - seatLeftList[idx]}
+                      </span>
+                      /<span className={styled.num_total}>440</span>
                     </span>
                   </div>
                 </button>

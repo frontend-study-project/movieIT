@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { setAlert } from "../../../store/slice/alert";
 import { useQuery } from "@tanstack/react-query";
 import SkeletonBox from "../../common/Skeleton/Skeleton";
+import { getAuthorization } from "../../../api/auth.api";
 
 const BoxSeatInfo = () => {
   const navigate = useNavigate();
@@ -21,7 +22,7 @@ const BoxSeatInfo = () => {
   const [posterURL, setPosterURL] = useState("");
   
   const {isLoading, error, data} = useQuery({
-    queryKey: 'theaterList',
+    queryKey: ['theaterList'],
     async queryFn() {
       const response = await fetch("http://localhost:3000/api/movie/now_playing?page=1")
       
@@ -97,6 +98,9 @@ const BoxSeatInfo = () => {
 
     fetch('http://localhost:3000/api/reservation', {
       method: 'POST',
+      headers: {
+        Authorization: `Bearer ${getAuthorization()}`, 
+      },
       body: JSON.stringify({
         "movieId" : movie.id,
         "theaterId" : theater.id,

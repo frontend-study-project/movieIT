@@ -9,11 +9,13 @@ import styled from "./StepTwo.module.css";
 import SeatArrange from "../SeatItem/SeatArrange";
 import SeatDimmed from "../SeatItem/SeatDimmed";
 import { setAlert } from "../../../store/slice/alert";
+import { getAuthorization } from "../../../api/auth.api";
 
 const BoxSeat = () => {
+
   const dispatch = useDispatch();
 
-  const {rating} = useSelector(state => state.book.stepOne);
+  const {rating, theater, movie} = useSelector(state => state.book.stepOne);
   const {totalNum, selectedSeats} = useSelector(state => state.book.stepTwo);
 
   const [count, setCount] = useState({
@@ -39,7 +41,21 @@ const BoxSeat = () => {
     const total = count.adult + count.teenager + count.senior + count.challenged;
 
     dispatch(setBook({ step: "stepTwo", type: "totalNum", data: total }));
+
+    
   }, [count]);
+
+  if (movie.id !== '' && theater.id !== '') {
+    fetch(`http://localhost:3000/api/booking/movie/${movie.id}/theater/${theater.id}/seat?date=2024-03-06 23:01`,{
+      headers: {
+        Authorization: `Bearer ${getAuthorization()}`, 
+      }
+    })
+    .then(res => res.json())
+    .then(data => {
+      console.log(data);
+    })
+  }
 
   const onAddCount = (id) => {
     if (totalNum >= 8) {
@@ -128,7 +144,7 @@ const BoxSeat = () => {
       </div>
       <div
         className={`${styled.box_seat} ${styledCommon.scroll}`}
-        style={{ overflowY: totalNum ? "hidden" : "scroll" }}
+        style={{ overflowY: totalNum ? "scroll" : "hidden" }}
       >
         {totalNum === 0 && <SeatDimmed />}
         <SeatArrange />

@@ -22,7 +22,7 @@ const BoxMovie = () => {
   }
 
   const {isLoading, error, data} = useQuery({
-    queryKey: 'movieList',
+    queryKey: ['movieList'],
     async queryFn() {
       const response = await fetch("http://localhost:3000/api/movie/now_playing?page=1");
     
