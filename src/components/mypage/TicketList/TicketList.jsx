@@ -20,7 +20,7 @@ const TicketList = () => {
       field: 'poster', 
       headerName: '포스터', 
       width: 100 ,
-      renderCell: ({ value }) => <img style={{ width: '100%' }} src={value} />
+      renderCell: ({ value }) => <img style={{ width: '100%' }} src={`https://image.tmdb.org/t/p/w400/${value}`} />
     },
     { 
       field: 'movie', 
@@ -30,17 +30,17 @@ const TicketList = () => {
     { 
       field: 'theater', 
       headerName: '극장정보', 
-      width: 150 
+      width: 150,
     },
     { 
       field: 'date', 
       headerName: '관람일시', 
-      width: 200 
+      width: 180
     },
     { 
       field: 'seat', 
       headerName: '관람좌석', 
-      width: 70 
+      width: 90 
     },
     { 
       field: 'money', 
