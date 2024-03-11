@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setBook } from "../../../store/slice/book";
 import { setAlert } from "../../../store/slice/alert";
 
-const SeatArrange = () => {
+const SeatArrange = ({occupiedSeatsList}) => {
   const [seatArr, setSeatArr] = useState({
     seatRowArr: [],
     seatColArr: [],
@@ -110,6 +110,16 @@ const SeatArrange = () => {
     }
     
   };
+
+  const handleSeatClassName = (key) => {
+    if (selectedSeats.includes(key)) {
+      return "selected";
+    } else if (occupiedSeatsList.includes(key)) {
+      return "occupied";
+    } else {
+      return "common"
+    }
+  }
   
   useEffect(() => {
     return () => {
@@ -148,7 +158,7 @@ const SeatArrange = () => {
                   onClick={handleClickSeat}
                 >
                   <SeatItem
-                    seatType={selectedSeats.includes(key) ? "selected" : "common"}
+                    seatType={handleSeatClassName(key)}
                     seatDesc={`${row.order}${col.order}`}
                     seatNum={col.order}
                   />

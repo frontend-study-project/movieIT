@@ -75,7 +75,6 @@ const BoxTime = () => {
         .then((res) => res.json())
         .then((data) => {
           setSeatList(data);
-          console.log(data)
         });
     }
   }, [movie, theater]);

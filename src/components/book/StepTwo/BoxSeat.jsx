@@ -12,10 +12,11 @@ import { setAlert } from "../../../store/slice/alert";
 import { getAuthorization } from "../../../api/auth.api";
 
 const BoxSeat = () => {
+  const [occupiedSeatsList, setoOccupiedSeatsList] = useState(['F14', 'F15']);
 
   const dispatch = useDispatch();
 
-  const {rating, theater, movie} = useSelector(state => state.book.stepOne);
+  const {rating, theater, movie, date, runningTime} = useSelector(state => state.book.stepOne);
   const {totalNum, selectedSeats} = useSelector(state => state.book.stepTwo);
 
   const [count, setCount] = useState({
@@ -42,20 +43,20 @@ const BoxSeat = () => {
 
     dispatch(setBook({ step: "stepTwo", type: "totalNum", data: total }));
 
-    
+    if (movie.id !== '' && theater.id !== '') {
+      fetch(`http://localhost:3000/api/booking/movie/${movie.id}/theater/${theater.id}/seat?date=${date.slice(0,10) + ' '  + runningTime.timeStart}`,{
+        headers: {
+          Authorization: `Bearer ${getAuthorization()}`, 
+          'Content-Type': 'application/json',
+        }
+      })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+        setoOccupiedSeatsList(data);
+      })
+    }
   }, [count]);
-
-  if (movie.id !== '' && theater.id !== '') {
-    fetch(`http://localhost:3000/api/booking/movie/${movie.id}/theater/${theater.id}/seat?date=2024-03-06 23:01`,{
-      headers: {
-        Authorization: `Bearer ${getAuthorization()}`, 
-      }
-    })
-    .then(res => res.json())
-    .then(data => {
-      console.log(data);
-    })
-  }
 
   const onAddCount = (id) => {
     if (totalNum >= 8) {
@@ -147,7 +148,7 @@ const BoxSeat = () => {
         style={{ overflowY: totalNum ? "scroll" : "hidden" }}
       >
         {totalNum === 0 && <SeatDimmed />}
-        <SeatArrange />
+        <SeatArrange occupiedSeatsList={occupiedSeatsList} />
       </div>
     </div>
   );

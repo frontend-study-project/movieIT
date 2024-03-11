@@ -90,16 +90,12 @@ const BoxSeatInfo = () => {
   };
 
   const handleCompleteBook = () => {
-    dispatch(setAlert({
-      open: true,
-      title: '예매가 완료되었습니다!',
-      btnList: [{autoFocus: true, txt: '확인'}]
-    }))
-
+    
     fetch('http://localhost:3000/api/reservation', {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${getAuthorization()}`, 
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         "movieId" : movie.id,
@@ -111,8 +107,16 @@ const BoxSeatInfo = () => {
         "money": totalPrice
     })
     })
-
-    navigate('/mypage/booking');
+    .then(() => {
+      dispatch(setAlert({
+        open: true,
+        title: '예매가 완료되었습니다!',
+        btnList: [{autoFocus: true, txt: '확인'}]
+      }))
+  
+    })
+    
+    // navigate('/mypage/booking');
   }
 
   return (
@@ -147,9 +151,6 @@ const BoxSeatInfo = () => {
           </li>
           <li>
             <SeatItem seatType={"occupied"} seatDesc={"예매완료"} /> 예매완료
-          </li>
-          <li>
-            <SeatItem seatType={"impossible"} seatDesc={"선택불가"} /> 선택불가
           </li>
           <li>
             <SeatItem seatType={"common"} seatDesc={"일반"} /> 일반
