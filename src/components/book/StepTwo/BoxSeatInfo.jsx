@@ -20,6 +20,7 @@ const BoxSeatInfo = () => {
   );
 
   const [posterURL, setPosterURL] = useState("");
+  const [isLoaded, setIsLoaded] = useState(false);
   
   const {isLoading, error, data} = useQuery({
     queryKey: ['theaterList'],
@@ -90,7 +91,14 @@ const BoxSeatInfo = () => {
   };
 
   const handleCompleteBook = () => {
-    
+    if (!totalPrice) {
+      dispatch(setAlert({
+        open: true,
+        title: '좌석을 먼저 선택완료해주세요.',
+        btnList: [{autoFocus: true, txt: '확인'}]
+      }));
+      return;
+    }
     fetch('http://localhost:3000/api/reservation', {
       method: 'POST',
       headers: {
@@ -99,11 +107,11 @@ const BoxSeatInfo = () => {
       },
       body: JSON.stringify({
         "movieId" : movie.id,
-        "theaterId" : theater.id,
+        "theaterId" : theater.id, 
         "auditorium" : '',
         "people" : totalNum,
         "seat" : selectedSeats,
-        "date": date.slice(0,10) + ' '  + runningTime.timeStart,
+        "date": date.slice(0,10) + ' '  + runningTime.timeStart.replaceAll(' ', ''),
         "money": totalPrice
     })
     })
@@ -115,10 +123,12 @@ const BoxSeatInfo = () => {
       }))
   
     })
-    
     // navigate('/mypage/booking');
   }
 
+  const handlePosterImgLoad = (event) => {
+    setIsLoaded(true);
+  }
   return (
     <div className={styled.box_result}>
       <div className={styled.item_movie}>
@@ -136,13 +146,15 @@ const BoxSeatInfo = () => {
             {runningTime.timeStart} ~ {runningTime.timeEnd}
           </span>
         </div>
-        {isLoading ? (<SkeletonBox width={70} height={100} color={700}/>) : (
-          <img
+        {!isLoaded && <div className={styled.box_skeleton}>
+          <SkeletonBox width={70} height={100} color={700} />
+        </div> }
+        <img
           src={`https://image.tmdb.org/t/p/original/${posterURL}`}
           alt=""
           className={styled.thumb_img}
+          onLoad={handlePosterImgLoad}
         />
-        )}
       </div>
       <div className={styled.item_seat}>
         <ul className={styled.info_seat}>

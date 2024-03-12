@@ -72,12 +72,12 @@ const BoxTheater = () => {
                   <li
                     key={item2.id}
                     className={
-                      parseInt(selectedTheaterId) === parseInt(idx2) ? `${styled.on}` : ""
+                      parseInt(selectedTheaterId) === parseInt(item2.id) ? `${styled.on}` : ""
                     }
                   >
                     <button
                       type="button"
-                      onClick={() => handleClickTheater(idx2, item2.txt)}
+                      onClick={() => handleClickTheater(item2.id, item2.txt)}
                     >
                       {item2.txt}
                     </button>
