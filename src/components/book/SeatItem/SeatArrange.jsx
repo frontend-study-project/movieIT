@@ -114,7 +114,7 @@ const SeatArrange = ({occupiedSeatsList}) => {
   const handleSeatClassName = (key) => {
     if (selectedSeats.includes(key)) {
       return "selected";
-    } else if (occupiedSeatsList.includes(key)) {
+    } else if (occupiedSeatsList?.includes(key)) {
       return "occupied";
     } else {
       return "common"

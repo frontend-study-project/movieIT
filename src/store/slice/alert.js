@@ -4,7 +4,7 @@ const initialState = {
   open: false,
   title: '',
   content: '',
-  btnList: []
+  btnList: [], 
 }
 
 const reducers = {

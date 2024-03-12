@@ -36,6 +36,27 @@ const reducers ={
     const {step, type, dataId} = payload;
     state[step][type][dataId] -= 1;
   },
+  reset() {
+    return {
+      page: 1,
+      stepOne: {
+        date: '',
+        rating: '',
+        movie: {id: '', txt: ''},
+        area: '',
+        theater: {id: '', txt: ''},
+        runningTime: {
+          timeStart: '',
+          timeEnd: ''
+        },
+      },
+      stepTwo: {
+        totalNum: 0,
+        seatCategory: {adult: 0, teenager: 0, senior: 0, challenged: 0},
+        selectedSeats: []
+      }
+    }
+  }
 }
 
 const bookSlice = createSlice({
@@ -44,5 +65,5 @@ const bookSlice = createSlice({
   reducers
 })
 
-export const { setBook, setPage, setAddCate, setMinusCate } = bookSlice.actions;
+export const { setBook, setPage, setAddCate, setMinusCate, reset } = bookSlice.actions;
 export default bookSlice.reducer;
