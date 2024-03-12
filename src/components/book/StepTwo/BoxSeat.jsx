@@ -52,7 +52,6 @@ const BoxSeat = () => {
       })
       .then(res => res.json())
       .then(data => {
-        console.log(data);
         setoOccupiedSeatsList(data);
       })
     }

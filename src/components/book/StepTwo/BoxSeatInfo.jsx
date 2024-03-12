@@ -4,14 +4,12 @@ import SeatItem from "../SeatItem/SeatItem";
 import styled from "./StepTwo.module.css";
 import { setPage } from "../../../store/slice/book";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { setAlert } from "../../../store/slice/alert";
 import { useQuery } from "@tanstack/react-query";
 import SkeletonBox from "../../common/Skeleton/Skeleton";
 import { getAuthorization } from "../../../api/auth.api";
 
 const BoxSeatInfo = () => {
-  const navigate = useNavigate();
 
   const dispatch = useDispatch();
 
@@ -119,11 +117,9 @@ const BoxSeatInfo = () => {
       dispatch(setAlert({
         open: true,
         title: '예매가 완료되었습니다!',
-        btnList: [{autoFocus: true, txt: '확인'}]
+        btnList: [{autoFocus: true, txt: '확인'}],
       }))
-  
     })
-    // navigate('/mypage/booking');
   }
 
   const handlePosterImgLoad = (event) => {
@@ -188,7 +184,7 @@ const BoxSeatInfo = () => {
         <div className={styled.txt_pay}>
           <em>최종결제금액</em>
           <strong className={styled.num_pay}>
-            <em>{totalPrice}</em>원
+            <em>{Number(totalPrice).toLocaleString()}</em>원
           </strong>
         </div>
       </div>

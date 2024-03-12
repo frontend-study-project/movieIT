@@ -68,7 +68,6 @@ const BoxTime = () => {
   };
 
   useEffect(() => {
-    console.log(theater.id);
     if (movie.id !== "" && theater.id !== "") {
       fetch(
         `http://localhost:3000/api/booking/movie/${movie.id}/theater/${theater.id}?hour=${nowHour}`
@@ -132,7 +131,7 @@ const BoxTime = () => {
                     </span>
                     <span className={styled.wrap_seat}>
                       <span className={styled.num_left}>
-                        {440 - seatLeftList[idx]}
+                        {440 - seatLeftList[idx] || 0}
                       </span>
                       /<span className={styled.num_total}>440</span>
                     </span>
