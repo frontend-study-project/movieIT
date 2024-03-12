@@ -6,10 +6,10 @@ import Divider from '@mui/material/Divider';
 import moment from 'moment';
 import { getImageUrl } from '../../../hooks/useImageUrl';
 import RatingItem from '../../book/CommonItem/RatingItem';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Poster = ({ image, rating, certification, heart, description, poster_path, voteAverage, releaseDate, name, id }) => {
-  
+ 
   return (
     <div className={styled.poster}>
       <Card className={styled.poster_thumnail}>
@@ -73,12 +73,20 @@ const Poster = ({ image, rating, certification, heart, description, poster_path,
 
 const PostList = ({ data }) => {
   console.log("data", data);
+
+  const navigate = useNavigate();
+
+  const handelDetailPage = (data) => {
+    navigate('/movie/detail', {
+      state: data
+    })
+  }
   return (
     <Grid container spacing={{ xs: 4 }} columns={{ xs: 4 }}>
       {
         data.map((poster) => (
-          <Grid key={poster.id} item xs={1}>
-            <Poster {...poster} />
+          <Grid key={poster.id} item xs={1} onClick={() => handelDetailPage(poster)}>
+            <Poster {...poster} data={data}/>
           </Grid>
         ))
       }

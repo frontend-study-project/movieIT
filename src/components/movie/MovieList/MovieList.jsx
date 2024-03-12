@@ -24,7 +24,10 @@ const MovieList = () => {
                 name: ele.title,
                 voteAverage: ele.vote_average,
                 releaseDate: ele.release_date,
-                description: ele.overview
+                description: ele.overview,
+                backdropPath: ele.backdrop_path,
+                engName: ele.original_title
+                // length: data.legnth
               };
             });
             setMovieList(list);

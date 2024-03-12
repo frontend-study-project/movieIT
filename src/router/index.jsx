@@ -11,6 +11,7 @@ import MypageBooking from '../pages/Mypage/Booking/MypageBooking';
 import MyUpdate from '../pages/Mypage/MyUpdate/MyUpdate';
 import MyTheater from '../pages/Mypage/MyTheater/MyTheater';
 import PasswordChange from '../pages/Mypage/PasswordChange/PasswordChange';
+import MovieDetail from '../components/movie/MovieDetail/MovieDetail';
 
 const routes = [
   {
@@ -23,6 +24,10 @@ const routes = [
       {
         path: '/movie',
         element: <Movie />,
+      },
+      {
+        path: '/movie/detail',
+        element: <MovieDetail/>
       },
       {
         path: '/book',

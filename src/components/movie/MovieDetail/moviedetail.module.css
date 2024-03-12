@@ -1,0 +1,187 @@
+.wrapper{
+  position: relative;
+  z-index: 1;
+  height: 520px;
+  margin: 0 0 40px 0;
+  color: #ccc;
+  background-color: #151515;
+}
+.bg_img{
+  position: absolute;
+  left: 50%;
+  top: 0;
+  z-index: 1;
+  width: 1100px;
+  margin: 0 0 0 -550px;
+  height: 100%;
+  background-position: center 0;
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+  opacity: .8;
+}
+.bg_img::after{
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(15, 15, 15, .5);
+}
+.bgpattern{
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 3;
+  width: 100%;
+  height: 100%;
+}
+.bgmask{
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 4;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, #0f0f0f 20%, rgba(15, 15, 15, 0) 50%, #0f0f0f 80%);
+}
+.deaitl_content{
+  position: relative;
+  z-index: 4;
+  width: 1100px;
+  height: 100%;
+  margin: 0 auto;
+  padding: 0px;
+}
+
+.title{
+    position: static;
+    left: inherit;
+    top: inherit;
+    width: 800px;
+    padding: 15px 0 0 0;
+    color: #fff;
+    font-size: 3.0666em;
+    font-weight: 400;
+    line-height: 1.2;
+    text-shadow: 2px 2px 10px rgba(0,0,0,.7);
+}
+.eng_title{
+    width: 800px;
+    padding: 10px 0 0 0;
+    font-size: 1.3333em;
+    font-family: Roboto;
+    color: #fff;
+    line-height: 1.1;
+    overflow: hidden;
+    max-width: 100%;
+    white-space: nowrap;
+    text-overflow: ellipsis;  
+}
+.button_util{
+    padding: 15px 0 0 0;
+}
+.button {
+    display: inline-block;
+    min-width: 100px;
+    height: 36px;
+    line-height: 3px;
+    margin: 0 6px 0 0;
+    padding: 0 10px;
+    font-size: .9333em;
+    color: #fff;
+    text-decoration: none;
+    text-align: center;
+    border: 1px solid #706f72;
+    border-radius: 4px;
+    background-color: transparent;
+    cursor: pointer;
+    letter-spacing: -.5px;
+    font-weight: 400;
+    font-family: NanumBarunGothic, Dotum, '돋움', sans-serif;
+}
+.button:hover{
+    color: #222;
+    background-color: #fff;
+}
+.heart {
+    width: 17px;
+    height: 15px;
+    display: block;
+    background: url(/images/icon/ico-heart-toggle-gray.png);
+  }
+.heart-num {
+    margin-left: 5px;
+    font-size: 13px;
+    letter-spacing: -1px;
+}
+.sns_share{
+    position: relative;
+    display: inline-block;
+}
+.common_share:hover{
+    cursor: pointer;
+    color: gray;
+    background-color: #fff;
+}
+.common_share{
+    display: inline-block;
+    min-width: 100px;
+    height: 36px;
+    line-height: 50px;
+    margin: 0 5px 0 0;
+    padding: 0 10px;
+    font-size: .9333em;
+    color: #fff;
+    text-decoration: none;
+    text-align: center;
+    border: 1px solid #706f72;
+    border-radius: 4px;
+    background-color: transparent;
+}
+.iconset{
+    margin-right: 4px;
+    width: 17px;
+    height: 17px;
+    background-image: url(https://img.megabox.co.kr/static/pc/images/common/ico/ico-sns-line.png);
+    overflow: hidden;
+    display: inline-block;
+    margin: 5px;
+    padding: 0;
+    font-size: 0;
+    line-height: 0;
+    vertical-align: middle;
+    background-position: 0 0;
+    background-repeat: no-repeat;
+}
+.info{
+    position: absolute;
+    left: 0;
+    bottom: 45px;
+    padding: 0;
+}
+.score{
+    float: left;
+    padding: 0;
+}
+.tit{
+    display: block;
+    padding: 0 0 15px 0;
+    line-height: 1.1;
+    font-size: .9333em;
+}
+.number{
+    padding: 0 0 0 30px;
+    background: url(https://img.megabox.co.kr/static/pc/images/common/ico/ico-megabox.png) no-repeat 0 center;
+    font-family: Roboto, Dotum, '돋움', sans-serif;
+    font-weight: 400;
+}
+.before{
+    font-size: 2.1333em; 
+    color: #59bec9;
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 1.1;
+}
