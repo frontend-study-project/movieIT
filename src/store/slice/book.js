@@ -4,9 +4,10 @@ const initialState = {
   page: 1,
   stepOne: {
     date: '',
-    movie: '',
+    rating: '',
+    movie: {id: '', txt: ''},
     area: '',
-    theater: '',
+    theater: {id: '', txt: ''},
     runningTime: {
       timeStart: '',
       timeEnd: ''

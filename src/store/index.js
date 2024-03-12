@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
 import SearchReducer from './slice/search';
-import bookReducer from './slice/book';
+import BookReducer from './slice/book';
+import AlertReducer from './slice/alert';
 
 export default configureStore({
   reducer: {
     search: SearchReducer,
-    book: bookReducer,
+    book: BookReducer,
+    alert: AlertReducer
   }
 })

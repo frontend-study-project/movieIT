@@ -15,19 +15,17 @@ const BoxDate = () => {
       setBook({
         step: 'stepOne',
         type: "date",
-        data: date.toDateString(),
+        data: date.toISOString(),
       })
     );
   };
 
   const [dates, setDates] = useState([]);
 
-  const [year, setYear] = useState(
-    `${new Date().getFullYear()}.${new Date().getMonth() + 1}`
-  );
+  const [year, setYear] = useState(new Date().toISOString().slice(0, 7));
 
   const yearHandler = (date) => {
-    setYear(`${date.getFullYear()}.${date.getMonth() + 1}`);
+    setYear(new Date().toISOString().slice(0, 7));
   };
 
   useEffect(() => {
@@ -36,12 +34,11 @@ const BoxDate = () => {
     const defaultDates = [];
     for (let i = 0; i < 30; i++) {
       const date = new Date(now + i * DAY);
-      const day = date.getDay();
-      const DayOfWeek = ["일", "월", "화", "수", "목", "금", "토"][day];
+      const DayOfWeek = ["일", "월", "화", "수", "목", "금", "토"];
       defaultDates.push({
         id: date,
         num: date.getDate(),
-        txt: DayOfWeek,
+        txt: DayOfWeek[date.getDay()],
       });
     }
     setDates(defaultDates);
@@ -49,10 +46,10 @@ const BoxDate = () => {
       setBook({
         step: 'stepOne',
         type: "date",
-        data: new Date().toDateString(),
+        data: new Date().toISOString(),
       })
     );
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className={styled.box_date}>

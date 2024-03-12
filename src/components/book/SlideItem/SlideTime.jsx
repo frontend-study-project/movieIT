@@ -3,7 +3,7 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { useState } from "react";
 
-const SlideTime = ({ list, year, moveX, nowHour, onChangeHour }) => {
+const SlideTime = ({ list, moveX, nowHour, onChangeHour }) => {
 
   const [count, setCount] = useState({
     move: nowHour > 13 ? -13 : -nowHour, selected: -nowHour
@@ -47,11 +47,8 @@ const SlideTime = ({ list, year, moveX, nowHour, onChangeHour }) => {
     });
   };
 
-  const handleSlideItemClick = (event) => {
-    const idx = event.currentTarget.getAttribute('data-hour');
-
+  const handleSlideItemClick = (idx) => {
     moveToDirect(idx);
-
     onChangeHour(+idx);
   }
 
@@ -67,19 +64,18 @@ const SlideTime = ({ list, year, moveX, nowHour, onChangeHour }) => {
           이전
         </ArrowBackIosIcon>
       </button>
-      {year && <strong className={styled.txt_year}>{year}</strong>} {/* year이 아닌 list[count.date].id를 넣고 싶음 */}
       <div className={styled.inner_slide}>
         <ul
           className={styled.list_slide}
           style={{transform: `translateX(${count.move * moveX}px)`}}
         >
-          {list.map((item, idx) => (
+          {list.map((item) => (
             <li
-              key={item.id}
-              className={`${styled.item_slide} ${idx === -count.selected ? styled.on : ""}`}
+              key={item}
+              className={`${styled.item_slide} ${item === -count.selected ? styled.on : ""}`}
             >
-              <button type="button" data-hour={idx} onClick={handleSlideItemClick}>
-                <em className={styled.txt_num}>{item.num}</em>
+              <button type="button" onClick={() => handleSlideItemClick(item)}>
+                <em className={styled.txt_num}>{item}</em>
               </button>
             </li>
           ))}

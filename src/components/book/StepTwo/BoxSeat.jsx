@@ -8,10 +8,12 @@ import styledCommon from "../../../pages/Book/book.module.css";
 import styled from "./StepTwo.module.css";
 import SeatArrange from "../SeatItem/SeatArrange";
 import SeatDimmed from "../SeatItem/SeatDimmed";
+import { setAlert } from "../../../store/slice/alert";
 
 const BoxSeat = () => {
   const dispatch = useDispatch();
 
+  const {rating} = useSelector(state => state.book.stepOne);
   const {totalNum, selectedSeats} = useSelector(state => state.book.stepTwo);
 
   const [count, setCount] = useState({
@@ -21,6 +23,18 @@ const BoxSeat = () => {
     challenged: 0,
   });
 
+  const resetCountsAndSeats = () => {
+    setCount({
+      adult: 0,
+      teenager: 0,
+      senior: 0,
+      challenged: 0,
+    });
+
+    dispatch(setBook({ step: "stepTwo", type: "selectedSeats", data: [] }));
+    dispatch(setBook({ step: "stepTwo", type: "seatCategory", data: {adult: 0, teenager: 0, senior: 0, challenged: 0} }));
+  };
+
   useEffect(() => {
     const total = count.adult + count.teenager + count.senior + count.challenged;
 
@@ -29,7 +43,11 @@ const BoxSeat = () => {
 
   const onAddCount = (id) => {
     if (totalNum >= 8) {
-      alert("인원선택은 총 8명까지 가능합니다.");
+      dispatch(setAlert({
+        open: true,
+        title: '인원선택은 총 8명까지 가능합니다.',
+        btnList: [{autoFocus: true, txt: '확인'}]
+      }))
       return;
     }
 
@@ -44,45 +62,29 @@ const BoxSeat = () => {
   };
 
   const onMinusCount = (id) => {
+
+    if (totalNum <= selectedSeats.length) {
+      if (confirm('선택하신 좌석을 모두 취소하고 다시 선택하시겠습니까?')) { 
+        resetCountsAndSeats();
+        return;
+      } else {
+        return 
+      }
+    }
+
     setCount((prev) => {
       return {
         ...prev,
         [id]: prev[id] > 0 ? prev[id] - 1 : 0,
       };
     });
-
-    if (totalNum <= selectedSeats.length) {
-      if (confirm('선택하신 좌석을 모두 취소하고 다시 선택하시겠습니까?')) { 
-        setCount({
-          adult: 0,
-          teenager: 0,
-          senior: 0,
-          challenged: 0,
-        });
-        dispatch(setBook({ step: "stepTwo", type: "selectedSeats", data: [] }));
-        dispatch(setBook({ step: "stepTwo", type: "seatCategory", data: {adult: 0, teenager: 0, senior: 0, challenged: 0} }));
-      }
-    }
     dispatch(setMinusCate({ step: "stepTwo", type: "seatCategory", dataId: id}))
   };
 
-  const handleResetCount = () => {
-    setCount({
-      adult: 0,
-      teenager: 0,
-      senior: 0,
-      challenged: 0,
-    });
-
-    dispatch(setBook({ step: "stepTwo", type: "selectedSeats", data: [] }));
-    dispatch(setBook({ step: "stepTwo", type: "seatCategory", data: {adult: 0, teenager: 0, senior: 0, challenged: 0} }));
-  };
-
+  
   useEffect(() => {
     return () => {
-      dispatch(setBook({ step: "stepTwo", type: "selectedSeats", data: [] }));
-
-      dispatch(setBook({ step: "stepTwo", type: "seatCategory", data: {adult: 0, teenager: 0, senior: 0, challenged: 0} }));
+      resetCountsAndSeats();
     };
   }, []);
 
@@ -90,7 +92,7 @@ const BoxSeat = () => {
     <div className={styled.wrap_seat}>
       <div className={styled.head_book}>
         <h4>관람인원선택</h4>
-        <button type="button" onClick={handleResetCount}>
+        <button type="button" onClick={resetCountsAndSeats}>
           <RestartAltIcon fontSize="small">이전</RestartAltIcon>초기화
         </button>
       </div>
@@ -102,13 +104,13 @@ const BoxSeat = () => {
           onAddCount={onAddCount}
           onMinusCount={onMinusCount}
         />
-        <SelectItem
+        {rating !== '18' && <SelectItem
           id="teenager"
           label="청소년"
           count={count}
           onAddCount={onAddCount}
           onMinusCount={onMinusCount}
-        />
+        />}
         <SelectItem
           id="senior"
           label="경로"
