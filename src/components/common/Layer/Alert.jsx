@@ -5,7 +5,8 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useDispatch, useSelector } from 'react-redux';
-import { setAlert, reset } from '../../../store/slice/alert';
+import { setAlert } from '../../../store/slice/alert';
+import { reset } from '../../../store/slice/book';
 import { useNavigate } from 'react-router-dom';
 
 export default function Alert() {
