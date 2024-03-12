@@ -68,9 +68,10 @@ const BoxTime = () => {
   };
 
   useEffect(() => {
+    console.log(theater.id);
     if (movie.id !== "" && theater.id !== "") {
       fetch(
-        `http://localhost:3000/api/booking/movie/${movie.id}/theater/${theater.id}?time=${nowHour}`
+        `http://localhost:3000/api/booking/movie/${movie.id}/theater/${theater.id}?hour=${nowHour}`
       )
         .then((res) => res.json())
         .then((data) => {
@@ -108,8 +109,8 @@ const BoxTime = () => {
                 <button
                   type="button"
                   data-screen={ele.screen}
-                  data-timestart={`${+nowHour} : ${ele.minute}`}
-                  data-timeend={`${+nowHour + 2} : ${ele.minute}`}
+                  data-timestart={`${+nowHour}:${ele.minute}`}
+                  data-timeend={`${+nowHour + 2}:${ele.minute}`}
                   onClick={handleHourClick}
                 >
                   <div className={styled.item_time}>
