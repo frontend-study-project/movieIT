@@ -6,11 +6,14 @@ import Divider from '@mui/material/Divider';
 import moment from 'moment';
 import { getImageUrl } from '../../../hooks/useImageUrl';
 import RatingItem from '../../book/CommonItem/RatingItem';
+import { Link } from 'react-router-dom';
 
-const Poster = ({ image, rating, certification, heart, description, poster_path, voteAverage, releaseDate, name }) => {
+const Poster = ({ image, rating, certification, heart, description, poster_path, voteAverage, releaseDate, name, id }) => {
+  
   return (
     <div className={styled.poster}>
       <Card className={styled.poster_thumnail}>
+      {/* <Box className={styled.rank}>s</Box> */}
         <CardMedia
           component="img"
           image={poster_path? getImageUrl(poster_path) : image}
@@ -23,7 +26,7 @@ const Poster = ({ image, rating, certification, heart, description, poster_path,
             fontSize="14px" 
             className={styled['poster_thumnail-cover_content']}
           >
-            {description}
+              {description}     
           </Typography>
 
           <Divider component="li" style={{ borderColor: '#737373' }} />
@@ -48,7 +51,7 @@ const Poster = ({ image, rating, certification, heart, description, poster_path,
         <Box className={styled.buttons} display="flex" gap={2} >
           <Box variant="outlined" style={{ color: "black", borderColor: "#787878" }}>
             <span>예매율</span>
-            <span className={styled['vote-avr']}>{voteAverage}%</span>
+            <span className={styled['vote-avr']}>{voteAverage.toFixed(1)}%</span>
           </Box>
           |
           <Box variant="outlined" style={{ color: "black", borderColor: "#787878" }}>
@@ -58,12 +61,12 @@ const Poster = ({ image, rating, certification, heart, description, poster_path,
         </Box> : null
       }
       <Box className={styled.buttons} display="flex" gap={2} justifyContent="space-between">
-        <Button variant="outlined" style={{ backgroundColor: "#2b2b2b", color: "#fff", borderColor: "#787878" }}>
+        <Button variant="outlined" style={{ backgroundColor: "#fff", color: "#fff", borderColor: "#ebebeb" }}>
           <i className={styled.heart} />
           <span className={styled['heart-num']}>{heart}</span>
         </Button>
-        <Button variant="contained" style={{ flex: 1 }}>예매</Button>
-      </Box>
+        <Button variant="contained" color="primary" style={{ flex: 1 }} ><Link to="/book" state={{id: id}}>예매</Link></Button>
+      </Box> 
     </div>
   )
 };

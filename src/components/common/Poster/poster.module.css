@@ -1,3 +1,18 @@
+.rank{
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 230px;
+  height: 150px;
+  padding: 8px 0 0 10px;
+  line-height: 1.1;
+  font-size: 2em;
+  font-style: italic;
+  font-family: 'Roboto, Dotum, 돋움, sans-serif';
+  font-weight: 300;
+  color: #fff;
+  text-shadow: 2px 2px 2px rgba(0,0,0,)
+}
 .poster_thumnail {
   position: relative;
   cursor: pointer;
@@ -22,7 +37,8 @@
 }
 
 .poster_thumnail-cover_content {
-  flex: 1;
+  overflow: hidden;
+  height: 160px;
 }
 
 .poster_review {
