@@ -13,6 +13,7 @@ const BoxTheater = () => {
       setTheaterList(data)
     })
   }, []);
+  
 
   const dispatch = useDispatch();
 

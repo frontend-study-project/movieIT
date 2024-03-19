@@ -5,9 +5,9 @@ import styled from "./StepTwo.module.css";
 import { setPage } from "../../../store/slice/book";
 import { useEffect, useState } from "react";
 import { setAlert } from "../../../store/slice/alert";
-import { useQuery } from "@tanstack/react-query";
 import SkeletonBox from "../../common/Skeleton/Skeleton";
-import { getAuthorization } from "../../../api/auth.api";
+import { useFetchMovieDetailQuery } from "../../../hooks/useMovie";
+import { useSaveBookingMutation } from "../../../hooks/useBook";
 
 const BoxSeatInfo = () => {
 
@@ -17,17 +17,12 @@ const BoxSeatInfo = () => {
     (state) => state.book.stepOne
   );
 
+  const saveBookmutate = useSaveBookingMutation();
+
   const [posterURL, setPosterURL] = useState("");
   const [isLoaded, setIsLoaded] = useState(false);
-  
-  const {isLoading, error, data} = useQuery({
-    queryKey: ['theaterList'],
-    async queryFn() {
-      const response = await fetch("http://localhost:3000/api/movie/now_playing?page=1")
-      
-      return response.json();
-    }
-  })
+
+  const {isLoading, error, data} = useFetchMovieDetailQuery();
   
   useEffect(() => {
     const [movieInfo] = isLoading ? 'null' : data?.filter((ele) => ele.title === movie.txt);
@@ -97,29 +92,14 @@ const BoxSeatInfo = () => {
       }));
       return;
     }
-    fetch('http://localhost:3000/api/reservation', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${getAuthorization()}`, 
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        "movieId" : movie.id,
-        "theaterId" : theater.id, 
-        "auditorium" : '',
-        "people" : totalNum,
-        "seat" : selectedSeats,
-        "date": date.slice(0,10) + ' '  + runningTime.timeStart,
-        "money": totalPrice
-    })
-    })
-    .then(() => {
-      dispatch(setAlert({
-        open: true,
-        title: '예매가 완료되었습니다!',
-        btnList: [{autoFocus: true, txt: '확인'}],
-      }))
-    })
+    saveBookmutate.mutate({
+      movieId: movie.id,
+      theaterId: theater.id,
+      people: totalNum,
+      seat: selectedSeats,
+      date: date.slice(0, 10) + " " + runningTime.timeStart,
+      money: totalPrice
+    }); 
   }
 
   const handlePosterImgLoad = (event) => {

@@ -6,8 +6,9 @@ import RatingItem from "../CommonItem/RatingItem";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import styledCommon from "../../../pages/Book/book.module.css";
 import styled from "./StepOne.module.css";
-import { useQuery } from "@tanstack/react-query";
+// import { useQuery } from "@tanstack/react-query";
 import SkeletonBox from "../../common/Skeleton/Skeleton";
+import { useFetchMovieDetailQuery } from "../../../hooks/useMovie";
 
 const BoxMovie = () => {
   const dispatch = useDispatch();
@@ -21,14 +22,17 @@ const BoxMovie = () => {
     '18': '청소년 관람불가',
   }
 
-  const {isLoading, error, data} = useQuery({
-    queryKey: ['movieList'],
-    async queryFn() {
-      const response = await fetch("http://localhost:3000/api/movie/now_playing?page=1");
+  // const {isLoading, error, data} = useQuery({
+  //   queryKey: ['movieList'],
+  //   async queryFn() {
+  //     const response = await fetch("http://localhost:3000/api/movie/now_playing?page=1");
     
-      return response.json();
-    },
-  })
+  //     return response.json();
+  //   },
+  // })
+
+  const {isLoading, error, data} = useFetchMovieDetailQuery();
+  console.log(data);
 
   useEffect(() => {
     let list = isLoading ? [] : data?.filter(ele => new Date(ele.release_date) <= new Date(date));
