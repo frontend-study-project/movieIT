@@ -26,6 +26,7 @@ export const useSaveBookingMutation = () => {
         open: true,
         title: '예매가 완료되었습니다!',
         btnList: [{autoFocus: true, txt: '확인'}],
+        isBookCompleted: true
       }))
     },
     onError: () => {

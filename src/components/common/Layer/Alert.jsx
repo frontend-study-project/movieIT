@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom';
 export default function Alert() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const {open, title, content, btnList} = useSelector(state => state.alert);
+  const {open, title, content, btnList, isBookCompleted} = useSelector(state => state.alert);
   
   const handleClose = () => {
     dispatch(setAlert({
@@ -20,15 +20,20 @@ export default function Alert() {
       title: '',
       content: '',
       btnList: [],
+      isBookCompleted: false
     }))
   };
 
 
   const handleClickBtn = () => {
-    handleClose();
+    
+    if (isBookCompleted) {
+      console.log('dsfkajlsdfaf');
+      navigate('/mypage/booking');
+      dispatch(reset())
+    }
 
-    // navigate('/mypage/booking');
-    dispatch(reset())
+    handleClose();
   }
 
   return (

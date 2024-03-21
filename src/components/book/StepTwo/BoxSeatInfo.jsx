@@ -22,7 +22,7 @@ const BoxSeatInfo = () => {
   const [posterURL, setPosterURL] = useState("");
   const [isLoaded, setIsLoaded] = useState(false);
 
-  const {isLoading, error, data} = useFetchMovieDetailQuery();
+  const {isLoading, data} = useFetchMovieDetailQuery();
   
   useEffect(() => {
     const [movieInfo] = isLoading ? 'null' : data?.filter((ele) => ele.title === movie.txt);
@@ -87,7 +87,7 @@ const BoxSeatInfo = () => {
     if (!totalPrice) {
       dispatch(setAlert({
         open: true,
-        title: '좌석을 먼저 선택완료해주세요.',
+        title: '좌석을 먼저 선택 완료해주세요.',
         btnList: [{autoFocus: true, txt: '확인'}]
       }));
       return;

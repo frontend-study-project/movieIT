@@ -65,7 +65,11 @@ const BoxTime = () => {
       })
     );
 
-    data ? dispatch(setPage(2)) : navigate("/login", { state: pathname });
+    if (data) {
+      dispatch(setPage(2))
+    }
+    
+    navigate("/login", { state: pathname });
   };
 
   const { data: seatsLeftdata } = useFetchSeatsLeftQuery({
