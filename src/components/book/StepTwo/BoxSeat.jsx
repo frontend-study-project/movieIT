@@ -41,16 +41,19 @@ const BoxSeat = () => {
   const {data: occupiedSeats} = useFetchSeatsOccupiedQuery({
     movieId: movie.id,
     theaterId: theater.id,
+    date: date.slice(0,10) + ' '  + runningTime.timeStart,
     activate: !!(movie.id && theater.id)
   });
+
+  useEffect(() => {
+    occupiedSeats && setoOccupiedSeatsList(occupiedSeats);
+  }, [occupiedSeats]);
 
   useEffect(() => {
     const total = count.adult + count.teenager + count.senior + count.challenged;
 
     dispatch(setBook({ step: "stepTwo", type: "totalNum", data: total }));
-
-    occupiedSeats && setoOccupiedSeatsList(occupiedSeats);
-  }, [occupiedSeats]);
+  }, [count])
 
   const onAddCount = (id) => {
     if (totalNum >= 8) {

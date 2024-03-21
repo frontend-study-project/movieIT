@@ -27,9 +27,8 @@ export default function Alert() {
   const handleClickBtn = () => {
     handleClose();
 
-    navigate('/mypage/booking');
+    // navigate('/mypage/booking');
     dispatch(reset())
-
   }
 
   return (
