@@ -101,9 +101,16 @@ const BoxSeatInfo = () => {
       money: totalPrice
     }); 
   }
-
+console.log(totalNum, selectedSeats);
   const handlePosterImgLoad = (event) => {
     setIsLoaded(true);
+  }
+
+  const isSeatsAllSelected = () => {
+    if (totalNum > 0) {
+      return totalNum === selectedSeats.length ? '' : 'disabled'
+    }
+    return 'disabled';
   }
   return (
     <div className={styled.box_result}>
@@ -176,7 +183,7 @@ const BoxSeatInfo = () => {
         >
           이전
         </button>
-        <button type="button" className={styled.btn_next} onClick={handleCompleteBook}>
+        <button type="button" className={styled.btn_next} onClick={handleCompleteBook} disabled={isSeatsAllSelected()}>
           예매
         </button>
       </div>

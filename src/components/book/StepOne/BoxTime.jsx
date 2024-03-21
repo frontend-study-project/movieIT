@@ -11,6 +11,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useFetchSeatsLeftQuery } from "../../../hooks/useSeatsLeft";
 
 const BoxTime = () => {
+  const [screenList, setScreenList] = useState([]);
+
   const { pathname } = useLocation();
 
   const navigate = useNavigate();
@@ -19,26 +21,16 @@ const BoxTime = () => {
 
   const dispatch = useDispatch();
 
-  const hourList = [];
-  for (let i = 1; i <= 24; i++) {
-    hourList.push(i);
-  }
-
-  const screenList = Array.from({ length: 10 }).map((_, idx) => {
-    return {
-      minute: 10 + idx * 5,
-      screen: `컴포트${parseInt(Math.random() * 12 + 1)}관`,
-    };
-  });
+  const hourList = Array.from({length: 24}).map((_, idx) => idx + 1);
 
   const [seatLeftList, setSeatList] = useState([]);
 
-  const [nowHour, setNowHour] = useState(new Date().getHours());
+  const [hour, setHour] = useState(new Date().getHours());
 
   const { movie, theater } = useSelector((state) => state.book.stepOne);
 
   const onChangeHour = (hour) => {
-    setNowHour(hour);
+    setHour(hour);
   };
 
   const handleHourClick = (event) => {
@@ -75,13 +67,37 @@ const BoxTime = () => {
   const { data: seatsLeftdata } = useFetchSeatsLeftQuery({
     movieId: movie.id,
     theaterId: theater.id,
-    hour: nowHour,
+    hour,
     activate: !!(movie.id && theater.id),
   });
 
   useEffect(() => {
     seatsLeftdata && setSeatList(seatsLeftdata);
   }, [seatsLeftdata]);
+
+  useEffect(() => {
+    const nowHour = new Date().getHours();
+    const nowMinutes = new Date().getMinutes();
+    let minutesListLength = 10, minutesList = [];
+    if (hour === nowHour) {
+      minutesListLength = Math.floor(nowMinutes / 10) * 2;
+      minutesList = Array.from({ length: 10 - minutesListLength }).map((_, idx) => {
+        return {
+          minute: 10 * Math.ceil(nowMinutes / 10) + idx * 5,
+          screen: `컴포트${parseInt(Math.random() * 12 + 1)}관`,
+        };
+      })
+    } else {
+      minutesList = Array.from({ length: minutesListLength }).map((_, idx) => {
+        return {
+          minute: 10 + idx * 5,
+          screen: `컴포트${parseInt(Math.random() * 12 + 1)}관`,
+        };
+      })
+    }
+    setScreenList(minutesList)
+  }, [hour]);
+
   return (
     <div className={styled.box_time}>
       <h3 className={styledCommon.tit_box}>
@@ -91,11 +107,11 @@ const BoxTime = () => {
         <SlideTime
           list={hourList}
           moveX={35}
-          nowHour={nowHour}
+          hour={hour}
           onChangeHour={onChangeHour}
         />
       )}
-      {movie.txt === "" || theater.txt === "" ? (
+      {!(movie.txt && theater.txt)? (
         <div className={styled.area_empty}>
           <TheatersIcon fontSize="large" color="disabled" />
           <p>
@@ -112,16 +128,16 @@ const BoxTime = () => {
                 <button
                   type="button"
                   data-screen={ele.screen}
-                  data-timestart={`${+nowHour}:${ele.minute}`}
-                  data-timeend={`${+nowHour + 2}:${ele.minute}`}
+                  data-timestart={`${+hour}:${ele.minute}`}
+                  data-timeend={`${+hour + 2}:${ele.minute}`}
                   onClick={handleHourClick}
                 >
                   <div className={styled.item_time}>
                     <span className={styled.emph_time}>
-                      {+nowHour} : {ele.minute}
+                      {+hour} : {ele.minute}
                     </span>
                     <div className={styled.txt_time}>
-                      ~ {+nowHour + 2} : {ele.minute}
+                      ~ {+hour + 2} : {ele.minute}
                     </div>
                   </div>
                   <div className={styled.item_tit}>

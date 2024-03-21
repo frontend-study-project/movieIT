@@ -3,10 +3,10 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { useState } from "react";
 
-const SlideTime = ({ list, moveX, nowHour, onChangeHour }) => {
+const SlideTime = ({ list, moveX, hour, onChangeHour }) => {
 
   const [count, setCount] = useState({
-    move: nowHour > 13 ? -13 : -nowHour + 1, selected: -nowHour
+    move: hour > 13 ? -13 : -(hour - 1), selected: -hour
   });
 
   const handleDisabledPrev = () => {
@@ -74,7 +74,7 @@ const SlideTime = ({ list, moveX, nowHour, onChangeHour }) => {
               key={item}
               className={`${styled.item_slide} ${item === -count.selected ? styled.on : ""}`}
             >
-              <button type="button" onClick={() => handleSlideItemClick(item)}>
+              <button type="button" onClick={() => handleSlideItemClick(item)} style={{opacity: `${new Date().getHours() <= hour ? 1 : 0.5}`}} disabled={`${new Date().getHours() <= hour ? '' : 'disabled'}`}>
                 <em className={styled.txt_num}>{item}</em>
               </button>
             </li>
