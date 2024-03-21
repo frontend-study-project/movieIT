@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setBook, setPage } from "../../../store/slice/book";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useFetchSeatsLeftQuery } from "../../../hooks/useSeatsLeft";
 
 const BoxTime = () => {
   const { pathname } = useLocation();
@@ -67,17 +68,16 @@ const BoxTime = () => {
     data ? dispatch(setPage(2)) : navigate("/login", { state: pathname });
   };
 
+  const { data: seatsLeftdata } = useFetchSeatsLeftQuery({
+    movieId: movie.id,
+    theaterId: theater.id,
+    hour: nowHour,
+    activate: !!(movie.id && theater.id),
+  });
+
   useEffect(() => {
-    if (movie.id !== "" && theater.id !== "") {
-      fetch(
-        `http://localhost:3000/api/booking/movie/${movie.id}/theater/${theater.id}?hour=${nowHour}`
-      )
-        .then((res) => res.json())
-        .then((data) => {
-          setSeatList(data);
-        });
-    }
-  }, [movie, theater]);
+    seatsLeftdata && setSeatList(seatsLeftdata);
+  }, [seatsLeftdata]);
   return (
     <div className={styled.box_time}>
       <h3 className={styledCommon.tit_box}>

@@ -9,7 +9,7 @@ import styled from "./StepTwo.module.css";
 import SeatArrange from "../SeatItem/SeatArrange";
 import SeatDimmed from "../SeatItem/SeatDimmed";
 import { setAlert } from "../../../store/slice/alert";
-import { getAuthorization } from "../../../api/auth.api";
+import { useFetchSeatsOccupiedQuery } from "../../../hooks/useSeatsOccupied";
 
 const BoxSeat = () => {
   const [occupiedSeatsList, setoOccupiedSeatsList] = useState(['F14', 'F15']);
@@ -38,24 +38,19 @@ const BoxSeat = () => {
     dispatch(setBook({ step: "stepTwo", type: "seatCategory", data: {adult: 0, teenager: 0, senior: 0, challenged: 0} }));
   };
 
+  const {data: occupiedSeats} = useFetchSeatsOccupiedQuery({
+    movieId: movie.id,
+    theaterId: theater.id,
+    activate: !!(movie.id && theater.id)
+  });
+
   useEffect(() => {
     const total = count.adult + count.teenager + count.senior + count.challenged;
 
     dispatch(setBook({ step: "stepTwo", type: "totalNum", data: total }));
 
-    if (movie.id !== '' && theater.id !== '') {
-      fetch(`http://localhost:3000/api/booking/movie/${movie.id}/theater/${theater.id}/seat?date=${date.slice(0,10) + ' '  + runningTime.timeStart}`,{
-        headers: {
-          Authorization: `Bearer ${getAuthorization()}`, 
-          'Content-Type': 'application/json',
-        }
-      })
-      .then(res => res.json())
-      .then(data => {
-        setoOccupiedSeatsList(data);
-      })
-    }
-  }, [count]);
+    occupiedSeats && setoOccupiedSeatsList(occupiedSeats);
+  }, [occupiedSeats]);
 
   const onAddCount = (id) => {
     if (totalNum >= 8) {

@@ -3,17 +3,14 @@ import styled from "./StepOne.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { setBook } from "../../../store/slice/book";
 import { useEffect, useState } from "react";
+import { useFetchTheaterListQuery } from "../../../hooks/useTheater";
 
 const BoxTheater = () => {
   const [theaterList, setTheaterList] = useState([]);
+  const {isLoading, error, data} = useFetchTheaterListQuery();
   useEffect(() => {
-    fetch('http://localhost:3000/api/theater')
-    .then(res => res.json())
-    .then(data => {
-      setTheaterList(data)
-    })
-  }, []);
-  
+    setTheaterList(data);
+  }, [data]);
 
   const dispatch = useDispatch();
 
@@ -58,7 +55,7 @@ const BoxTheater = () => {
       </h3>
       <div className={styled.inner_theater}>
         <ul className={styled.list_area}>
-          {theaterList.map((item, idx) => (
+          {theaterList?.map((item, idx) => (
             <li
               key={item.id}
               className={
