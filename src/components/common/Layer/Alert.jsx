@@ -28,7 +28,6 @@ export default function Alert() {
   const handleClickBtn = () => {
     
     if (isBookCompleted) {
-      console.log('dsfkajlsdfaf');
       navigate('/mypage/booking');
       dispatch(reset())
     }

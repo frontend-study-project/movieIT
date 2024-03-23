@@ -79,8 +79,9 @@ const BoxTime = () => {
     const nowHour = new Date().getHours();
     const nowMinutes = new Date().getMinutes();
     let minutesListLength = 10, minutesList = [];
-    if (hour === nowHour) {
-      minutesListLength = Math.floor(nowMinutes / 10) * 2;
+    if ((hour === nowHour) && (nowMinutes < 50)) {
+      minutesListLength = (Math.floor(nowMinutes / 10) || 1 ) * 2;
+      console.log(minutesListLength);
       minutesList = Array.from({ length: 10 - minutesListLength }).map((_, idx) => {
         return {
           minute: 10 * Math.ceil(nowMinutes / 10) + idx * 5,
@@ -107,7 +108,7 @@ const BoxTime = () => {
         <SlideTime
           list={hourList}
           moveX={35}
-          hour={hour}
+          hour={new Date().getMinutes() < 50 ? hour : hour + 1}
           onChangeHour={onChangeHour}
         />
       )}

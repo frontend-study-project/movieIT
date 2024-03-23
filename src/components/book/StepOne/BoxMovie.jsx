@@ -50,7 +50,7 @@ const BoxMovie = () => {
         영화<span className={styledCommon.screen_out}>선택</span>
       </h3>
       {isLoading ? (
-        Array.from({length: 16}).map(() => <SkeletonBox width={228} height={24} color={400} style={{ marginBottom: '4px' }}/>)
+        Array.from({length: 16}).map((_, idx) => <SkeletonBox key={`skeleton${idx}`} width={228} height={24} color={400} style={{ marginBottom: '4px' }}/>)
       ) : (
         <ul className={`${styled.list_movie} ${styledCommon.scroll}`}>
         {movieList.map((item) => (
