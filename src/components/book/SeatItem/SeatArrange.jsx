@@ -98,13 +98,13 @@ const SeatArrange = ({occupiedSeatsList}) => {
         dispatch(setAlert({
           open: true,
           title: '관람하실 인원을 먼저 선택해주세요.',
-          btnList: [{autoFocus: true, txt: '확인'}]
+          btnList: [{autoFocus: true, txt: '확인', clickFn: () => {}}]
         }))
       } else {
         dispatch(setAlert({
           open: true,
           title: "좌석 선택이 완료되었습니다.",
-          btnList: [{autoFocus: true, txt: '확인'}]
+          btnList: [{autoFocus: true, txt: '확인', clickFn: () => {}}]
         }))
       }
     }

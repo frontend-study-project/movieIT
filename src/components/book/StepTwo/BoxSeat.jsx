@@ -60,7 +60,7 @@ const BoxSeat = () => {
       dispatch(setAlert({
         open: true,
         title: '인원선택은 총 8명까지 가능합니다.',
-        btnList: [{autoFocus: true, txt: '확인'}]
+        btnList: [{autoFocus: true, txt: '확인', clickFn: () => {}}]
       }))
       return;
     }
@@ -78,12 +78,13 @@ const BoxSeat = () => {
   const onMinusCount = (id) => {
 
     if (totalNum <= selectedSeats.length) {
-      if (confirm('선택하신 좌석을 모두 취소하고 다시 선택하시겠습니까?')) { 
-        resetCountsAndSeats();
-        return;
-      } else {
-        return 
-      }
+      dispatch(setAlert({
+        open: true,
+        title: '선택하신 좌석을 모두 취소하고 다시 선택하시겠습니까?',
+        content: '',
+        btnList: [{autoFocus: false, txt: '취소', clickFn: () => {return}}, {autoFocus: true, txt: '확인', clickFn: () => {resetCountsAndSeats()}}],
+      }))
+      return;
     }
 
     setCount((prev) => {

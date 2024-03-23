@@ -6,13 +6,10 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useDispatch, useSelector } from 'react-redux';
 import { setAlert } from '../../../store/slice/alert';
-import { reset } from '../../../store/slice/book';
-import { useNavigate } from 'react-router-dom';
 
 export default function Alert() {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const {open, title, content, btnList, isBookCompleted} = useSelector(state => state.alert);
+  const {open, title, content, btnList} = useSelector(state => state.alert);
   
   const handleClose = () => {
     dispatch(setAlert({
@@ -20,18 +17,12 @@ export default function Alert() {
       title: '',
       content: '',
       btnList: [],
-      isBookCompleted: false
     }))
   };
 
 
-  const handleClickBtn = () => {
-    
-    if (isBookCompleted) {
-      navigate('/mypage/booking');
-      dispatch(reset())
-    }
-
+  const handleClickBtn = (idx) => {
+    btnList[idx].clickFn()
     handleClose();
   }
 
@@ -52,7 +43,7 @@ export default function Alert() {
         </DialogContent>}
         <DialogActions>
           {
-            btnList.map((ele, idx) => <Button key={idx} onClick={handleClickBtn} autoFocus={ele.autoFocus}>{ele.txt}</Button>)
+            btnList.map((ele, idx) => <Button key={idx} onClick={() => handleClickBtn(idx)} autoFocus={ele.autoFocus}>{ele.txt}</Button>)
           }
         </DialogActions>
       </Dialog>

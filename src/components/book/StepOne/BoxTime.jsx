@@ -81,13 +81,13 @@ const BoxTime = () => {
     let minutesListLength = 10, minutesList = [];
     if ((hour === nowHour) && (nowMinutes < 50)) {
       minutesListLength = (Math.floor(nowMinutes / 10) || 1 ) * 2;
-      console.log(minutesListLength);
       minutesList = Array.from({ length: 10 - minutesListLength }).map((_, idx) => {
         return {
           minute: 10 * Math.ceil(nowMinutes / 10) + idx * 5,
           screen: `컴포트${parseInt(Math.random() * 12 + 1)}관`,
         };
       })
+
     } else {
       minutesList = Array.from({ length: minutesListLength }).map((_, idx) => {
         return {

@@ -88,7 +88,7 @@ const BoxSeatInfo = () => {
       dispatch(setAlert({
         open: true,
         title: '좌석을 먼저 선택 완료해주세요.',
-        btnList: [{autoFocus: true, txt: '확인'}]
+        btnList: [{autoFocus: true, txt: '확인', clickFn: () => {}}]
       }));
       return;
     }
@@ -100,8 +100,8 @@ const BoxSeatInfo = () => {
       date: date.slice(0, 10) + " " + runningTime.timeStart,
       money: totalPrice
     }); 
+
   }
-console.log(totalNum, selectedSeats);
   const handlePosterImgLoad = (event) => {
     setIsLoaded(true);
   }
@@ -112,6 +112,7 @@ console.log(totalNum, selectedSeats);
     }
     return 'disabled';
   }
+
   return (
     <div className={styled.box_result}>
       <div className={styled.item_movie}>
