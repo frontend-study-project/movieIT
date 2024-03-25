@@ -21,8 +21,6 @@ const BoxTime = () => {
 
   const dispatch = useDispatch();
 
-  const hourList = Array.from({length: 24}).map((_, idx) => idx + 1);
-
   const [seatLeftList, setSeatList] = useState([]);
 
   const [hour, setHour] = useState(new Date().getHours());
@@ -73,7 +71,7 @@ const BoxTime = () => {
 
   useEffect(() => {
     seatsLeftdata && setSeatList(seatsLeftdata);
-  }, [seatsLeftdata]);
+  }, [seatsLeftdata, movie, theater]);
 
   useEffect(() => {
     const nowHour = new Date().getHours();
@@ -106,14 +104,11 @@ const BoxTime = () => {
       <h3 className={styledCommon.tit_box}>
         시간<span className={styledCommon.screen_out}>선택</span>
       </h3>
-      {hourList && (
-        <SlideTime
-          list={hourList}
+      <SlideTime
           moveX={35}
           hour={hourCondition}
           onChangeHour={onChangeHour}
         />
-      )}
       {!(movie.txt && theater.txt)? (
         <div className={styled.area_empty}>
           <TheatersIcon fontSize="large" color="disabled" />
