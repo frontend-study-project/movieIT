@@ -20,7 +20,6 @@ export default function Alert() {
     }))
   };
 
-
   const handleClickBtn = (idx) => {
     btnList[idx].clickFn()
     handleClose();
@@ -37,7 +36,7 @@ export default function Alert() {
           {title}
         </DialogTitle>
         {content && <DialogContent>
-          <DialogContentText id="alert-dialog-description">
+          <DialogContentText id="alert-dialog-description" style={{whiteSpace: 'pre-line'}}>
             {content}
           </DialogContentText>
         </DialogContent>}

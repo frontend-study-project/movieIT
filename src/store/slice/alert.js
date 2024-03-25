@@ -5,7 +5,6 @@ const initialState = {
   title: '',
   content: '',
   btnList: [], 
-  isBookCompleted: false
 }
 
 const reducers = {

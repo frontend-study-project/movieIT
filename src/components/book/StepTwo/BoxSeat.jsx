@@ -146,7 +146,7 @@ const BoxSeat = () => {
         style={{ overflowY: totalNum ? "scroll" : "hidden" }}
       >
         {totalNum === 0 && <SeatDimmed />}
-        <SeatArrange occupiedSeatsList={occupiedSeatsList} />
+        <SeatArrange occupiedSeatsList={occupiedSeatsList} challengedSeats={['A23', 'A24', 'A25', 'A26']} />
       </div>
     </div>
   );

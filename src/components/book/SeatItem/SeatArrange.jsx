@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setBook } from "../../../store/slice/book";
 import { setAlert } from "../../../store/slice/alert";
 
-const SeatArrange = ({occupiedSeatsList}) => {
+const SeatArrange = ({occupiedSeatsList, challengedSeats}) => {
   const [seatArr, setSeatArr] = useState({
     seatRowArr: [],
     seatColArr: [],
@@ -116,6 +116,8 @@ const SeatArrange = ({occupiedSeatsList}) => {
       return "selected";
     } else if (occupiedSeatsList?.includes(key)) {
       return "occupied";
+    } else if (challengedSeats.includes(key)) {
+      return "challenged";
     } else {
       return "common"
     }

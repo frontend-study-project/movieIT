@@ -152,7 +152,7 @@ const BoxSeatInfo = () => {
             <SeatItem seatType={"common"} seatDesc={"일반"} /> 일반
           </li>
           <li>
-            <SeatItem seatType={"challenged"} seatDesc={"장애인석"} /> 장애인석
+            <SeatItem seatType={"challenged"} seatDesc={"우대석"} /> 우대석
           </li>
         </ul>
         <div className={styled.info_select}>
@@ -184,7 +184,7 @@ const BoxSeatInfo = () => {
         >
           이전
         </button>
-        <button type="button" className={styled.btn_next} onClick={handleCompleteBook} disabled={isSeatsAllSelected()}>
+        <button type="button" className={styled.btn_book} onClick={handleCompleteBook} disabled={isSeatsAllSelected()}>
           예매
         </button>
       </div>
