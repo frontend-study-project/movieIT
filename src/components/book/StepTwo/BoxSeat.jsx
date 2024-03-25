@@ -37,13 +37,17 @@ const BoxSeat = () => {
     dispatch(setBook({ step: "stepTwo", type: "selectedSeats", data: [] }));
     dispatch(setBook({ step: "stepTwo", type: "seatCategory", data: {adult: 0, teenager: 0, senior: 0, challenged: 0} }));
   };
+  // const yearNum = new Date(date).getFullYear();
+  // const monthNum = new Date(date).getMonth + 1;
+  // const dateNum = new Date(date).getDate();
 
   const {data: occupiedSeats} = useFetchSeatsOccupiedQuery({
     movieId: movie.id,
     theaterId: theater.id,
-    date: date.slice(0,10) + ' '  + runningTime.timeStart,
+    date: `${date} ${runningTime.timeStart}`,
     activate: !!(movie.id && theater.id)
   });
+  console.log();
 
   useEffect(() => {
     occupiedSeats && setoOccupiedSeatsList(occupiedSeats);

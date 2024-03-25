@@ -97,7 +97,7 @@ const BoxSeatInfo = () => {
       theaterId: theater.id,
       people: totalNum,
       seat: selectedSeats,
-      date: date.slice(0, 10) + " " + runningTime.timeStart,
+      date: `${date} ${runningTime.timeStart}`,
       money: totalPrice
     }); 
 

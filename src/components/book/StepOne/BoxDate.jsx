@@ -11,27 +11,37 @@ const BoxDate = () => {
   const dispatch = useDispatch();
 
   const handleDateClick = (date) => {
+    const yearNum = new Date(date).getFullYear();
+    const monthNum = new Date(date).getMonth() + 1;
+    const dateNum = new Date(date).getDate();
+
+    const formatMonth = yearNum < 10 ? `0${yearNum}` : yearNum;
+    const formatDate = dateNum < 10 ? `0${dateNum}` : dateNum;
+
     dispatch(
       setBook({
         step: 'stepOne',
         type: "date",
-        data: date.toISOString(),
+        data: `${yearNum}-${formatMonth}-${formatDate}`,
       })
     );
   };
 
   const [dates, setDates] = useState([]);
 
-  const [year, setYear] = useState(new Date().toISOString().slice(0, 7));
+  const [year, setYear] = useState(new Date().getFullYear());
 
   const yearHandler = (date) => {
-    setYear(new Date().toISOString().slice(0, 7));
+    setYear(new Date(date).getFullYear());
   };
 
   useEffect(() => {
     const DAY = 1000 * 60 * 60 * 24;
     const now = new Date().getTime();
     const defaultDates = [];
+    let month = new Date().getMonth() + 1, formatMonth = month < 10 ? `0${month}` : month;
+    let date = new Date().getDate(), formatDate = date < 10 ? `0${date}` : date;
+
     for (let i = 0; i < 30; i++) {
       const date = new Date(now + i * DAY);
       const DayOfWeek = ["일", "월", "화", "수", "목", "금", "토"];
@@ -46,7 +56,7 @@ const BoxDate = () => {
       setBook({
         step: 'stepOne',
         type: "date",
-        data: new Date().toISOString(),
+        data: `${year}-${formatMonth}-${formatDate}`
       })
     );
   }, [dispatch]);

@@ -21,7 +21,7 @@ const BoxTime = () => {
 
   const dispatch = useDispatch();
 
-  const [seatLeftList, setSeatList] = useState([]);
+  const [seatLeftList, setSeatLeftList] = useState([]);
 
   const [hour, setHour] = useState(new Date().getHours());
 
@@ -70,8 +70,9 @@ const BoxTime = () => {
   });
 
   useEffect(() => {
-    seatsLeftdata && setSeatList(seatsLeftdata);
-  }, [seatsLeftdata, movie, theater]);
+    seatsLeftdata && setSeatLeftList(seatsLeftdata);
+  }, [seatsLeftdata, movie, theater, hour]);
+  console.log(seatsLeftdata);
 
   useEffect(() => {
     const nowHour = new Date().getHours();
@@ -85,7 +86,9 @@ const BoxTime = () => {
           screen: `컴포트${parseInt(Math.random() * 12 + 1)}관`,
         };
       })
-
+      setSeatLeftList(prev => {
+        return [...prev].slice(minutesListLength)
+      })
     } else {
       minutesList = Array.from({ length: minutesListLength }).map((_, idx) => {
         return {
@@ -95,6 +98,7 @@ const BoxTime = () => {
       })
     }
     setScreenList(minutesList)
+    
   }, [hour]);
 
   const hourCondition = new Date().getMinutes() < 50 ? hour : hour + 1;
