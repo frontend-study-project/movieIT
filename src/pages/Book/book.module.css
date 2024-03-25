@@ -3,11 +3,6 @@ button{
   background-color: inherit;
   cursor: pointer;
 }
-button:disabled{
-  color: #aaa;
-  background-color: #e0e0e0;
-  border-bottom: 1px solid #e0e0
-}
 .screen_out{
   position:absolute;width:0;height:0;line-height:0;text-indent:-9999em;overflow:hidden;
 }

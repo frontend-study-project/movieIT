@@ -51,7 +51,7 @@ const SlideTime = ({ list, moveX, hour, onChangeHour }) => {
     moveToDirect(idx);
     onChangeHour(+idx);
   }
-
+  
   return (
     <div className={styled.wrap_slide}>
       <button
@@ -69,12 +69,12 @@ const SlideTime = ({ list, moveX, hour, onChangeHour }) => {
           className={styled.list_slide}
           style={{transform: `translateX(${count.move * moveX}px)`}}
         >
-          {list.map((item) => (
+          {list.map((item, idx) => (
             <li
               key={item}
               className={`${styled.item_slide} ${item === -count.selected ? styled.on : ""}`}
             >
-              <button type="button" onClick={() => handleSlideItemClick(item)} style={{opacity: `${new Date().getHours() <= hour ? 1 : 0.5}`}} disabled={`${new Date().getHours() <= hour ? '' : 'disabled'}`}>
+              <button type="button" onClick={() => handleSlideItemClick(item)} style={{opacity: `${new Date().getHours() <= idx + 1 ? 1 : 0.5}`}} disabled={`${new Date().getHours() <= idx + 1 ? '' : 'disabled'}`}>
                 <em className={styled.txt_num}>{item}</em>
               </button>
             </li>

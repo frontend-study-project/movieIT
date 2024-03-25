@@ -99,6 +99,8 @@ const BoxTime = () => {
     setScreenList(minutesList)
   }, [hour]);
 
+  const hourCondition = new Date().getMinutes() < 50 ? hour : hour + 1;
+
   return (
     <div className={styled.box_time}>
       <h3 className={styledCommon.tit_box}>
@@ -108,7 +110,7 @@ const BoxTime = () => {
         <SlideTime
           list={hourList}
           moveX={35}
-          hour={new Date().getMinutes() < 50 ? hour : hour + 1}
+          hour={hourCondition}
           onChangeHour={onChangeHour}
         />
       )}
@@ -129,16 +131,16 @@ const BoxTime = () => {
                 <button
                   type="button"
                   data-screen={ele.screen}
-                  data-timestart={`${+hour}:${ele.minute}`}
-                  data-timeend={`${+hour + 2}:${ele.minute}`}
+                  data-timestart={`${hourCondition}:${ele.minute}`}
+                  data-timeend={`${hourCondition + 2}:${ele.minute}`}
                   onClick={handleHourClick}
                 >
                   <div className={styled.item_time}>
                     <span className={styled.emph_time}>
-                      {+hour} : {ele.minute}
+                      {hourCondition} : {ele.minute}
                     </span>
                     <div className={styled.txt_time}>
-                      ~ {+hour + 2} : {ele.minute}
+                      ~ {hourCondition + 2} : {ele.minute}
                     </div>
                   </div>
                   <div className={styled.item_tit}>
