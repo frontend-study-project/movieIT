@@ -20,10 +20,11 @@ const BoxMovie = () => {
     '18': '청소년 관람불가',
   }
 
-  const {isLoading, error, data} = useFetchMovieDetailQuery();
+  const {isLoading, data} = useFetchMovieDetailQuery();
 
   useEffect(() => {
     let list = isLoading ? [] : data?.filter(ele => new Date(ele.release_date) <= new Date(date));
+    // let test = isLoading ? [] : data?.map(ele => console.log(date));
     list = [...list].map((ele) => {
       return {
         id: ele.id,

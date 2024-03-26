@@ -54,6 +54,7 @@ const SlideDate = ({ list, year, moveX, onSlideItemClick }) => {
     moveToDirect(idx);
 
     onSlideItemClick(list[idx].id);
+    console.log(list[idx], 'dl')
   }
 
   return (
@@ -79,7 +80,7 @@ const SlideDate = ({ list, year, moveX, onSlideItemClick }) => {
               key={item.id}
               className={`${styled.item_slide} ${idx === handleSelected() ? styled.on : ""}`}
             >
-              <button type="button" data-date={year ? idx : ''} onClick={handleSlideItemClick}>
+              <button type="button" data-date={idx} onClick={handleSlideItemClick}>
                 <em className={styled.txt_num}>{item.num}</em>
                 <span className={styled.tit_txt}>{item.txt}</span>
               </button>

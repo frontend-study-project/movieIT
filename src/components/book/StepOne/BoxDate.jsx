@@ -10,19 +10,24 @@ import { setBook } from "../../../store/slice/book";
 const BoxDate = () => {
   const dispatch = useDispatch();
 
+  const formatYear = (value) => {
+    return new Date(value).getFullYear()
+  }
+  const formatMonth = (value) => {
+    const month = new Date(value).getMonth() + 1;
+    return month < 10 ? `0${month}` : month;
+  }
+  const formatDate = (value) => {
+    const date = new Date(value).getDate();
+    return date < 10 ? `0${date}` : date;
+  }
+
   const handleDateClick = (date) => {
-    const yearNum = new Date(date).getFullYear();
-    const monthNum = new Date(date).getMonth() + 1;
-    const dateNum = new Date(date).getDate();
-
-    const formatMonth = yearNum < 10 ? `0${yearNum}` : yearNum;
-    const formatDate = dateNum < 10 ? `0${dateNum}` : dateNum;
-
     dispatch(
       setBook({
         step: 'stepOne',
         type: "date",
-        data: `${yearNum}-${formatMonth}-${formatDate}`,
+        data: date,
       })
     );
   };
@@ -39,14 +44,12 @@ const BoxDate = () => {
     const DAY = 1000 * 60 * 60 * 24;
     const now = new Date().getTime();
     const defaultDates = [];
-    let month = new Date().getMonth() + 1, formatMonth = month < 10 ? `0${month}` : month;
-    let date = new Date().getDate(), formatDate = date < 10 ? `0${date}` : date;
 
     for (let i = 0; i < 30; i++) {
       const date = new Date(now + i * DAY);
       const DayOfWeek = ["일", "월", "화", "수", "목", "금", "토"];
       defaultDates.push({
-        id: date,
+        id: `${formatYear(date)}-${formatMonth(date)}-${formatDate(date)}`,
         num: date.getDate(),
         txt: DayOfWeek[date.getDay()],
       });
@@ -56,10 +59,10 @@ const BoxDate = () => {
       setBook({
         step: 'stepOne',
         type: "date",
-        data: `${year}-${formatMonth}-${formatDate}`
+        data: `${year}-${formatMonth(new Date())}-${formatDate(new Date())}`
       })
     );
-  }, [dispatch]);
+  }, []);
 
   return (
     <div className={styled.box_date}>

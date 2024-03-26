@@ -72,7 +72,6 @@ const BoxTime = () => {
   useEffect(() => {
     seatsLeftdata && setSeatLeftList(seatsLeftdata);
   }, [seatsLeftdata, movie, theater, hour]);
-  console.log(seatsLeftdata);
 
   useEffect(() => {
     const nowHour = new Date().getHours();
