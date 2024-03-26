@@ -71,7 +71,7 @@ const BoxTime = () => {
 
   useEffect(() => {
     seatsLeftdata && setSeatLeftList(seatsLeftdata);
-  }, [seatsLeftdata, movie, theater, hour]);
+  }, [seatsLeftdata]);
 
   useEffect(() => {
     const nowHour = new Date().getHours();
@@ -98,7 +98,7 @@ const BoxTime = () => {
     }
     setScreenList(minutesList)
     
-  }, [hour]);
+  }, [hour, seatsLeftdata]);
 
   const hourCondition = new Date().getMinutes() < 50 ? hour : hour + 1;
 
