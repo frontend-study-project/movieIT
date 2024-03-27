@@ -10,33 +10,46 @@ import { setBook } from "../../../store/slice/book";
 const BoxDate = () => {
   const dispatch = useDispatch();
 
+  const formatYear = (value) => {
+    return new Date(value).getFullYear()
+  }
+  const formatMonth = (value) => {
+    const month = new Date(value).getMonth() + 1;
+    return month < 10 ? `0${month}` : month;
+  }
+  const formatDate = (value) => {
+    const date = new Date(value).getDate();
+    return date < 10 ? `0${date}` : date;
+  }
+
   const handleDateClick = (date) => {
     dispatch(
       setBook({
         step: 'stepOne',
         type: "date",
-        data: date.toISOString(),
+        data: date,
       })
     );
   };
 
   const [dates, setDates] = useState([]);
 
-  const [year, setYear] = useState(new Date().toISOString().slice(0, 7));
+  const [year, setYear] = useState(new Date().getFullYear());
 
   const yearHandler = (date) => {
-    setYear(new Date().toISOString().slice(0, 7));
+    setYear(new Date(date).getFullYear());
   };
 
   useEffect(() => {
     const DAY = 1000 * 60 * 60 * 24;
     const now = new Date().getTime();
     const defaultDates = [];
+
     for (let i = 0; i < 30; i++) {
       const date = new Date(now + i * DAY);
       const DayOfWeek = ["일", "월", "화", "수", "목", "금", "토"];
       defaultDates.push({
-        id: date,
+        id: `${formatYear(date)}-${formatMonth(date)}-${formatDate(date)}`,
         num: date.getDate(),
         txt: DayOfWeek[date.getDay()],
       });
@@ -46,10 +59,10 @@ const BoxDate = () => {
       setBook({
         step: 'stepOne',
         type: "date",
-        data: new Date().toISOString(),
+        data: `${year}-${formatMonth(new Date())}-${formatDate(new Date())}`
       })
     );
-  }, [dispatch]);
+  }, []);
 
   return (
     <div className={styled.box_date}>

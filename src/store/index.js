@@ -8,5 +8,6 @@ export default configureStore({
     search: SearchReducer,
     book: BookReducer,
     alert: AlertReducer
-  }
+  },
+  middleware: getDefaultMiddleware => getDefaultMiddleware({ serializableCheck: false }),
 })

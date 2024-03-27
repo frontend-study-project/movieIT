@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setBook } from "../../../store/slice/book";
 import { setAlert } from "../../../store/slice/alert";
 
-const SeatArrange = ({occupiedSeatsList}) => {
+const SeatArrange = ({occupiedSeatsList, challengedSeats}) => {
   const [seatArr, setSeatArr] = useState({
     seatRowArr: [],
     seatColArr: [],
@@ -98,13 +98,13 @@ const SeatArrange = ({occupiedSeatsList}) => {
         dispatch(setAlert({
           open: true,
           title: '관람하실 인원을 먼저 선택해주세요.',
-          btnList: [{autoFocus: true, txt: '확인'}]
+          btnList: [{autoFocus: true, txt: '확인', clickFn: () => {}}]
         }))
       } else {
         dispatch(setAlert({
           open: true,
           title: "좌석 선택이 완료되었습니다.",
-          btnList: [{autoFocus: true, txt: '확인'}]
+          btnList: [{autoFocus: true, txt: '확인', clickFn: () => {}}]
         }))
       }
     }
@@ -116,6 +116,8 @@ const SeatArrange = ({occupiedSeatsList}) => {
       return "selected";
     } else if (occupiedSeatsList?.includes(key)) {
       return "occupied";
+    } else if (challengedSeats.includes(key)) {
+      return "challenged";
     } else {
       return "common"
     }

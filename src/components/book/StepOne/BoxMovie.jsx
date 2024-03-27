@@ -3,11 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { setBook } from "../../../store/slice/book";
 import RatingItem from "../CommonItem/RatingItem";
 
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import styledCommon from "../../../pages/Book/book.module.css";
 import styled from "./StepOne.module.css";
-import { useQuery } from "@tanstack/react-query";
 import SkeletonBox from "../../common/Skeleton/Skeleton";
+import { useFetchMovieDetailQuery } from "../../../hooks/useMovie";
 
 const BoxMovie = () => {
   const dispatch = useDispatch();
@@ -21,17 +20,11 @@ const BoxMovie = () => {
     '18': '청소년 관람불가',
   }
 
-  const {isLoading, error, data} = useQuery({
-    queryKey: ['movieList'],
-    async queryFn() {
-      const response = await fetch("http://localhost:3000/api/movie/now_playing?page=1");
-    
-      return response.json();
-    },
-  })
+  const {isLoading, data} = useFetchMovieDetailQuery();
 
   useEffect(() => {
     let list = isLoading ? [] : data?.filter(ele => new Date(ele.release_date) <= new Date(date));
+    // let test = isLoading ? [] : data?.map(ele => console.log(date));
     list = [...list].map((ele) => {
       return {
         id: ele.id,
@@ -57,7 +50,9 @@ const BoxMovie = () => {
       <h3 className={styledCommon.tit_box}>
         영화<span className={styledCommon.screen_out}>선택</span>
       </h3>
-      {isLoading ? (<SkeletonBox width={230} height={450} color={400}/>) : (
+      {isLoading ? (
+        Array.from({length: 16}).map((_, idx) => <SkeletonBox key={`skeleton${idx}`} width={228} height={24} color={400} style={{ marginBottom: '4px' }}/>)
+      ) : (
         <ul className={`${styled.list_movie} ${styledCommon.scroll}`}>
         {movieList.map((item) => (
           <li
@@ -67,11 +62,6 @@ const BoxMovie = () => {
             <button type="button" id={item.id} onClick={() => handleClickMovie(item)}>
               <RatingItem rating={item.rating} ratingDesc={item.ratingDesc} />
               <span className={styled.txt_movie}>{item.name}</span>
-              <span className={styled.like_movie}>
-                <FavoriteBorderIcon fontSize="small" sx={{ fontSize: 14 }}>
-                  선호하는 영화
-                </FavoriteBorderIcon>
-              </span>
             </button>
           </li>
         ))}

@@ -40,10 +40,6 @@ li.on > button{
 .txt_movie{
   text-align: left;
 }
-.like_movie{
-  margin-left: auto;
-  margin-right: 7px;
-}
 /**** 극장 ****/
 .box_theater{
   position: relative;
@@ -99,7 +95,7 @@ li.on > button{
   overflow: hidden;
 }
 .box_time > div{
-  margin: 0 -20px;
+  margin: 0 -23px;
   border-top: 1px solid #f2f4f5;
   border-bottom: 1px solid #f2f4f5;
 }

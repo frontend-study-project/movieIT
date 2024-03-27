@@ -180,7 +180,7 @@
 .item_btns{
   width: calc(100% + 40px); 
   height: 40px;
-  margin: 10px -20px 0;
+  margin: 11px -20px 0;
   line-height: 40px;
 }
 .item_btns button{
@@ -193,8 +193,13 @@
 .btn_prev{
   background-color: #53565b;
 }
-.btn_next{
+.btn_book{
   background-color: #329eb1;
+}
+.btn_book:disabled{
+  color: #aaa;
+  background-color: #e0e0e0;
+  border-bottom: 1px solid #e0e0
 }
 /* 스켈레톤 */
 .box_skeleton{

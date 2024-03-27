@@ -8,8 +8,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { setBook, setPage } from "../../../store/slice/book";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useFetchSeatsLeftQuery } from "../../../hooks/useSeatsLeft";
 
 const BoxTime = () => {
+  const [hour, setHour] = useState(new Date().getHours());
+
+  const hourCondition = new Date().getMinutes() < 50 ? hour : hour + 1;
+
+  const [screenList, setScreenList] = useState([]);
+
   const { pathname } = useLocation();
 
   const navigate = useNavigate();
@@ -18,26 +25,12 @@ const BoxTime = () => {
 
   const dispatch = useDispatch();
 
-  const hourList = [];
-  for (let i = 1; i <= 24; i++) {
-    hourList.push(i);
-  }
-
-  const screenList = Array.from({ length: 10 }).map((_, idx) => {
-    return {
-      minute: 10 + idx * 5,
-      screen: `컴포트${parseInt(Math.random() * 12 + 1)}관`,
-    };
-  });
-
-  const [seatLeftList, setSeatList] = useState([]);
-
-  const [nowHour, setNowHour] = useState(new Date().getHours());
+  const [seatLeftList, setSeatLeftList] = useState([]);
 
   const { movie, theater } = useSelector((state) => state.book.stepOne);
 
   const onChangeHour = (hour) => {
-    setNowHour(hour);
+    setHour(hour);
   };
 
   const handleHourClick = (event) => {
@@ -64,34 +57,65 @@ const BoxTime = () => {
       })
     );
 
-    data ? dispatch(setPage(2)) : navigate("/login", { state: pathname });
+    if (data) {
+      dispatch(setPage(2))
+    }
+    
+    navigate("/login", { state: pathname });
   };
 
+  const { data: seatsLeftdata } = useFetchSeatsLeftQuery({
+    movieId: movie.id,
+    theaterId: theater.id,
+    hour,
+    activate: !!(movie.id && theater.id),
+  });
+
   useEffect(() => {
-    if (movie.id !== "" && theater.id !== "") {
-      fetch(
-        `http://localhost:3000/api/booking/movie/${movie.id}/theater/${theater.id}?hour=${nowHour}`
-      )
-        .then((res) => res.json())
-        .then((data) => {
-          setSeatList(data);
-        });
+    seatsLeftdata && setSeatLeftList(seatsLeftdata);
+  }, [seatsLeftdata]);
+
+  useEffect(() => {
+    const nowHour = new Date().getHours();
+    const nowMinutes = new Date().getMinutes();
+    let minutesListLength = 10, minutesList = [];
+    if ((hourCondition === nowHour) && (nowMinutes < 50)) {
+      minutesListLength = (Math.floor(nowMinutes / 10) || 1 ) * 2;
+      minutesList = Array.from({ length: 10 - minutesListLength }).map((_, idx) => {
+        return {
+          minute: 10 * Math.ceil(nowMinutes / 10) + idx * 5,
+          screen: `컴포트${parseInt(Math.random() * 12 + 1)}관`,
+        };
+      })
+      setSeatLeftList(prev => {
+        return [...prev].slice(minutesListLength)
+      })
+    } else {
+      minutesList = Array.from({ length: minutesListLength }).map((_, idx) => {
+        return {
+          minute: 10 + idx * 5,
+          screen: `컴포트${parseInt(Math.random() * 12 + 1)}관`,
+        };
+      })
     }
-  }, [movie, theater]);
+    setScreenList(minutesList)
+
+    console.log(hourCondition, nowHour);
+  }, [hourCondition, seatsLeftdata, movie]);
+
+  
+
   return (
     <div className={styled.box_time}>
       <h3 className={styledCommon.tit_box}>
         시간<span className={styledCommon.screen_out}>선택</span>
       </h3>
-      {hourList && (
-        <SlideTime
-          list={hourList}
+      <SlideTime
           moveX={35}
-          nowHour={nowHour}
+          hour={hourCondition}
           onChangeHour={onChangeHour}
         />
-      )}
-      {movie.txt === "" || theater.txt === "" ? (
+      {!(movie.txt && theater.txt)? (
         <div className={styled.area_empty}>
           <TheatersIcon fontSize="large" color="disabled" />
           <p>
@@ -108,16 +132,16 @@ const BoxTime = () => {
                 <button
                   type="button"
                   data-screen={ele.screen}
-                  data-timestart={`${+nowHour}:${ele.minute}`}
-                  data-timeend={`${+nowHour + 2}:${ele.minute}`}
+                  data-timestart={`${hourCondition}:${ele.minute}`}
+                  data-timeend={`${hourCondition + 2}:${ele.minute}`}
                   onClick={handleHourClick}
                 >
                   <div className={styled.item_time}>
                     <span className={styled.emph_time}>
-                      {+nowHour} : {ele.minute}
+                      {hourCondition} : {ele.minute}
                     </span>
                     <div className={styled.txt_time}>
-                      ~ {+nowHour + 2} : {ele.minute}
+                      ~ {hourCondition + 2} : {ele.minute}
                     </div>
                   </div>
                   <div className={styled.item_tit}>

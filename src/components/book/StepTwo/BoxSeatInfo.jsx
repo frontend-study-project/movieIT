@@ -5,9 +5,9 @@ import styled from "./StepTwo.module.css";
 import { setPage } from "../../../store/slice/book";
 import { useEffect, useState } from "react";
 import { setAlert } from "../../../store/slice/alert";
-import { useQuery } from "@tanstack/react-query";
 import SkeletonBox from "../../common/Skeleton/Skeleton";
-import { getAuthorization } from "../../../api/auth.api";
+import { useFetchMovieDetailQuery } from "../../../hooks/useMovie";
+import { useSaveBookingMutation } from "../../../hooks/useBook";
 
 const BoxSeatInfo = () => {
 
@@ -17,17 +17,12 @@ const BoxSeatInfo = () => {
     (state) => state.book.stepOne
   );
 
+  const saveBookmutate = useSaveBookingMutation();
+
   const [posterURL, setPosterURL] = useState("");
   const [isLoaded, setIsLoaded] = useState(false);
-  
-  const {isLoading, error, data} = useQuery({
-    queryKey: ['theaterList'],
-    async queryFn() {
-      const response = await fetch("http://localhost:3000/api/movie/now_playing?page=1")
-      
-      return response.json();
-    }
-  })
+
+  const {isLoading, data} = useFetchMovieDetailQuery();
   
   useEffect(() => {
     const [movieInfo] = isLoading ? 'null' : data?.filter((ele) => ele.title === movie.txt);
@@ -92,39 +87,32 @@ const BoxSeatInfo = () => {
     if (!totalPrice) {
       dispatch(setAlert({
         open: true,
-        title: '좌석을 먼저 선택완료해주세요.',
-        btnList: [{autoFocus: true, txt: '확인'}]
+        title: '좌석을 먼저 선택 완료해주세요.',
+        btnList: [{autoFocus: true, txt: '확인', clickFn: () => {}}]
       }));
       return;
     }
-    fetch('http://localhost:3000/api/reservation', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${getAuthorization()}`, 
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        "movieId" : movie.id,
-        "theaterId" : theater.id, 
-        "auditorium" : '',
-        "people" : totalNum,
-        "seat" : selectedSeats,
-        "date": date.slice(0,10) + ' '  + runningTime.timeStart,
-        "money": totalPrice
-    })
-    })
-    .then(() => {
-      dispatch(setAlert({
-        open: true,
-        title: '예매가 완료되었습니다!',
-        btnList: [{autoFocus: true, txt: '확인'}],
-      }))
-    })
-  }
+    saveBookmutate.mutate({
+      movieId: movie.id,
+      theaterId: theater.id,
+      people: totalNum,
+      seat: selectedSeats,
+      date: `${date} ${runningTime.timeStart}`,
+      money: totalPrice
+    }); 
 
+  }
   const handlePosterImgLoad = (event) => {
     setIsLoaded(true);
   }
+
+  const isSeatsAllSelected = () => {
+    if (totalNum > 0) {
+      return totalNum === selectedSeats.length ? '' : 'disabled'
+    }
+    return 'disabled';
+  }
+
   return (
     <div className={styled.box_result}>
       <div className={styled.item_movie}>
@@ -164,7 +152,7 @@ const BoxSeatInfo = () => {
             <SeatItem seatType={"common"} seatDesc={"일반"} /> 일반
           </li>
           <li>
-            <SeatItem seatType={"challenged"} seatDesc={"장애인석"} /> 장애인석
+            <SeatItem seatType={"challenged"} seatDesc={"우대석"} /> 우대석
           </li>
         </ul>
         <div className={styled.info_select}>
@@ -196,7 +184,7 @@ const BoxSeatInfo = () => {
         >
           이전
         </button>
-        <button type="button" className={styled.btn_next} onClick={handleCompleteBook}>
+        <button type="button" className={styled.btn_book} onClick={handleCompleteBook} disabled={isSeatsAllSelected()}>
           예매
         </button>
       </div>

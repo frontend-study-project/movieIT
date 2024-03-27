@@ -3,11 +3,28 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { useState } from "react";
 
-const SlideTime = ({ list, moveX, nowHour, onChangeHour }) => {
+const SlideTime = ({ moveX, hour, onChangeHour }) => {
+  const nowMinutes = new Date().getMinutes();
+  const moveCondition = () => {
+    if ((hour > 13) || (hour === 0)) {
+      return nowMinutes > 50 ? 0 : -13;
+    }
 
+    return -(hour - 1);
+  }
+
+  const selectedCondition = () => {
+   if (!hour) {
+    return nowMinutes > 50 ? -1 :-24;
+   }
+   
+   return -hour
+  }
+  
   const [count, setCount] = useState({
-    move: nowHour > 13 ? -13 : -nowHour + 1, selected: -nowHour
+    move: moveCondition(), selected: selectedCondition()
   });
+  const list = Array.from({length: 24}).map((_, idx) => idx + 1);
 
   const handleDisabledPrev = () => {
     return count.move >= 0 ? 'disabled' : '';
@@ -52,6 +69,12 @@ const SlideTime = ({ list, moveX, nowHour, onChangeHour }) => {
     onChangeHour(+idx);
   }
 
+  const hourDisabledCondition = (idx) => {
+    const nowHour = new Date().getHours() === 0 ? 24 : new Date().getHours();
+
+    return nowHour <= idx + 1;
+  }
+
   return (
     <div className={styled.wrap_slide}>
       <button
@@ -69,12 +92,12 @@ const SlideTime = ({ list, moveX, nowHour, onChangeHour }) => {
           className={styled.list_slide}
           style={{transform: `translateX(${count.move * moveX}px)`}}
         >
-          {list.map((item) => (
+          {list.map((item, idx) => (
             <li
               key={item}
               className={`${styled.item_slide} ${item === -count.selected ? styled.on : ""}`}
             >
-              <button type="button" onClick={() => handleSlideItemClick(item)}>
+              <button type="button" onClick={() => handleSlideItemClick(item)} style={{opacity: `${hourDisabledCondition(idx) ? 1 : 0.5}`}} disabled={`${hourDisabledCondition(idx) ? '' : 'disabled'}`}>
                 <em className={styled.txt_num}>{item}</em>
               </button>
             </li>

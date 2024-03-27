@@ -9,7 +9,7 @@ import styled from "./StepTwo.module.css";
 import SeatArrange from "../SeatItem/SeatArrange";
 import SeatDimmed from "../SeatItem/SeatDimmed";
 import { setAlert } from "../../../store/slice/alert";
-import { getAuthorization } from "../../../api/auth.api";
+import { useFetchSeatsOccupiedQuery } from "../../../hooks/useSeatsOccupied";
 
 const BoxSeat = () => {
   const [occupiedSeatsList, setoOccupiedSeatsList] = useState(['F14', 'F15']);
@@ -37,32 +37,34 @@ const BoxSeat = () => {
     dispatch(setBook({ step: "stepTwo", type: "selectedSeats", data: [] }));
     dispatch(setBook({ step: "stepTwo", type: "seatCategory", data: {adult: 0, teenager: 0, senior: 0, challenged: 0} }));
   };
+  // const yearNum = new Date(date).getFullYear();
+  // const monthNum = new Date(date).getMonth + 1;
+  // const dateNum = new Date(date).getDate();
+
+  const {data: occupiedSeats} = useFetchSeatsOccupiedQuery({
+    movieId: movie.id,
+    theaterId: theater.id,
+    date: `${date} ${runningTime.timeStart}`,
+    activate: !!(movie.id && theater.id)
+  });
+  console.log();
+
+  useEffect(() => {
+    occupiedSeats && setoOccupiedSeatsList(occupiedSeats);
+  }, [occupiedSeats]);
 
   useEffect(() => {
     const total = count.adult + count.teenager + count.senior + count.challenged;
 
     dispatch(setBook({ step: "stepTwo", type: "totalNum", data: total }));
-
-    if (movie.id !== '' && theater.id !== '') {
-      fetch(`http://localhost:3000/api/booking/movie/${movie.id}/theater/${theater.id}/seat?date=${date.slice(0,10) + ' '  + runningTime.timeStart}`,{
-        headers: {
-          Authorization: `Bearer ${getAuthorization()}`, 
-          'Content-Type': 'application/json',
-        }
-      })
-      .then(res => res.json())
-      .then(data => {
-        setoOccupiedSeatsList(data);
-      })
-    }
-  }, [count]);
+  }, [count])
 
   const onAddCount = (id) => {
     if (totalNum >= 8) {
       dispatch(setAlert({
         open: true,
         title: '인원선택은 총 8명까지 가능합니다.',
-        btnList: [{autoFocus: true, txt: '확인'}]
+        btnList: [{autoFocus: true, txt: '확인', clickFn: () => {}}]
       }))
       return;
     }
@@ -80,12 +82,13 @@ const BoxSeat = () => {
   const onMinusCount = (id) => {
 
     if (totalNum <= selectedSeats.length) {
-      if (confirm('선택하신 좌석을 모두 취소하고 다시 선택하시겠습니까?')) { 
-        resetCountsAndSeats();
-        return;
-      } else {
-        return 
-      }
+      dispatch(setAlert({
+        open: true,
+        title: '선택하신 좌석을 모두 취소하고 다시 선택하시겠습니까?',
+        content: '',
+        btnList: [{autoFocus: false, txt: '취소', clickFn: () => {return}}, {autoFocus: true, txt: '확인', clickFn: () => {resetCountsAndSeats()}}],
+      }))
+      return;
     }
 
     setCount((prev) => {
@@ -147,7 +150,7 @@ const BoxSeat = () => {
         style={{ overflowY: totalNum ? "scroll" : "hidden" }}
       >
         {totalNum === 0 && <SeatDimmed />}
-        <SeatArrange occupiedSeatsList={occupiedSeatsList} />
+        <SeatArrange occupiedSeatsList={occupiedSeatsList} challengedSeats={['A23', 'A24', 'A25', 'A26']} />
       </div>
     </div>
   );
