@@ -11,6 +11,10 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useFetchSeatsLeftQuery } from "../../../hooks/useSeatsLeft";
 
 const BoxTime = () => {
+  const [hour, setHour] = useState(new Date().getHours());
+
+  const hourCondition = new Date().getMinutes() < 50 ? hour : hour + 1;
+
   const [screenList, setScreenList] = useState([]);
 
   const { pathname } = useLocation();
@@ -22,8 +26,6 @@ const BoxTime = () => {
   const dispatch = useDispatch();
 
   const [seatLeftList, setSeatLeftList] = useState([]);
-
-  const [hour, setHour] = useState(new Date().getHours());
 
   const { movie, theater } = useSelector((state) => state.book.stepOne);
 
@@ -77,7 +79,7 @@ const BoxTime = () => {
     const nowHour = new Date().getHours();
     const nowMinutes = new Date().getMinutes();
     let minutesListLength = 10, minutesList = [];
-    if ((hour === nowHour) && (nowMinutes < 50)) {
+    if ((hourCondition === nowHour) && (nowMinutes < 50)) {
       minutesListLength = (Math.floor(nowMinutes / 10) || 1 ) * 2;
       minutesList = Array.from({ length: 10 - minutesListLength }).map((_, idx) => {
         return {
@@ -97,10 +99,11 @@ const BoxTime = () => {
       })
     }
     setScreenList(minutesList)
-    
-  }, [hour, seatsLeftdata]);
 
-  const hourCondition = new Date().getMinutes() < 50 ? hour : hour + 1;
+    console.log(hourCondition, nowHour);
+  }, [hourCondition, seatsLeftdata, movie]);
+
+  
 
   return (
     <div className={styled.box_time}>
