@@ -4,6 +4,7 @@ import { setAlert } from "../store/slice/alert";
 import { getAuthorization } from "../api/auth.api";
 import { useNavigate } from "react-router-dom";
 import { reset } from "../store/slice/book";
+import { postReservation } from "../api/reservation.api";
 
 export const useSaveBookingMutation = () => {
   const dispatch = useDispatch();
@@ -11,14 +12,7 @@ export const useSaveBookingMutation = () => {
 
   return useMutation({
     mutationFn: async (data) => {
-      const response = await fetch("http://localhost:3000/api/reservation", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${getAuthorization()}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ ...data, auditorium: "" }),
-      });
+      const response = await postReservation(data);
       if (!response.ok) throw new Error();
 
       return response;

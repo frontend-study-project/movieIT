@@ -99,8 +99,6 @@ const BoxTime = () => {
       })
     }
     setScreenList(minutesList)
-
-    console.log(hourCondition, nowHour);
   }, [hourCondition, seatsLeftdata, movie]);
 
   
