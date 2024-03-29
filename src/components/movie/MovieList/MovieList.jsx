@@ -11,7 +11,7 @@ const MovieList = () => {
         '18': '청소년 관람불가',
       }
     useEffect(() => {
-        fetch("http://localhost:3000/api/movie/now_playing?page=1")
+        fetch("https://port-0-movieit-backend-fhrtg2blubc29w6.sel5.cloudtype.app/api/movie/now_playing?page=1")
           .then((res) => res.json())
           .then((data) => {
             let list = [];

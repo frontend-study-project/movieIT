@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      '/api': 'http://localhost:3000'
+      '/api': 'https://port-0-movieit-backend-fhrtg2blubc29w6.sel5.cloudtype.app/'
     }
   }
 })
