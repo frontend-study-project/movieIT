@@ -7,7 +7,7 @@ const SlideTime = ({ moveX, hour, onChangeHour }) => {
   const nowMinutes = new Date().getMinutes();
   const moveCondition = () => {
     if ((hour > 13) || (hour === 0)) {
-      return nowMinutes > 50 ? 0 : -13;
+      return  -13;
     }
 
     return -(hour - 1);
