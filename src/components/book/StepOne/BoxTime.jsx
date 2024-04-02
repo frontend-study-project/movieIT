@@ -12,26 +12,29 @@ import { useFetchSeatsLeftQuery } from "../../../hooks/useSeatsLeft";
 
 const BoxTime = () => {
   const [hour, setHour] = useState(new Date().getHours());
-
   const hourCondition = new Date().getMinutes() < 50 ? hour : hour + 1;
+
+  const dispatch = useDispatch();
+  const { movie, theater } = useSelector((state) => state.book.stepOne);
+  const { data } = useFetchUserQuery();
+  const { data: seatsLeftdata } = useFetchSeatsLeftQuery({
+    movieId: movie.id,
+    theaterId: theater.id,
+    hour,
+    activate: !!(movie.id && theater.id),
+  });
+
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
 
   const [screenList, setScreenList] = useState([]);
 
-  const { pathname } = useLocation();
-
-  const navigate = useNavigate();
-
-  const { data } = useFetchUserQuery();
-
-  const dispatch = useDispatch();
-
   const [seatLeftList, setSeatLeftList] = useState([]);
-
-  const { movie, theater } = useSelector((state) => state.book.stepOne);
 
   const onChangeHour = (hour) => {
     setHour(hour);
   };
+  console.log(seatsLeftdata, seatLeftList,hour);
 
   const handleHourClick = (event) => {
     const screen = event.currentTarget.getAttribute("data-screen");
@@ -58,18 +61,11 @@ const BoxTime = () => {
     );
 
     if (data) {
-      dispatch(setPage(2))
+      dispatch(setPage(2));
     }
-    
+
     navigate("/login", { state: pathname });
   };
-
-  const { data: seatsLeftdata } = useFetchSeatsLeftQuery({
-    movieId: movie.id,
-    theaterId: theater.id,
-    hour,
-    activate: !!(movie.id && theater.id),
-  });
 
   useEffect(() => {
     seatsLeftdata && setSeatLeftList(seatsLeftdata);
@@ -78,42 +74,50 @@ const BoxTime = () => {
   useEffect(() => {
     const nowHour = new Date().getHours();
     const nowMinutes = new Date().getMinutes();
-    let minutesListLength = 10, minutesList = [];
-    if ((hourCondition === nowHour) && (nowMinutes < 50)) {
-      minutesListLength = (Math.floor(nowMinutes / 10) || 1 ) * 2;
-      minutesList = Array.from({ length: 10 - minutesListLength }).map((_, idx) => {
-        return {
-          minute: 10 * Math.ceil(nowMinutes / 10) + idx * 5,
-          screen: `컴포트${parseInt(Math.random() * 12 + 1)}관`,
-        };
-      })
-      setSeatLeftList(prev => {
-        return [...prev].slice(minutesListLength)
-      })
+    let minutesListLength = 10,
+      minutesList = [];
+
+    if (nowHour === hour && nowMinutes > 10) {
+      minutesListLength = (Math.round(nowMinutes / 10) - 1 || 1) * 2;
+
+      minutesList = Array.from({ length: 10 - minutesListLength }).map(
+        (_, idx) => {
+          return {
+            minute: 10 * Math.round(nowMinutes / 10) + idx * 5,
+            screen: `컴포트${parseInt(Math.random() * 12 + 1)}관`,
+          };
+        }
+      );
+
+      if (movie.id && theater.id) {
+        setSeatLeftList((prev) => {
+          if (prev.length > 10 - minutesListLength) {
+            return [...prev].slice(minutesListLength);
+          }
+
+          return prev;
+        });
+      } 
     } else {
       minutesList = Array.from({ length: minutesListLength }).map((_, idx) => {
         return {
           minute: 10 + idx * 5,
-          screen: `컴포트${parseInt(Math.random() * 12 + 1)}관`,
+          screen: `컴포트${idx + 1}관`,
         };
-      })
-    }
-    setScreenList(minutesList)
-  }, [hourCondition, seatsLeftdata, movie]);
+      });
 
-  
+      setSeatLeftList(seatsLeftdata);
+    }
+    setScreenList(minutesList);
+  }, [seatsLeftdata]);
 
   return (
     <div className={styled.box_time}>
       <h3 className={styledCommon.tit_box}>
         시간<span className={styledCommon.screen_out}>선택</span>
       </h3>
-      <SlideTime
-          moveX={35}
-          hour={hourCondition}
-          onChangeHour={onChangeHour}
-        />
-      {!(movie.txt && theater.txt)? (
+      <SlideTime moveX={35} hour={hourCondition} onChangeHour={onChangeHour} />
+      {!(movie.txt && theater.txt) ? (
         <div className={styled.area_empty}>
           <TheatersIcon fontSize="large" color="disabled" />
           <p>
@@ -153,7 +157,7 @@ const BoxTime = () => {
                     </span>
                     <span className={styled.wrap_seat}>
                       <span className={styled.num_left}>
-                        {440 - seatLeftList[idx] || 0}
+                      {seatLeftList ? 440 - seatLeftList[idx] : 440}
                       </span>
                       /<span className={styled.num_total}>440</span>
                     </span>
