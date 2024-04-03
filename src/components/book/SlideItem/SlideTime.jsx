@@ -5,20 +5,20 @@ import { useState } from "react";
 
 const SlideTime = ({ moveX, hour, onChangeHour }) => {
   const nowMinutes = new Date().getMinutes();
+
   const moveCondition = () => {
     if ((hour > 13) || (hour === 0)) {
-      return  -13;
+      return -13;
     }
 
     return -(hour - 1);
   }
-
   const selectedCondition = () => {
-   if (!hour) {
-    return nowMinutes > 50 ? -1 :-24;
-   }
-   
-   return -hour
+    if (!hour) {
+      return nowMinutes > 55 ? -1 :-24;
+    }
+    
+    return -hour
   }
   
   const [count, setCount] = useState({
