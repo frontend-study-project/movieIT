@@ -15,11 +15,12 @@ const BoxTime = () => {
   const hourCondition = new Date().getMinutes() < 50 ? hour : hour + 1;
 
   const dispatch = useDispatch();
-  const { movie, theater } = useSelector((state) => state.book.stepOne);
+  const { date, movie, theater } = useSelector((state) => state.book.stepOne);
   const { data } = useFetchUserQuery();
   const { data: seatsLeftdata } = useFetchSeatsLeftQuery({
     movieId: movie.id,
     theaterId: theater.id,
+    date,
     hour,
     activate: !!(movie.id && theater.id),
   });
@@ -34,7 +35,6 @@ const BoxTime = () => {
   const onChangeHour = (hour) => {
     setHour(hour);
   };
-  console.log(seatsLeftdata, seatLeftList,hour);
 
   const handleHourClick = (event) => {
     const screen = event.currentTarget.getAttribute("data-screen");
@@ -72,19 +72,19 @@ const BoxTime = () => {
   }, [seatsLeftdata]);
 
   useEffect(() => {
-    const nowHour = new Date().getHours();
     const nowMinutes = new Date().getMinutes();
     let minutesListLength = 10,
-      minutesList = [];
+      minutesList = [],
+      formatDate = new Date(`${date} ${hour}:00:00`);
 
-    if (nowHour === hour && nowMinutes > 10) {
+    if (new Date() > formatDate && nowMinutes > 10) {
       minutesListLength = (Math.round(nowMinutes / 10) - 1 || 1) * 2;
 
       minutesList = Array.from({ length: 10 - minutesListLength }).map(
         (_, idx) => {
           return {
             minute: 10 * Math.round(nowMinutes / 10) + idx * 5,
-            screen: `컴포트${parseInt(Math.random() * 12 + 1)}관`,
+            screen: `컴포트${idx + 1}관`,
           };
         }
       );
@@ -109,7 +109,7 @@ const BoxTime = () => {
       setSeatLeftList(seatsLeftdata);
     }
     setScreenList(minutesList);
-  }, [seatsLeftdata]);
+  }, [seatsLeftdata, date]);
 
   return (
     <div className={styled.box_time}>
