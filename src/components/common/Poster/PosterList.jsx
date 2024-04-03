@@ -69,7 +69,6 @@ const Poster = ({ image, rating, certification, heart, description, poster_path,
 };
 
 const PostList = ({ data }) => {
-  console.log("data", data);
   return (
     <Grid container spacing={{ xs: 4 }} columns={{ xs: 4 }}>
       {

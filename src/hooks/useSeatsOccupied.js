@@ -1,5 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-import { getAuthorization } from "../api/auth.api";
 import { fetchSeatsOccupied } from "../api/seats.api";
 
 export const useFetchSeatsOccupiedQuery = ({movieId, theaterId, date, activate}) => useQuery({

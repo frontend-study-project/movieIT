@@ -54,7 +54,7 @@ const SlideDate = ({ list, year, moveX, onSlideItemClick }) => {
     moveToDirect(idx);
 
     onSlideItemClick(list[idx].id);
-    console.log(list[idx], 'dl')
+
   }
 
   return (
