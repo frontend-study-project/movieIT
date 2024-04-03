@@ -31,6 +31,7 @@ const BoxTime = () => {
   const [screenList, setScreenList] = useState([]);
 
   const [seatLeftList, setSeatLeftList] = useState([]);
+  console.log(hour, seatsLeftdata);
 
   const onChangeHour = (hour) => {
     setHour(hour);
