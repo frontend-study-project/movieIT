@@ -3,7 +3,7 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { useState } from "react";
 
-const SlideTime = ({ moveX, hour, onChangeHour }) => {
+const SlideTime = ({ moveX, hour, date, onChangeHour }) => {
   const nowMinutes = new Date().getMinutes();
 
   const moveCondition = () => {
@@ -73,6 +73,8 @@ const SlideTime = ({ moveX, hour, onChangeHour }) => {
     let nowHour = new Date().getHours() === 0 ? 24 : new Date().getHours();
 
     if (nowMinutes >= 55) nowHour++;
+
+    if ( Date.now() < new Date(date)) return 1
 
     return nowHour <= idx + 1;
   }

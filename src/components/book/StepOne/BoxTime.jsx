@@ -118,7 +118,7 @@ const BoxTime = () => {
       <h3 className={styledCommon.tit_box}>
         시간<span className={styledCommon.screen_out}>선택</span>
       </h3>
-      <SlideTime moveX={35} hour={hourCondition} onChangeHour={onChangeHour} />
+      <SlideTime moveX={35} hour={hourCondition} date={date} onChangeHour={onChangeHour} />
       {!(movie.txt && theater.txt) ? (
         <div className={styled.area_empty}>
           <TheatersIcon fontSize="large" color="disabled" />
