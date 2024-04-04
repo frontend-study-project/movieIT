@@ -12,7 +12,7 @@ import { useFetchSeatsLeftQuery } from "../../../hooks/useSeatsLeft";
 
 const BoxTime = () => {
   const [hour, setHour] = useState(new Date().getHours());
-  const hourCondition = new Date().getMinutes() < 50 ? hour : hour + 1;
+  const hourCondition = new Date().getMinutes() < 55 ? hour : hour + 1;
 
   const dispatch = useDispatch();
   const { date, movie, theater } = useSelector((state) => state.book.stepOne);
@@ -76,7 +76,8 @@ const BoxTime = () => {
     const nowMinutes = new Date().getMinutes();
     let minutesListLength = 10,
       minutesList = [],
-      formatDate = new Date(`${date} ${hour}:00:00`);
+      formatDate = new Date(`${date} ${nowMinutes >= 55 ? hour + 1 :hour}:00:00`);
+
 
     if (new Date() > formatDate && nowMinutes > 10) {
       minutesListLength = (Math.round(nowMinutes / 10) - 1 || 1) * 2;

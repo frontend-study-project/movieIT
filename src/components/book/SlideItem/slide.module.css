@@ -1,9 +1,15 @@
 /**** 슬라이드 ****/
 .wrap_slide{
   position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   padding: 0 20px;
 }
 .btn_prev,  .btn_next{
@@ -32,13 +38,18 @@
   background-color: #fff;
 }
  .list_slide{
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   overflow-y: unset;
   height: 100%;
+  -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s;
   transition: all 0.3s;
 }
 .item_slide{
-  flex-shrink: 0;
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
 }
 
 [class*='box_date'] .item_slide{
@@ -93,5 +104,7 @@
   width: 3px;
   height: 3px;
   background-color: #888;
-  transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+          transform: translateY(-50%);
 }

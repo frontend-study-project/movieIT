@@ -1,5 +1,6 @@
 [class*="box_"]{
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 li.on > button{
   color: #fff;
@@ -19,8 +20,13 @@ li.on > button{
 }
 /**** 영화 ****/
 .box_movie{
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   width: 270px;
   padding: 10px 20px 17px 20px;
   border-left: 1px solid #d8d9db;
@@ -30,8 +36,12 @@ li.on > button{
   height: 450px;
 }
 .list_movie button{
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  align-items: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   width: 100%;
   min-height: 28px;
   padding: 0 0 0 5px;
@@ -51,7 +61,8 @@ li.on > button{
 .list_area{
   width: calc(50% - 5px);
   border-right: 1px solid #d8d9db;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   overflow-y: hidden;
 }
 .list_area > li.on > button{
@@ -107,11 +118,16 @@ li.on > button{
   border-top: 1px solid #ebebeb;
 }
 .list_movies button{
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: space-between;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   width: 100%;
   padding: 10px 0 0 30px;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   text-align: left;
 }
 .item_time{
@@ -156,10 +172,19 @@ li.on > button{
   line-height: 20px;
 }
 .area_empty{
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   height: calc(100% - 80px);
   text-align: center;
   font-size: 15px;

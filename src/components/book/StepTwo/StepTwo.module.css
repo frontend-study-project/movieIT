@@ -3,8 +3,12 @@
   width: 770px;
 }
 .head_book{
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: space-between;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   padding: 8px 0;
   border-top: 1px solid #444;
 }
@@ -14,8 +18,12 @@
   color: #222;
 }
 .head_book button{
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  align-items: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   padding: 0 8px;
   border-radius: 4px;
   border: 1px solid #c1c1c1;
@@ -28,6 +36,8 @@
   margin-right: 4px;
 }
 .box_select{
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   padding: 10px 0 10px 20px;
   background-color: #f2f4f5;
@@ -41,7 +51,8 @@
   position: relative;
   height: 454px;
   padding: 30px 0;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
 /**** 정보 ****/
@@ -52,7 +63,8 @@
   padding: 15px 20px 0 20px;
   background-color: #333;
   border-radius: 10px;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   color: #fff;
 }
 /* 영화정보 */
@@ -67,7 +79,8 @@
   overflow: hidden;
   padding-left: 28px;
   white-space: nowrap;
-  text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+     text-overflow: ellipsis;
 }
 .txt_cate{
   display: inline-block;
@@ -78,8 +91,12 @@
 /* 정보상세 */
 .item_info{
   position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: space-between;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   padding: 10px 0;
   border-bottom: 1px solid #434343;
 }
@@ -101,6 +118,8 @@
 }
 /* 좌석안내 */
 .item_seat{
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   min-height: 230px;
   margin-top: 10px;
@@ -116,14 +135,19 @@
   letter-spacing: -1px;
 }
 .info_seat li{
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  align-items: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   line-height: 22px;
 }
 .info_select{
   width: 116px;
   padding: 0 14px;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 .info_select em{
   display: block;
@@ -132,8 +156,11 @@
   text-align: center;
 }
 .info_select ul{
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
   width: 88px;
 }
 .info_select li{
@@ -156,9 +183,16 @@
 }
 /* 결제금액 */
 .item_pay{
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
   min-height: 80px;
 }
 .cate_pay{
@@ -166,8 +200,12 @@
   color: #c4c4c4;
 }
 .txt_pay{
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: space-between;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   line-height: 35px;
 }
 .num_pay{
