@@ -88,7 +88,6 @@ const BoxTime = () => {
     setScreenList(minutesList);
 
   }, [seatsLeftdata]);
-  console.log('결과', seatLeftList);
 
   return (
     <div className={styled.box_time}>

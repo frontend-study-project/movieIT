@@ -1,7 +1,7 @@
 import styled from "./slide.module.css";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const SlideTime = ({ moveX, hour, date, onChangeHour }) => {
   const nowMinutes = new Date().getMinutes();
@@ -17,7 +17,7 @@ const SlideTime = ({ moveX, hour, date, onChangeHour }) => {
     if (!hour) {
       return nowMinutes >= 55 ? -1 :-24;
     }
-    
+
     return -hour
   }
   
@@ -78,6 +78,20 @@ const SlideTime = ({ moveX, hour, date, onChangeHour }) => {
 
     return nowHour <= idx + 1;
   }
+
+  useEffect(() => {
+    const nowHour = new Date().getHours();
+    
+    if (nowHour > hour) {
+
+      setCount(prev => {
+        return {
+          ...prev,
+          move: prev.move, selected: nowMinutes >= 55 ? -(nowHour + 1) : -nowHour
+        }
+      });
+    }
+  }, [date]);
 
   return (
     <div className={styled.wrap_slide}>
