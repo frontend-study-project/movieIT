@@ -30,8 +30,7 @@ const BoxTime = () => {
 
   const [screenList, setScreenList] = useState([]);
 
-  const [seatLeftList, setSeatLeftList] = useState([]);
-  console.log(hour, seatsLeftdata);
+  const [seatLeftList, setSeatLeftList] = useState(seatsLeftdata || [0,0,0,0,0,0,0,0,0,0]);
 
   const onChangeHour = (hour) => {
     setHour(hour);
@@ -70,48 +69,26 @@ const BoxTime = () => {
 
   useEffect(() => {
     seatsLeftdata && setSeatLeftList(seatsLeftdata);
-  }, [seatsLeftdata]);
 
-  useEffect(() => {
     const nowMinutes = new Date().getMinutes();
-    let minutesListLength = 10,
-      minutesList = [],
+    let minutesList = ['10','15','20','25','30','35','40','45','50','55'],
+      sliceStartIdx = 0,
       formatDate = new Date(`${date} ${nowMinutes >= 55 ? hour + 1 :hour}:00:00`);
 
+    if (new Date() > formatDate && nowMinutes >= 10) {
+      sliceStartIdx = Math.round(nowMinutes / 10) + Math.floor(nowMinutes / 10) - 1;
 
-    if (new Date() > formatDate && nowMinutes > 10) {
-      minutesListLength = (Math.round(nowMinutes / 10) - 1 || 1) * 2;
+      minutesList = (minutesList.length > 10 - sliceStartIdx) && minutesList.slice(sliceStartIdx);
 
-      minutesList = Array.from({ length: 10 - minutesListLength }).map(
-        (_, idx) => {
-          return {
-            minute: 10 * Math.round(nowMinutes / 10) + idx * 5,
-            screen: `컴포트${idx + 1}관`,
-          };
-        }
-      );
-
-      if (movie.id && theater.id) {
-        setSeatLeftList((prev) => {
-          if (prev.length > 10 - minutesListLength) {
-            return [...prev].slice(minutesListLength);
-          }
-
-          return prev;
-        });
-      } 
     } else {
-      minutesList = Array.from({ length: minutesListLength }).map((_, idx) => {
-        return {
-          minute: 10 + idx * 5,
-          screen: `컴포트${idx + 1}관`,
-        };
-      });
-
-      setSeatLeftList(seatsLeftdata);
+      minutesList = ['10','15','20','25','30','35','40','45','50','55']
     }
+
+    seatsLeftdata && setSeatLeftList(seatsLeftdata.slice(sliceStartIdx));
     setScreenList(minutesList);
-  }, [seatsLeftdata, date]);
+
+  }, [seatsLeftdata]);
+  console.log('결과', seatLeftList);
 
   return (
     <div className={styled.box_time}>
@@ -130,22 +107,22 @@ const BoxTime = () => {
         </div>
       ) : (
         <ul className={`${styled.list_movies} ${styledCommon.scroll}`}>
-          {screenList.map((ele, idx) => {
+          { screenList.map((ele, idx) => {
             return (
               <li key={"hour" + idx}>
                 <button
                   type="button"
                   data-screen={ele.screen}
-                  data-timestart={`${hourCondition}:${ele.minute}`}
-                  data-timeend={`${hourCondition + 2}:${ele.minute}`}
+                  data-timestart={`${hourCondition}:${ele}`}
+                  data-timeend={`${hourCondition + 2}:${ele}`}
                   onClick={handleHourClick}
                 >
                   <div className={styled.item_time}>
                     <span className={styled.emph_time}>
-                      {hourCondition} : {ele.minute}
+                      {hourCondition} : {ele}
                     </span>
                     <div className={styled.txt_time}>
-                      ~ {hourCondition + 2} : {ele.minute}
+                      ~ {hourCondition + 2} : {ele}
                     </div>
                   </div>
                   <div className={styled.item_tit}>
@@ -155,11 +132,11 @@ const BoxTime = () => {
                   <div className={styled.item_info}>
                     <span className={styled.txt_theater}>
                       {theater.txt}
-                      <br /> {ele.screen}
+                      <br /> {`컴포트${idx + 1}관`}
                     </span>
                     <span className={styled.wrap_seat}>
                       <span className={styled.num_left}>
-                      {seatLeftList ? 440 - seatLeftList[idx] : 440}
+                      {seatLeftList ? 440 - seatLeftList[idx]: 440}
                       </span>
                       /<span className={styled.num_total}>440</span>
                     </span>

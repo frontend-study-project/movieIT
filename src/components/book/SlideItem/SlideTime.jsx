@@ -72,9 +72,9 @@ const SlideTime = ({ moveX, hour, date, onChangeHour }) => {
   const hourDisabledCondition = (idx) => {
     let nowHour = new Date().getHours() === 0 ? 24 : new Date().getHours();
 
-    if (nowMinutes >= 55) nowHour++;
+    if ( Date.now() < new Date(date)) return 1;
 
-    if ( Date.now() < new Date(date)) return 1
+    if (nowMinutes >= 55) nowHour++;
 
     return nowHour <= idx + 1;
   }
