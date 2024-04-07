@@ -2,8 +2,12 @@ import styled from "./slide.module.css";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { setBook } from "../../../store/slice/book";
 
 const SlideTime = ({ moveX, hour, date, onChangeHour }) => {
+  const dispatch = useDispatch();
+  const nowHour = new Date().getHours();
   const nowMinutes = new Date().getMinutes();
 
   const moveCondition = () => {
@@ -70,19 +74,23 @@ const SlideTime = ({ moveX, hour, date, onChangeHour }) => {
   }
 
   const hourDisabledCondition = (idx) => {
-    let nowHour = new Date().getHours() === 0 ? 24 : new Date().getHours();
+    let hour = nowHour === 0 ? 24 : new Date().getHours();
 
     if ( Date.now() < new Date(date)) return 1;
 
-    if (nowMinutes >= 55) nowHour++;
+    if (nowMinutes >= 55) hour++;
 
-    return nowHour <= idx + 1;
+    return hour <= idx + 1;
   }
 
   useEffect(() => {
-    const nowHour = new Date().getHours();
-    
+  
     if (nowHour > hour) {
+      dispatch(setBook({
+        step: "stepOne",
+        type: "hour",
+        data: nowMinutes >= 55 ? -(nowHour + 1) : -nowHour
+      }))
 
       setCount(prev => {
         return {

@@ -8,6 +8,7 @@ const initialState = {
     movie: {id: '', txt: ''},
     area: '',
     theater: {id: '', txt: ''},
+    hour: '',
     runningTime: {
       timeStart: '',
       timeEnd: ''
@@ -45,6 +46,7 @@ const reducers ={
         movie: {id: '', txt: ''},
         area: '',
         theater: {id: '', txt: ''},
+        hour: '',
         runningTime: {
           timeStart: '',
           timeEnd: ''

@@ -12,10 +12,8 @@ import { useFetchSeatsLeftQuery } from "../../../hooks/useSeatsLeft";
 
 const BoxTime = () => {
   const [hour, setHour] = useState(new Date().getHours());
-  const hourCondition = new Date().getMinutes() < 55 ? hour : hour + 1;
-
   const dispatch = useDispatch();
-  const { date, movie, theater } = useSelector((state) => state.book.stepOne);
+  const { date, movie, theater, hour : checkHour } = useSelector((state) => state.book.stepOne);
   const { data } = useFetchUserQuery();
   const { data: seatsLeftdata } = useFetchSeatsLeftQuery({
     movieId: movie.id,
@@ -24,6 +22,19 @@ const BoxTime = () => {
     hour,
     activate: !!(movie.id && theater.id),
   });
+
+  const hourCondition = (hourChanged) => {
+
+    if (hourChanged) {
+      return -hourChanged
+    } 
+
+    if (new Date().getMinutes() >= 55) {
+      return hour + 1;
+    }
+
+    return hour;
+  };
 
   const navigate = useNavigate();
   const { pathname } = useLocation();
@@ -89,12 +100,17 @@ const BoxTime = () => {
 
   }, [seatsLeftdata]);
 
+  useEffect(()=> {
+    const hour = hourCondition(checkHour);
+    setHour(hour);
+  }, [date]);
+
   return (
     <div className={styled.box_time}>
       <h3 className={styledCommon.tit_box}>
         시간<span className={styledCommon.screen_out}>선택</span>
       </h3>
-      <SlideTime moveX={35} hour={hourCondition} date={date} onChangeHour={onChangeHour} />
+      <SlideTime moveX={35} hour={hourCondition()} date={date} onChangeHour={onChangeHour} />
       {!(movie.txt && theater.txt) ? (
         <div className={styled.area_empty}>
           <TheatersIcon fontSize="large" color="disabled" />
@@ -112,16 +128,16 @@ const BoxTime = () => {
                 <button
                   type="button"
                   data-screen={ele.screen}
-                  data-timestart={`${hourCondition}:${ele}`}
-                  data-timeend={`${hourCondition + 2}:${ele}`}
+                  data-timestart={`${hourCondition()}:${ele}`}
+                  data-timeend={`${hourCondition() + 2}:${ele}`}
                   onClick={handleHourClick}
                 >
                   <div className={styled.item_time}>
                     <span className={styled.emph_time}>
-                      {hourCondition} : {ele}
+                      {hourCondition()} : {ele}
                     </span>
                     <div className={styled.txt_time}>
-                      ~ {hourCondition + 2} : {ele}
+                      ~ {hourCondition() + 2} : {ele}
                     </div>
                   </div>
                   <div className={styled.item_tit}>
