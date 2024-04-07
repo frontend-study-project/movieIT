@@ -1,7 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { useDispatch } from "react-redux";
 import { setAlert } from "../store/slice/alert";
-import { getAuthorization } from "../api/auth.api";
 import { useNavigate } from "react-router-dom";
 import { reset } from "../store/slice/book";
 import { postReservation } from "../api/reservation.api";

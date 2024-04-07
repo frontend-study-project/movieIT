@@ -41,7 +41,7 @@ const reducers ={
     return {
       page: 1,
       stepOne: {
-        date: '',
+        date: new Date(),
         rating: '',
         movie: {id: '', txt: ''},
         area: '',
