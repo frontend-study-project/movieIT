@@ -8,6 +8,7 @@ const initialState = {
     movie: {id: '', txt: ''},
     area: '',
     theater: {id: '', txt: ''},
+    hour: '',
     runningTime: {
       timeStart: '',
       timeEnd: ''
@@ -40,11 +41,12 @@ const reducers ={
     return {
       page: 1,
       stepOne: {
-        date: '',
+        date: new Date(),
         rating: '',
         movie: {id: '', txt: ''},
         area: '',
         theater: {id: '', txt: ''},
+        hour: '',
         runningTime: {
           timeStart: '',
           timeEnd: ''

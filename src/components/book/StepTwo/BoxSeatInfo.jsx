@@ -102,6 +102,7 @@ const BoxSeatInfo = () => {
     }); 
 
   }
+  
   const handlePosterImgLoad = (event) => {
     setIsLoaded(true);
   }

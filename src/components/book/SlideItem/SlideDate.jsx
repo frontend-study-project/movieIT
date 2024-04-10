@@ -2,9 +2,15 @@ import styled from "./slide.module.css";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useFetchMovieDetailQuery } from "../../../hooks/useMovie";
+import { setAlert } from "../../../store/slice/alert";
+import { reset, setBook } from "../../../store/slice/book";
 
 const SlideDate = ({ list, year, moveX, onSlideItemClick }) => {
-
+  const dispatch = useDispatch();
+  const {movie} = useSelector((state) => state.book.stepOne);
+  const {data: movieList} = useFetchMovieDetailQuery();
   const [count, setCount] = useState({move: 0, selected: 0});
 
   const handleDisabledPrev = () => {
@@ -48,12 +54,37 @@ const SlideDate = ({ list, year, moveX, onSlideItemClick }) => {
     });
   };
 
+  const resetBookInfo = () => {
+    dispatch(reset());
+    moveToDirect(0);
+
+    // dispatch(setBook({
+    //   step: 'stepOne',
+    //   type: "date",
+    //   data: list[0].id
+    // }))
+  }
+
   const handleSlideItemClick = (event) => {
     const idx = event.currentTarget.getAttribute('data-date');
+
+    const [selectedMovie] = movieList.filter(ele => ele.title === movie.txt);
+    if (selectedMovie) {
+      if (new Date(list[idx].id) < new Date(selectedMovie.release_date)) {
+        dispatch(setAlert({
+          open: true,
+          title: '선택 초기화',
+          content: '해당 날짜는 선택하신 영화가 존재하지 않습니다. 확인 버튼을 누르시면 선택이 초기화가 됩니다. 초기화하시겠습니까?',
+          btnList: [{autoFocus: false, txt: '취소', clickFn: () => {return}}, {autoFocus: true, txt: '확인', clickFn: () => {resetBookInfo()}}],
+        }))
+        return;
+      }
+    }
 
     moveToDirect(idx);
 
     onSlideItemClick(list[idx].id);
+
 
   }
 
