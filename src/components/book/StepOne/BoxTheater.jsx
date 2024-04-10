@@ -7,7 +7,7 @@ import { useFetchTheaterListQuery } from "../../../hooks/useTheater";
 
 const BoxTheater = () => {
   const [theaterList, setTheaterList] = useState([]);
-  const {isLoading, error, data} = useFetchTheaterListQuery();
+  const { data} = useFetchTheaterListQuery();
   useEffect(() => {
     setTheaterList(data);
   }, [data]);

@@ -1,20 +1,28 @@
 import styledCommon from "../../../pages/Book/book.module.css";
 import styled from "./StepOne.module.css";
 import SlideTime from "../SlideItem/SlideTime";
-
 import TheatersIcon from "@mui/icons-material/Theaters";
-import { useFetchUserQuery } from "../../../hooks/useAuth";
+
 import { useDispatch, useSelector } from "react-redux";
 import { setBook, setPage } from "../../../store/slice/book";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useFetchUserQuery } from "../../../hooks/useAuth";
 import { useFetchSeatsLeftQuery } from "../../../hooks/useSeatsLeft";
 
 const BoxTime = () => {
-  const [hour, setHour] = useState(new Date().getHours());
+  const NOW = new Date('2024-4-10 11:57:00');
+  const NOW_HOUR = NOW.getHours();
+  const NOW_MINUTES = NOW.getMinutes();
+  const MINUTES = ['10','15','20','25','30','35','40','45','50','55'];
+  const [hour, setHour] = useState(NOW_HOUR);
+  
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
   const { date, movie, theater, hour : checkHour } = useSelector((state) => state.book.stepOne);
-  const { data } = useFetchUserQuery();
+  
+  const { data: userData } = useFetchUserQuery();
   const { data: seatsLeftdata } = useFetchSeatsLeftQuery({
     movieId: movie.id,
     theaterId: theater.id,
@@ -23,30 +31,19 @@ const BoxTime = () => {
     activate: !!(movie.id && theater.id),
   });
 
-  const hourCondition = (hourChanged) => {
-
-    if (hourChanged) {
-      return -hourChanged
-    } 
-
-    if (new Date().getMinutes() >= 55) {
-      return hour + 1;
-    }
-
-    return hour;
-  };
-
-  const navigate = useNavigate();
-  const { pathname } = useLocation();
-
   const [screenList, setScreenList] = useState([]);
-
   const [seatLeftList, setSeatLeftList] = useState(seatsLeftdata || [0,0,0,0,0,0,0,0,0,0]);
 
+  // 1) slideTime에 보내주는 시간 2) 러닝타임 시간대로 사용
+  const hourCondition = () => {
+    return hour === 0 ? 24 : hour;
+  };
+
+  // SlideTime에서 슬라이드 내 시간 선택할때 BoxTime에서도 알수있게 동기화
   const onChangeHour = (hour) => {
     setHour(hour);
   };
-
+  // 영화시간 클릭시 - 1) 러닝타임, 스크린 데이터 스토어에 저장 2) 로그인 여부에 따른 페이지 이동
   const handleHourClick = (event) => {
     const screen = event.currentTarget.getAttribute("data-screen");
     const timeStart = event.currentTarget.getAttribute("data-timestart");
@@ -71,28 +68,28 @@ const BoxTime = () => {
       })
     );
 
-    if (data) {
+    if (userData) {
       dispatch(setPage(2));
     }
 
     navigate("/login", { state: pathname });
   };
-
+  // 영화, 극장 선택시 (잔여좌석수 받아오고)
+  // 날짜, 시간기준으로 상영시간별 리스트 만들기
   useEffect(() => {
     seatsLeftdata && setSeatLeftList(seatsLeftdata);
 
-    const nowMinutes = new Date().getMinutes();
-    let minutesList = ['10','15','20','25','30','35','40','45','50','55'],
+    let minutesList = MINUTES,
       sliceStartIdx = 0,
-      formatDate = new Date(`${date} ${nowMinutes >= 55 ? hour + 1 :hour}:00:00`);
+      formatDate = new Date(`${date} ${NOW_MINUTES >= 55 ? hour + 1 :hour}:00:00`);
 
-    if (new Date() > formatDate && nowMinutes >= 10) {
-      sliceStartIdx = Math.round(nowMinutes / 10) + Math.floor(nowMinutes / 10) - 1;
+    if (NOW > formatDate && NOW_MINUTES >= 10) {
+      sliceStartIdx = Math.round(NOW_MINUTES / 10) + Math.floor(NOW_MINUTES / 10) - 1;
 
       minutesList = (minutesList.length > 10 - sliceStartIdx) && minutesList.slice(sliceStartIdx);
 
     } else {
-      minutesList = ['10','15','20','25','30','35','40','45','50','55']
+      minutesList = MINUTES
     }
 
     seatsLeftdata && setSeatLeftList(seatsLeftdata.slice(sliceStartIdx));
@@ -100,17 +97,25 @@ const BoxTime = () => {
 
   }, [seatsLeftdata]);
 
+  // slideTime에서 값 받아오기
   useEffect(()=> {
-    const hour = hourCondition(checkHour);
-    setHour(hour);
+    if (new Date(date).toDateString() === NOW.toDateString()) {
+      setHour(checkHour);
+    } 
   }, [date]);
+
+  useEffect(() => {
+    if (NOW_MINUTES >= 55) {
+      setHour(hour + 1)
+    }
+  }, [])
 
   return (
     <div className={styled.box_time}>
       <h3 className={styledCommon.tit_box}>
         시간<span className={styledCommon.screen_out}>선택</span>
       </h3>
-      <SlideTime moveX={35} hour={hourCondition()} date={date} onChangeHour={onChangeHour} />
+      <SlideTime hour={hourCondition()} date={date} onChangeHour={onChangeHour} />
       {!(movie.txt && theater.txt) ? (
         <div className={styled.area_empty}>
           <TheatersIcon fontSize="large" color="disabled" />
