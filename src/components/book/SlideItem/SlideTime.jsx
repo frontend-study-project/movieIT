@@ -8,7 +8,7 @@ import { setBook } from "../../../store/slice/book";
 const SlideTime = ({ hour, date, onChangeHour }) => {
   const dispatch = useDispatch();
   const MOVE_X = 35;
-  const NOW = new Date('2024-4-10 11:57:00');
+  const NOW = new Date();
   const NOW_HOUR = NOW.getHours();
   const NOW_MINUTES = NOW.getMinutes();
   const list = Array.from({length: 24}).map((_, idx) => idx + 1);

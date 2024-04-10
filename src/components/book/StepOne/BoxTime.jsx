@@ -11,7 +11,7 @@ import { useFetchUserQuery } from "../../../hooks/useAuth";
 import { useFetchSeatsLeftQuery } from "../../../hooks/useSeatsLeft";
 
 const BoxTime = () => {
-  const NOW = new Date('2024-4-10 11:57:00');
+  const NOW = new Date();
   const NOW_HOUR = NOW.getHours();
   const NOW_MINUTES = NOW.getMinutes();
   const MINUTES = ['10','15','20','25','30','35','40','45','50','55'];
