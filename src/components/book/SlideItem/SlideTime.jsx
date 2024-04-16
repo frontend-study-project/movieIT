@@ -111,7 +111,6 @@ const SlideTime = ({ hour, date, onChangeHour }) => {
       }
     })
   },[]);
-  console.log(count);
   
   return (
     <div className={styled.wrap_slide}>
