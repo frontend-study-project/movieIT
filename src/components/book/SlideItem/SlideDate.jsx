@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useFetchMovieDetailQuery } from "../../../hooks/useMovie";
 import { setAlert } from "../../../store/slice/alert";
-import { reset, setBook } from "../../../store/slice/book";
+import { reset } from "../../../store/slice/book";
 
 const SlideDate = ({ list, year, moveX, onSlideItemClick }) => {
   const dispatch = useDispatch();
@@ -57,12 +57,6 @@ const SlideDate = ({ list, year, moveX, onSlideItemClick }) => {
   const resetBookInfo = () => {
     dispatch(reset());
     moveToDirect(0);
-
-    // dispatch(setBook({
-    //   step: 'stepOne',
-    //   type: "date",
-    //   data: list[0].id
-    // }))
   }
 
   const handleSlideItemClick = (event) => {

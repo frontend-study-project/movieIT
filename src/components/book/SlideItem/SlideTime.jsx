@@ -14,7 +14,7 @@ const SlideTime = ({ hour, date, onChangeHour }) => {
   const list = Array.from({length: 24}).map((_, idx) => idx + 1);
   // 슬라이드 : 움직이는 조건
   const moveCondition = () => {
-    if ((hour >= 13) || (hour === 0)) {
+    if ((hour > 13) || (hour === 0)) {
       return -13;
     }
     
@@ -110,7 +110,8 @@ const SlideTime = ({ hour, date, onChangeHour }) => {
         move: prev.move, selected: NOW_MINUTES >= 55 ? -(NOW_HOUR + 1) : -NOW_HOUR
       }
     })
-  },[])
+  },[]);
+  console.log(count);
   
   return (
     <div className={styled.wrap_slide}>
