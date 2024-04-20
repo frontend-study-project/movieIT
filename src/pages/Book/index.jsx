@@ -8,6 +8,7 @@ const Book = () => {
  const pageNum = useSelector(state => state.book.page);
 
  const {open} = useSelector(state => state.alert);
+
   return (
     <div className={styled.cont_book}>
       <h2 className={styled.tit_book}>예매</h2>

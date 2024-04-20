@@ -3,6 +3,8 @@ import * as authApi from '../api/auth.api';
 import { useSnackbar } from './useSnackbar';
 import { useNavigate } from 'react-router-dom';
 import { CURRENT_PASSWORD_EQUAL, CURRENT_PASSWORD_NOT_EQUAL, NEW_PASSWORD_NOT_EQUAL } from '../api/error/auth';
+import { useDispatch } from 'react-redux';
+import { reset } from '../store/slice/book';
 
 export const useFetchUserQuery = () =>
   useQuery({
@@ -155,6 +157,7 @@ export const useLogoutMutation = () => {
   const snackbar = useSnackbar();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const dispatch = useDispatch();
 
   return useMutation({
     async mutationFn() {
@@ -162,6 +165,7 @@ export const useLogoutMutation = () => {
       queryClient.setQueryData(['user'], null, { updatedAt: Date.now() });
 
       snackbar('로그아웃 되었습니다.');
+      dispatch(reset());
       navigate('/');
     },
   });

@@ -21,7 +21,7 @@ const Login = () => {
       } else {
         navigate('/', { replace: true });
       }
-    }
+    } 
   }, [user, navigate]);
 
   return (

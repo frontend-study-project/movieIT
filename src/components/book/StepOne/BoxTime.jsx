@@ -68,10 +68,6 @@ const BoxTime = () => {
       })
     );
 
-    if (userData) {
-      dispatch(setPage(2));
-    }
-
     navigate("/login", { state: pathname });
   };
   // 영화, 극장 선택시 (잔여좌석수 받아오고)
