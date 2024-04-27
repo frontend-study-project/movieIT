@@ -6,19 +6,25 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 
 const Login = () => {
-  const { state } = useLocation(); 
+  const {state} = useLocation(); 
   const { data: user } = useFetchUserQuery();
   const navigate = useNavigate();
+
+  console.log(location);
   
   useEffect(() => {
     if (user) {
       if (state) {
-        navigate(state);
+        if (state.includes('join')) {
+          navigate(-3)
+        } else {
+          navigate(state);
+        }
       } else {
         navigate('/', { replace: true });
       }
     } 
-  }, [user, navigate]);
+  }, [user]);
 
   return (
     <Box className={styled.login}>
