@@ -8,21 +8,25 @@ import { useDispatch } from 'react-redux';
 import { setPage } from '../../../store/slice/book';
 
 const Login = () => {
-  const { state } = useLocation(); 
+  const {state} = useLocation(); 
   const { data: user } = useFetchUserQuery();
-  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   
   useEffect(() => {
     if (user) {
       if (state) {
         dispatch(setPage(2));
-        navigate(state);
+        if (state.includes('join')) {
+          navigate(-3)
+        } else {
+          navigate(state);
+        }
       } else {
         navigate('/', { replace: true });
       }
-    }
-  }, [user, navigate]);
+    } 
+  }, [user]);
 
   return (
     <Box className={styled.login}>

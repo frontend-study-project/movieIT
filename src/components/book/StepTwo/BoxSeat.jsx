@@ -12,7 +12,7 @@ import { setAlert } from "../../../store/slice/alert";
 import { useFetchSeatsOccupiedQuery } from "../../../hooks/useSeatsOccupied";
 
 const BoxSeat = () => {
-  const [occupiedSeatsList, setoOccupiedSeatsList] = useState(['F14', 'F15']);
+  const [occupiedSeatsList, setoOccupiedSeatsList] = useState([]);
 
   const dispatch = useDispatch();
 

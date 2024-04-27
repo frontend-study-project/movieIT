@@ -4,10 +4,9 @@ import SlideTime from "../SlideItem/SlideTime";
 import TheatersIcon from "@mui/icons-material/Theaters";
 
 import { useDispatch, useSelector } from "react-redux";
-import { setBook, setPage } from "../../../store/slice/book";
+import { setBook } from "../../../store/slice/book";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useFetchUserQuery } from "../../../hooks/useAuth";
 import { useFetchSeatsLeftQuery } from "../../../hooks/useSeatsLeft";
 
 const BoxTime = () => {
@@ -22,7 +21,6 @@ const BoxTime = () => {
   const { pathname } = useLocation();
   const { date, movie, theater, hour : checkHour } = useSelector((state) => state.book.stepOne);
   
-  const { data: userData } = useFetchUserQuery();
   const { data: seatsLeftdata } = useFetchSeatsLeftQuery({
     movieId: movie.id,
     theaterId: theater.id,
@@ -67,10 +65,6 @@ const BoxTime = () => {
         data: screen,
       })
     );
-
-    if (userData) {
-      dispatch(setPage(2));
-    }
 
     navigate("/login", { state: pathname });
   };
