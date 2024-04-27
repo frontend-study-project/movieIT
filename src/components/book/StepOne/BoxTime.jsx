@@ -4,7 +4,7 @@ import SlideTime from "../SlideItem/SlideTime";
 import TheatersIcon from "@mui/icons-material/Theaters";
 
 import { useDispatch, useSelector } from "react-redux";
-import { setBook, setPage } from "../../../store/slice/book";
+import { setBook } from "../../../store/slice/book";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useFetchSeatsLeftQuery } from "../../../hooks/useSeatsLeft";
@@ -65,7 +65,7 @@ const BoxTime = () => {
         data: screen,
       })
     );
-    dispatch(setPage(2));
+
     navigate("/login", { state: pathname });
   };
   // 영화, 극장 선택시 (잔여좌석수 받아오고)
