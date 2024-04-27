@@ -4,19 +4,15 @@ import LoginForm from '../../../components/auth/LoginForm/LoginForm';
 import { useFetchUserQuery } from '../../../hooks/useAuth';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { setPage } from '../../../store/slice/book';
 
 const Login = () => {
   const { state } = useLocation(); 
   const { data: user } = useFetchUserQuery();
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   
   useEffect(() => {
     if (user) {
       if (state) {
-        dispatch(setPage(2));
         navigate(state);
       } else {
         navigate('/', { replace: true });
