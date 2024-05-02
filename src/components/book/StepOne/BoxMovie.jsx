@@ -36,7 +36,7 @@ const BoxMovie = () => {
     setMovieList(list);
     setSelectedMovieId(movie.id);
   }, [date, data]);
-
+  console.log(movieList);
   const handleClickMovie = (movie) => {
     setSelectedMovieId(movie.id);
 

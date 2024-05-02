@@ -93,10 +93,11 @@ const BoxTime = () => {
 
   // slideTime에서 값 받아오기
   useEffect(()=> {
+    if (checkHour === '') return;
     if (new Date(date).toDateString() === NOW.toDateString()) {
       setHour(checkHour);
     } 
-  }, [date]);
+  }, [date, checkHour]);
 
   useEffect(() => {
     if (NOW_MINUTES >= 55) {

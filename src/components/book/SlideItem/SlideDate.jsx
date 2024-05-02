@@ -5,12 +5,14 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useFetchMovieDetailQuery } from "../../../hooks/useMovie";
 import { setAlert } from "../../../store/slice/alert";
-import { reset } from "../../../store/slice/book";
+import { reset, setBook } from "../../../store/slice/book";
 
-const SlideDate = ({ list, year, moveX, onSlideItemClick }) => {
+const SlideDate = ({ list, year }) => {
   const dispatch = useDispatch();
-  const {movie} = useSelector((state) => state.book.stepOne);
   const {data: movieList} = useFetchMovieDetailQuery();
+  const {movie} = useSelector((state) => state.book.stepOne);
+
+  const MOVEX = 70;
   const [count, setCount] = useState({move: 0, selected: 0});
 
   const handleDisabledPrev = () => {
@@ -21,21 +23,26 @@ const SlideDate = ({ list, year, moveX, onSlideItemClick }) => {
     return count.move <= -16 ? 'disabled' : '';
   }
 
-  const handleSelected = () => {
-    return -count.selected;
-  }
-
-  const moveToDirect = (idx) => {
+  const selectDate = (idx) => {
     setCount(prev => {
       return {
         ...prev,
         move: prev.move, selected: -idx
       }
     });
+
+    dispatch(
+      setBook({
+        step: 'stepOne',
+        type: "date",
+        data: list[idx].id,
+      })
+    );
   }
 
   const moveToPrev = () => {
     if (count.move >= 0) return;
+
     setCount(prev => {
       return {
         ...prev,
@@ -46,6 +53,7 @@ const SlideDate = ({ list, year, moveX, onSlideItemClick }) => {
 
   const moveToNext = () => {
     if (count.move <= -16) return;
+
     setCount(prev => {
       return {
         ...prev,
@@ -56,13 +64,12 @@ const SlideDate = ({ list, year, moveX, onSlideItemClick }) => {
 
   const resetBookInfo = () => {
     dispatch(reset());
-    moveToDirect(0);
+    selectDate(0);
   }
 
-  const handleSlideItemClick = (event) => {
-    const idx = event.currentTarget.getAttribute('data-date');
-
+  const handleSlideItemClick = (idx) => {
     const [selectedMovie] = movieList.filter(ele => ele.title === movie.txt);
+    
     if (selectedMovie) {
       if (new Date(list[idx].id) < new Date(selectedMovie.release_date)) {
         dispatch(setAlert({
@@ -75,11 +82,7 @@ const SlideDate = ({ list, year, moveX, onSlideItemClick }) => {
       }
     }
 
-    moveToDirect(idx);
-
-    onSlideItemClick(list[idx].id);
-
-
+    selectDate(idx);
   }
 
   return (
@@ -89,23 +92,24 @@ const SlideDate = ({ list, year, moveX, onSlideItemClick }) => {
         color="disabled"
         className={styled.btn_prev}
         onClick={moveToPrev}
+        disabled={handleDisabledPrev()}
       >
         <ArrowBackIosIcon fontSize="small" sx={{ fontSize: 16 }} color={handleDisabledPrev()}>
           이전
         </ArrowBackIosIcon>
       </button>
-      {year && <strong className={styled.txt_year}>{year}</strong>} {/* year이 아닌 list[count].id를 넣고 싶음 */}
+      <strong className={styled.txt_year}>{year}</strong>
       <div className={styled.inner_slide}>
         <ul
           className={styled.list_slide}
-          style={{transform: `translateX(${count.move * moveX}px)`}}
+          style={{transform: `translateX(${count.move * MOVEX}px)`}}
         >
           {list.map((item, idx) => (
             <li
               key={item.id}
-              className={`${styled.item_slide} ${idx === handleSelected() ? styled.on : ""}`}
+              className={`${styled.item_slide} ${idx === -count.selected ? styled.on : ""}`}
             >
-              <button type="button" data-date={idx} onClick={handleSlideItemClick}>
+              <button type="button" onClick={() => handleSlideItemClick(idx)}>
                 <em className={styled.txt_num}>{item.num}</em>
                 <span className={styled.tit_txt}>{item.txt}</span>
               </button>
@@ -113,7 +117,12 @@ const SlideDate = ({ list, year, moveX, onSlideItemClick }) => {
           ))}
         </ul>
       </div>
-      <button type="button" className={styled.btn_next} onClick={moveToNext}>
+      <button 
+      type="button" 
+      className={styled.btn_next} 
+      onClick={moveToNext}
+      disabled={handleDisabledNext()}
+      >
         <ArrowForwardIosIcon fontSize="small" sx={{ fontSize: 14 }} color={handleDisabledNext()}>
           다음
         </ArrowForwardIosIcon>
