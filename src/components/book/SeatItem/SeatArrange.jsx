@@ -18,7 +18,7 @@ const SeatArrange = ({occupiedSeatsList, challengedSeats}) => {
   const totalSeatInfo = {
     row: 20,
     col: [6, 10, 6],
-    aisle: { x: [6, 10], y: [14] },
+    aisle: { x: [14], y: [6, 10] },
   };
 
   const seatsNum = {
@@ -27,8 +27,8 @@ const SeatArrange = ({occupiedSeatsList, challengedSeats}) => {
   };
 
   const layout = {
-    width: 20 * (seatsNum.x + totalSeatInfo.aisle.x.length + 1), // 좌석수 + 통로수 + 알파벳 정보(열 정보)
-    height: 18 * (seatsNum.y + totalSeatInfo.aisle.y.length), // 좌석수 + 통로수
+    width: 20 * (seatsNum.x + totalSeatInfo.aisle.y.length + 1), // 좌석수 + 통로수 + 알파벳 정보(열 정보)
+    height: 18 * (seatsNum.y + totalSeatInfo.aisle.x.length), // 좌석수 + 통로수
   };
 
   const startPoint = {
@@ -43,7 +43,7 @@ const SeatArrange = ({occupiedSeatsList, challengedSeats}) => {
     for (let i = 0; i < totalSeatInfo.row; i++) {
       seatRowArr.push({
         order: String.fromCharCode(65 + i),
-        aisle: totalSeatInfo.aisle.y.includes(i) ? rowIdx++ : rowIdx,
+        aisle: totalSeatInfo.aisle.x.includes(i) ? rowIdx++ : rowIdx,
       });
     }
     setSeatArr((prev) => {
@@ -58,7 +58,7 @@ const SeatArrange = ({occupiedSeatsList, challengedSeats}) => {
         const remodelIdx = 10 * idx + i;
         seatColArr.push({
           order: remodelIdx,
-          aisle: totalSeatInfo.aisle.x[idx] === i ? colIdx++ : colIdx,
+          aisle: totalSeatInfo.aisle.y[idx] === i ? colIdx++ : colIdx,
         });
       }
     });
@@ -69,6 +69,7 @@ const SeatArrange = ({occupiedSeatsList, challengedSeats}) => {
       };
     });
   }, []);
+  console.log(seatArr);
 
   useEffect(() => {
     makeSeatArr();
