@@ -12,7 +12,7 @@ const BoxMovie = () => {
   const dispatch = useDispatch();
   const [movieList, setMovieList] = useState([]);
   const [selectedMovieId, setSelectedMovieId] = useState(null);
-  const {date, movie} = useSelector((state) => state.book.stepOne);
+  const {date} = useSelector((state) => state.book.stepOne);
   const ratingList = {
     'All': '전체 관람가',
     '12': '12세 이상 관람가',
@@ -23,7 +23,7 @@ const BoxMovie = () => {
   const {isLoading, data} = useFetchMovieDetailQuery();
 
   useEffect(() => {
-    let list = isLoading ? [] : data?.filter(ele => new Date(ele.release_date) <= new Date(date));
+    let list = isLoading ? [] : data.filter(ele => new Date(ele.release_date) <= new Date(date));
     list = [...list].map((ele) => {
       return {
         id: ele.id,
@@ -34,9 +34,8 @@ const BoxMovie = () => {
     });
 
     setMovieList(list);
-    setSelectedMovieId(movie.id);
   }, [date, data]);
-  console.log(movieList);
+
   const handleClickMovie = (movie) => {
     setSelectedMovieId(movie.id);
 

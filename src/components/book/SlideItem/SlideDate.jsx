@@ -1,3 +1,4 @@
+import styledCommon from '../../../pages/Book/book.module.css';
 import styled from "./slide.module.css";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
@@ -98,7 +99,10 @@ const SlideDate = ({ list, year }) => {
           이전
         </ArrowBackIosIcon>
       </button>
-      <strong className={styled.txt_year}>{year}</strong>
+      <strong className={styled.txt_year}>
+        {year}
+        <span className={styledCommon.screen_out}>년</span>
+        </strong>
       <div className={styled.inner_slide}>
         <ul
           className={styled.list_slide}

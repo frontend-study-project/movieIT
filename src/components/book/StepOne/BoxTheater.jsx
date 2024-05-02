@@ -7,7 +7,7 @@ import { useFetchTheaterListQuery } from "../../../hooks/useTheater";
 
 const BoxTheater = () => {
   const [theaterList, setTheaterList] = useState([]);
-  const { data} = useFetchTheaterListQuery();
+  const { data } = useFetchTheaterListQuery();
   useEffect(() => {
     setTheaterList(data);
   }, [data]);
@@ -66,7 +66,7 @@ const BoxTheater = () => {
                 {item.area_depth1}
               </button>
               <ul className={`${styled.list_theater} ${styledCommon.scroll}`}>
-                {item.area_depth2.map((item2, idx2) => (
+                {item.area_depth2.map((item2) => (
                   <li
                     key={item2.id}
                     className={
