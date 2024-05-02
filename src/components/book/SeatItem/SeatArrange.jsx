@@ -69,7 +69,6 @@ const SeatArrange = ({occupiedSeatsList, challengedSeats}) => {
       };
     });
   }, []);
-  console.log(seatArr);
 
   useEffect(() => {
     makeSeatArr();
