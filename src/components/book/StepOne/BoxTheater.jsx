@@ -14,13 +14,9 @@ const BoxTheater = () => {
 
   const dispatch = useDispatch();
 
-  const selectedArea = useSelector((state) => state.book.stepOne.area);
-  const {id: selectedTheaterId} = useSelector((state) => state.book.stepOne.theater);
+  const {area, theater} = useSelector((state) => state.book.stepOne);
 
-  const handleClickArea = (event) => {
-    const depth1DataAttribute = event.currentTarget.getAttribute("data-depth1");
-    const area = theaterList[depth1DataAttribute]["area_depth1"];
-
+  const handleClickArea = (area) => {
     dispatch(
       setBook({
         step: "stepOne",
@@ -55,22 +51,22 @@ const BoxTheater = () => {
       </h3>
       <div className={styled.inner_theater}>
         <ul className={styled.list_area}>
-          {theaterList?.map((item, idx) => (
+          {theaterList?.map(item => (
             <li
               key={item.id}
               className={
-                selectedArea === item.area_depth1 ? `${styled.on}` : ""
+                area === item.area_depth1 ? `${styled.on}` : ""
               }
             >
-              <button type="button" data-depth1={idx} onClick={handleClickArea}>
+              <button type="button" onClick={() => handleClickArea(item.area_depth1)}>
                 {item.area_depth1}
               </button>
               <ul className={`${styled.list_theater} ${styledCommon.scroll}`}>
-                {item.area_depth2.map((item2) => (
+                {item.area_depth2.map(item2 => (
                   <li
                     key={item2.id}
                     className={
-                      parseInt(selectedTheaterId) === parseInt(item2.id) ? `${styled.on}` : ""
+                      parseInt(theater.id) === parseInt(item2.id) ? `${styled.on}` : ""
                     }
                   >
                     <button
