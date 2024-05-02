@@ -4,10 +4,11 @@ import SlideTime from "../SlideItem/SlideTime";
 import TheatersIcon from "@mui/icons-material/Theaters";
 
 import { useDispatch, useSelector } from "react-redux";
-import { setBook } from "../../../store/slice/book";
+import { setBook, setPage } from "../../../store/slice/book";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useFetchSeatsLeftQuery } from "../../../hooks/useSeatsLeft";
+import { useFetchUserQuery } from "../../../hooks/useAuth";
 
 const BoxTime = () => {
   const NOW = new Date();
@@ -20,6 +21,7 @@ const BoxTime = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { date, movie, theater, hour : checkHour } = useSelector((state) => state.book.stepOne);
+  const {data: user} = useFetchUserQuery();
   
   const { data: seatsLeftdata } = useFetchSeatsLeftQuery({
     movieId: movie.id,
@@ -41,11 +43,8 @@ const BoxTime = () => {
   const onChangeHour = (hour) => {
     setHour(hour);
   };
-  // 영화시간 클릭시 - 1) 러닝타임, 스크린 데이터 스토어에 저장 2) 로그인 여부에 따른 페이지 이동
-  const handleHourClick = (event) => {
-    const screen = event.currentTarget.getAttribute("data-screen");
-    const timeStart = event.currentTarget.getAttribute("data-timestart");
-    const timeEnd = event.currentTarget.getAttribute("data-timeend");
+  // 영화시간 클릭시 - 1) 러닝타임 데이터 스토어에 저장 2) 로그인 여부에 따른 페이지 이동
+  const handleHourClick = (timeStart, timeEnd) => {
 
     dispatch(
       setBook({
@@ -58,15 +57,10 @@ const BoxTime = () => {
       })
     );
 
-    dispatch(
-      setBook({
-        step: "stepOne",
-        type: "screen",
-        data: screen,
-      })
-    );
-
-    navigate("/login", { state: pathname });
+    dispatch(setPage(2));
+    if (!user) {
+      navigate("/login", { state: pathname });
+    }
   };
   // 영화, 극장 선택시 (잔여좌석수 받아오고)
   // 날짜, 시간기준으로 상영시간별 리스트 만들기
@@ -91,7 +85,7 @@ const BoxTime = () => {
 
   }, [seatsLeftdata]);
 
-  // slideTime에서 값 받아오기
+  // slideTime에서 바뀐 시간 받아오기
   useEffect(()=> {
     if (checkHour === '') return;
     if (new Date(date).toDateString() === NOW.toDateString()) {
@@ -127,10 +121,7 @@ const BoxTime = () => {
               <li key={"hour" + idx}>
                 <button
                   type="button"
-                  data-screen={ele.screen}
-                  data-timestart={`${hourCondition()}:${ele}`}
-                  data-timeend={`${hourCondition() + 2}:${ele}`}
-                  onClick={handleHourClick}
+                  onClick={() => handleHourClick(`${hourCondition()}:${ele}`, `${hourCondition() + 2}:${ele}`)}
                 >
                   <div className={styled.item_time}>
                     <span className={styled.emph_time}>
