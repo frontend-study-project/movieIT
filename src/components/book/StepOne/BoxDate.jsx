@@ -22,16 +22,6 @@ const BoxDate = () => {
     return date < 10 ? `0${date}` : date;
   }
 
-  const handleDateClick = (date) => {
-    dispatch(
-      setBook({
-        step: 'stepOne',
-        type: "date",
-        data: date,
-      })
-    );
-  };
-
   const [dates, setDates] = useState([]);
 
   const [year, setYear] = useState(new Date().getFullYear());
@@ -42,11 +32,11 @@ const BoxDate = () => {
 
   useEffect(() => {
     const DAY = 1000 * 60 * 60 * 24;
-    const now = new Date().getTime();
+    const NOW = new Date().getTime();
     const defaultDates = [];
 
     for (let i = 0; i < 30; i++) {
-      const date = new Date(now + i * DAY);
+      const date = new Date(NOW + i * DAY);
       const DayOfWeek = ["일", "월", "화", "수", "목", "금", "토"];
       defaultDates.push({
         id: `${formatYear(date)}-${formatMonth(date)}-${formatDate(date)}`,
@@ -54,12 +44,13 @@ const BoxDate = () => {
         txt: DayOfWeek[date.getDay()],
       });
     }
+
     setDates(defaultDates);
     dispatch(
       setBook({
         step: 'stepOne',
         type: "date",
-        data: `${year}-${formatMonth(new Date())}-${formatDate(new Date())}`
+        data: `${year}-${formatMonth(NOW)}-${formatDate(NOW)}`
       })
     );
   }, []);
@@ -71,8 +62,6 @@ const BoxDate = () => {
         list={dates}
         year={year}
         yearHandler={yearHandler}
-        moveX={70}
-        onSlideItemClick={handleDateClick}
       />
     </div>
   );

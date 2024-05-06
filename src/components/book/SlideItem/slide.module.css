@@ -16,6 +16,9 @@
   width: 30px;
   height: 100%;
   margin-top: 4px;
+  &:disabled{
+    cursor: auto;
+  }
 }
 .inner_slide{
   width: calc(100% - 60px);

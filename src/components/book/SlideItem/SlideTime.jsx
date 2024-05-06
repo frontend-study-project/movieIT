@@ -14,7 +14,7 @@ const SlideTime = ({ hour, date, onChangeHour }) => {
   const list = Array.from({length: 24}).map((_, idx) => idx + 1);
   // 슬라이드 : 움직이는 조건
   const moveCondition = () => {
-    if ((hour > 13) || (hour === 0)) {
+    if (hour > 13) {
       return -13;
     }
     
@@ -23,9 +23,8 @@ const SlideTime = ({ hour, date, onChangeHour }) => {
   // 슬라이드 : 선택된 시간 조건
   const selectedCondition = () => {
     if (!hour) {
-      return NOW_MINUTES >= 55 ? -1 :-24;
+      return NOW_MINUTES >= 55 ? -1 : -24;
     }
-
     return -hour;
   }
   // 슬라이드 : 움직일때, 선택될때마다 숫자 업데이트

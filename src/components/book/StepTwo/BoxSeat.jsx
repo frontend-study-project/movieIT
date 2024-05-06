@@ -15,16 +15,17 @@ const BoxSeat = () => {
   const [occupiedSeatsList, setoOccupiedSeatsList] = useState([]);
 
   const dispatch = useDispatch();
-
+  
   const {rating, theater, movie, date, runningTime} = useSelector(state => state.book.stepOne);
-  const {totalNum, selectedSeats} = useSelector(state => state.book.stepTwo);
-
+  const {selectedSeats} = useSelector(state => state.book.stepTwo);
+  
   const [count, setCount] = useState({
     adult: 0,
     teenager: 0,
     senior: 0,
     challenged: 0,
   });
+  const total = count.adult + count.teenager + count.senior + count.challenged;
 
   const resetCountsAndSeats = () => {
     setCount({
@@ -50,13 +51,11 @@ const BoxSeat = () => {
   }, [occupiedSeats]);
 
   useEffect(() => {
-    const total = count.adult + count.teenager + count.senior + count.challenged;
-
     dispatch(setBook({ step: "stepTwo", type: "totalNum", data: total }));
   }, [count])
 
   const onAddCount = (id) => {
-    if (totalNum >= 8) {
+    if (total >= 8) {
       dispatch(setAlert({
         open: true,
         title: '인원선택은 총 8명까지 가능합니다.',
@@ -76,8 +75,9 @@ const BoxSeat = () => {
   };
 
   const onMinusCount = (id) => {
+    if (!total) return;
 
-    if (totalNum <= selectedSeats.length) {
+    if (total <= selectedSeats.length) {
       dispatch(setAlert({
         open: true,
         title: '선택하신 좌석을 모두 취소하고 다시 선택하시겠습니까?',
@@ -143,9 +143,9 @@ const BoxSeat = () => {
       </div>
       <div
         className={`${styled.box_seat} ${styledCommon.scroll}`}
-        style={{ overflowY: totalNum ? "scroll" : "hidden" }}
+        style={{ overflowY: total ? "scroll" : "hidden" }}
       >
-        {totalNum === 0 && <SeatDimmed />}
+        {total === 0 && <SeatDimmed />}
         <SeatArrange occupiedSeatsList={occupiedSeatsList} challengedSeats={['A23', 'A24', 'A25', 'A26']} />
       </div>
     </div>

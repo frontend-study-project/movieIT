@@ -10,25 +10,20 @@ import { useFetchMovieDetailQuery } from "../../../hooks/useMovie";
 import { useSaveBookingMutation } from "../../../hooks/useBook";
 
 const BoxSeatInfo = () => {
-
+  const [posterURL, setPosterURL] = useState("");
+  const [isLoaded, setIsLoaded] = useState(false);
+  
   const dispatch = useDispatch();
+  const saveBookmutate = useSaveBookingMutation();
+  const {isLoading, data} = useFetchMovieDetailQuery();
 
   const { date, movie, theater, screen, runningTime, rating } = useSelector(
     (state) => state.book.stepOne
   );
 
-  const saveBookmutate = useSaveBookingMutation();
-
-  const [posterURL, setPosterURL] = useState("");
-  const [isLoaded, setIsLoaded] = useState(false);
-
-  const {isLoading, data} = useFetchMovieDetailQuery();
-  
-  useEffect(() => {
-    const [movieInfo] = isLoading ? 'null' : data?.filter((ele) => ele.title === movie.txt);
-
-    setPosterURL(movieInfo.poster_path);
-  }, [data]);
+  const { totalNum, selectedSeats, seatCategory } = useSelector(
+    (state) => state.book.stepTwo
+  );
 
   const selectedDate = new Date(date);
 
@@ -36,9 +31,12 @@ const BoxSeatInfo = () => {
 
   const layoutDate = `${selectedDate.getFullYear()}.${selectedDate.getMonth() + 1}.${selectedDate.getDate()} (${dayList[selectedDate.getDay()]})`
 
-  const { totalNum, selectedSeats, seatCategory } = useSelector(
-    (state) => state.book.stepTwo
-  );
+  useEffect(() => {
+    const [movieInfo] = isLoading ? 'null' : data.filter((ele) => ele.title === movie.txt);
+
+    setPosterURL(movieInfo.poster_path);
+  }, [data]);
+
   const listSelectedSeats = Array.from({length: 8}, (_,idx) => {
     if (idx < totalNum) {
       if (idx < selectedSeats.length) {
@@ -84,14 +82,6 @@ const BoxSeatInfo = () => {
   };
 
   const handleCompleteBook = () => {
-    if (!totalPrice) {
-      dispatch(setAlert({
-        open: true,
-        title: '좌석을 먼저 선택 완료해주세요.',
-        btnList: [{autoFocus: true, txt: '확인', clickFn: () => {}}]
-      }));
-      return;
-    }
     saveBookmutate.mutate({
       movieId: movie.id,
       theaterId: theater.id,
@@ -103,7 +93,7 @@ const BoxSeatInfo = () => {
 
   }
   
-  const handlePosterImgLoad = (event) => {
+  const handlePosterImgLoad = () => {
     setIsLoaded(true);
   }
 

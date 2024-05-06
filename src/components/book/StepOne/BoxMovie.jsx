@@ -23,7 +23,7 @@ const BoxMovie = () => {
   const {isLoading, data} = useFetchMovieDetailQuery();
 
   useEffect(() => {
-    let list = isLoading ? [] : data?.filter(ele => new Date(ele.release_date) <= new Date(date));
+    let list = isLoading ? [] : data.filter(ele => new Date(ele.release_date) <= new Date(date));
     list = [...list].map((ele) => {
       return {
         id: ele.id,
@@ -34,7 +34,7 @@ const BoxMovie = () => {
     });
 
     setMovieList(list);
-    setSelectedMovieId(movie.id);
+    setSelectedMovieId(movie.id); // [필요사항] 좌석선택 페이지로 넘어갔다가 이전버튼으로 돌아올 경우 선택된 영화가 선택된 상태로 보여지기 위해 필요함 
   }, [date, data]);
 
   const handleClickMovie = (movie) => {
