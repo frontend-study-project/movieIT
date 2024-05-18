@@ -25,7 +25,6 @@ const BoxMovie = () => {
   useEffect(() => {
     let list = isLoading ? [] : data.filter(ele => new Date(ele.release_date) <= new Date(date));
     list = [...list].map((ele) => {
-      console.log(ele);
       return {
         id: ele.id,
         rating: ele.certification,
