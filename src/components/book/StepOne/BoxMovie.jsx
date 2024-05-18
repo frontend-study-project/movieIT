@@ -14,7 +14,7 @@ const BoxMovie = () => {
   const [selectedMovieId, setSelectedMovieId] = useState(null);
   const {date, movie} = useSelector((state) => state.book.stepOne);
   const ratingList = {
-    'All': '전체 관람가',
+    'ALL': '전체 관람가',
     '12': '12세 이상 관람가',
     '15': '15세 이상 관람가',
     '18': '청소년 관람불가',

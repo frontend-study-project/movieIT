@@ -11,7 +11,7 @@ import { reset, setBook } from "../../../store/slice/book";
 const SlideDate = ({ list, year }) => {
   const dispatch = useDispatch();
   const {data: movieList} = useFetchMovieDetailQuery();
-  const {movie} = useSelector((state) => state.book.stepOne);
+  const {movie, date} = useSelector((state) => state.book.stepOne);
 
   const MOVEX = 70;
   const [count, setCount] = useState({move: 0, selected: 0});
@@ -85,6 +85,7 @@ const SlideDate = ({ list, year }) => {
 
     selectDate(idx);
   }
+  console.log(date);
 
   return (
     <div className={styled.wrap_slide}>
@@ -100,8 +101,10 @@ const SlideDate = ({ list, year }) => {
         </ArrowBackIosIcon>
       </button>
       <strong className={styled.txt_year}>
-        {year}
+        {date.slice(0,4)}.
         <span className={styledCommon.screen_out}>년</span>
+        {date.slice(5,7)}
+        <span className={styledCommon.screen_out}>월</span>
         </strong>
       <div className={styled.inner_slide}>
         <ul
