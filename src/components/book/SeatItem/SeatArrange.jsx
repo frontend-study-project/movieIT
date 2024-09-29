@@ -8,7 +8,7 @@ import { setBook } from "../../../store/slice/book";
 import { setAlert } from "../../../store/slice/alert";
 import { screenPerSeatInfo } from "../../../data/movie/theaterInfo";
 
-const SeatArrange = ({occupiedSeatsList, challengedSeats, screen}) => {
+const SeatArrange = ({occupiedSeatsList, screen}) => {
   const [seatArr, setSeatArr] = useState({
     seatRowArr: [],
     seatColArr: [],
@@ -106,7 +106,7 @@ const SeatArrange = ({occupiedSeatsList, challengedSeats, screen}) => {
       return "selected";
     } else if (occupiedSeatsList?.includes(key)) {
       return "occupied";
-    } else if (challengedSeats.includes(key)) {
+    } else if (screenPerSeatInfo[screen - 1].challengedSeats.includes(key)) {
       return "challenged";
     } else {
       return "common"

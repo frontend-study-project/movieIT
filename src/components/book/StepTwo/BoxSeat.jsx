@@ -102,7 +102,6 @@ const BoxSeat = () => {
       resetCountsAndSeats();
     };
   }, []);
-  console.log(occupiedSeatsList)
 
   return (
     <div className={styled.wrap_seat}>
@@ -147,7 +146,7 @@ const BoxSeat = () => {
         style={{ overflowY: total ? "scroll" : "hidden" }}
       >
         {total === 0 && <SeatDimmed />}
-        <SeatArrange occupiedSeatsList={occupiedSeatsList} challengedSeats={['A23', 'A24', 'A25', 'A26']} screen={screen} />
+        <SeatArrange occupiedSeatsList={occupiedSeatsList} screen={screen} />
       </div>
     </div>
   );
