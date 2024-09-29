@@ -8,23 +8,13 @@ import './index.css';
 import { Provider } from 'react-redux';
 import store from './store';
 
-const enableMocking = async () => {
-  if (import.meta.env.MODE !== 'development') return;
-
-  const { worker } = await import('./mocks/browser');
-
-  return worker.start();
-};
-
-enableMocking().then(() => {
-  ReactDOM.createRoot(document.getElementById('root')).render(
-    <Provider store={store}>
-      <QueryClientProvider>
-        <SnackbarProvider>
-          <RouterProvider router={router} />
-        </SnackbarProvider>
-      </QueryClientProvider>
-      ,
-    </Provider>,
-  );
-});
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <Provider store={store}>
+    <QueryClientProvider>
+      <SnackbarProvider>
+        <RouterProvider router={router} />
+      </SnackbarProvider>
+    </QueryClientProvider>
+    ,
+  </Provider>,
+);
