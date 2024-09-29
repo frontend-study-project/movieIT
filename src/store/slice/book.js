@@ -8,6 +8,7 @@ const initialState = {
     movie: {id: '', txt: ''},
     area: '',
     theater: {id: '', txt: ''},
+    screen: '',
     hour: '',
     runningTime: {
       timeStart: '',

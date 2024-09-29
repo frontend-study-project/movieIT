@@ -44,7 +44,8 @@ const BoxTime = () => {
     setHour(hour);
   };
   // 영화시간 클릭시 - 1) 러닝타임 데이터 스토어에 저장 2) 로그인 여부에 따른 페이지 이동
-  const handleHourClick = (timeStart, timeEnd) => {
+  const handleHourClick = (timeStart, timeEnd, screen) => {
+
     dispatch(
       setBook({
         step: "stepOne",
@@ -53,6 +54,13 @@ const BoxTime = () => {
           timeStart,
           timeEnd,
         },
+      })
+    );
+    dispatch(
+      setBook({
+        step: "stepOne",
+        type: "screen",
+        data: screen,
       })
     );
 
@@ -65,7 +73,6 @@ const BoxTime = () => {
   // 영화, 극장 선택시 (잔여좌석수 받아오고)
   // 날짜, 시간기준으로 상영시간별 리스트 만들기
   useEffect(() => {
-    // seatsLeftdata && setSeatLeftList(seatsLeftdata);
 
     let minutesList = MINUTES,
       sliceStartIdx = 0,
@@ -121,7 +128,7 @@ const BoxTime = () => {
               <li key={"hour" + idx}>
                 <button
                   type="button"
-                  onClick={() => handleHourClick(`${hourCondition()}:${ele}`, `${hourCondition() + 2}:${ele}`)}
+                  onClick={() => handleHourClick(`${hourCondition()}:${ele}`, `${hourCondition() + 2}:${ele}`, idx + 1)}
                 >
                   <div className={styled.item_time}>
                     <span className={styled.emph_time}>
@@ -138,7 +145,7 @@ const BoxTime = () => {
                   <div className={styled.item_info}>
                     <span className={styled.txt_theater}>
                       {theater.txt}
-                      <br /> {`컴포트${idx + 1}관`}
+                      <br /> {`컴포트${11 - screenList.length + idx}관`}
                     </span>
                     <span className={styled.wrap_seat}>
                       <span className={styled.num_left}>

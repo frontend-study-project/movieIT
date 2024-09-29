@@ -6,8 +6,9 @@ import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setBook } from "../../../store/slice/book";
 import { setAlert } from "../../../store/slice/alert";
+import { screenPerSeatInfo } from "../../../data/movie/theaterInfo";
 
-const SeatArrange = ({occupiedSeatsList, challengedSeats}) => {
+const SeatArrange = ({occupiedSeatsList, challengedSeats, screen}) => {
   const [seatArr, setSeatArr] = useState({
     seatRowArr: [],
     seatColArr: [],
@@ -15,35 +16,24 @@ const SeatArrange = ({occupiedSeatsList, challengedSeats}) => {
 
   const TOPBLANK = 75;
 
-  const totalSeatInfo = {
-    row: 20,
-    col: [6, 10, 6],
-    aisle: { x: [14], y: [6, 10] },
-  };
-
   const seatsNum = {
-    x: totalSeatInfo.row,
-    y: totalSeatInfo.col.reduce((acc, cur) => acc + cur, 0),
-  };
-
-  const layout = {
-    width: 20 * (seatsNum.x + totalSeatInfo.aisle.y.length + 1), // 좌석수 + 통로수 + 알파벳 정보(열 정보)
-    height: 18 * (seatsNum.y + totalSeatInfo.aisle.x.length), // 좌석수 + 통로수
+    x: screenPerSeatInfo[screen - 1].row,
+    y: screenPerSeatInfo[screen - 1].col.reduce((acc, cur) => acc + cur, 0),
   };
 
   const startPoint = {
-    x: 770 / 2 - layout.width / 2,
-    y: 394 / 2 - layout.height / 2 + TOPBLANK,
+    x: 770 / 2 - (20 * (seatsNum.y + screenPerSeatInfo[screen - 1].aisle.y.length + 2) ) / 2,
+    y: TOPBLANK,
   };
 
   const makeSeatArr = useCallback(() => {
     const seatRowArr = [],
       seatColArr = [];
     let rowIdx = 0;
-    for (let i = 0; i < totalSeatInfo.row; i++) {
+    for (let i = 0; i < screenPerSeatInfo[screen - 1].row; i++) {
       seatRowArr.push({
         order: String.fromCharCode(65 + i),
-        aisle: totalSeatInfo.aisle.x.includes(i) ? rowIdx++ : rowIdx,
+        aisle: screenPerSeatInfo[screen - 1].aisle.x.includes(i) ? rowIdx++ : rowIdx,
       });
     }
     setSeatArr((prev) => {
@@ -53,12 +43,12 @@ const SeatArrange = ({occupiedSeatsList, challengedSeats}) => {
       };
     });
     let colIdx = 0;
-    totalSeatInfo.col.map((ele, idx) => {
+    screenPerSeatInfo[screen - 1].col.map((ele, idx) => {
       for (let i = 1; i <= ele; i++) {
         const remodelIdx = 10 * idx + i;
         seatColArr.push({
           order: remodelIdx,
-          aisle: totalSeatInfo.aisle.y[idx] === i ? colIdx++ : colIdx,
+          aisle: screenPerSeatInfo[screen - 1].aisle.y[idx] === i ? colIdx++ : colIdx,
         });
       }
     });
@@ -147,7 +137,7 @@ const SeatArrange = ({occupiedSeatsList, challengedSeats}) => {
                 {colIdx === 0 && (
                   <span
                     className={styled.block_row}
-                    style={{ left: left - 40, top: top }}
+                    style={{ left: left, top: top }}
                   >
                     {row.order}
                   </span>
@@ -156,7 +146,7 @@ const SeatArrange = ({occupiedSeatsList, challengedSeats}) => {
                   type="button"
                   className={styled.block_seat}
                   title={`${row.order}${col.order}`}
-                  style={{ left: left, top: top }}
+                  style={{ left: left + 40, top: top }}
                   onClick={handleClickSeat}
                 >
                   <SeatItem

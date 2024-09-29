@@ -3,8 +3,10 @@ import { fetchSeatsOccupied } from "../api/seats.api";
 
 export const useFetchSeatsOccupiedQuery = ({movieId, theaterId, date, activate}) => useQuery({
   queryKey: ['seats', 'occupied'],
-  queryFn: async () => {
-    const response = await fetchSeatsOccupied(movieId, theaterId, date)
+  queryFn: () => {
+    const response = fetchSeatsOccupied(movieId, theaterId, date)
+
+    if (!response.ok) throw new Error('Cannot get occupied seats info')
     return response.json();
   },
   enabled: activate
