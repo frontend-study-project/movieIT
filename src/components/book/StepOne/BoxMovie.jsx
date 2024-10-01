@@ -18,7 +18,6 @@ const BoxMovie = () => {
   const first = useRef(false);
 
   const [movieList, setMovieList] = useState([]);
-  const [selectedMovieId, setSelectedMovieId] = useState(null);
   const dispatch = useDispatch();
   const {date, movie} = useSelector((state) => state.book.stepOne);
   const ratingList = {
@@ -31,7 +30,8 @@ const BoxMovie = () => {
   const {isLoading, data} = useFetchMovieDetailQuery();
 
   useEffect(() => {
-    let list = isLoading ? [] : data.filter(ele => new Date(ele.release_date) <= new Date(date));
+    if (!data) return
+    let list = data.filter(ele => new Date(ele.release_date) <= new Date(date));
     list = [...list].map((ele) => {
       return {
         id: ele.id,
@@ -42,8 +42,7 @@ const BoxMovie = () => {
     });
 
     setMovieList(list);
-    setSelectedMovieId(movie.id); // [필요사항] 좌석선택 페이지로 넘어갔다가 이전버튼으로 돌아올 경우 선택된 영화가 선택된 상태로 보여지기 위해 필요함 
-  }, [date, data]);
+  }, [date, data, movie]);
 
   useEffect(() => {
     if (!movieList.length || !movieId || first.current) return;
@@ -66,7 +65,6 @@ const BoxMovie = () => {
 
 
   const handleClickMovie = (movie) => {
-    setSelectedMovieId(movie.id);
 
     dispatch(setBook({ step: "stepOne", type: "movie", data: {id: movie.id, txt: movie.name} }));
     dispatch(setBook({ step: "stepOne", type: "rating", data: movie.rating }))
@@ -88,7 +86,7 @@ const BoxMovie = () => {
         {movieList.map((item) => (
           <li
             key={item.id}
-            className={selectedMovieId && (selectedMovieId === item.id) ? styled.on : ""}
+            className={(parseInt(movieId) === item.id) ? styled.on : ""}
           >
             <button type="button" id={item.id} onClick={() => handleClickMovie(item)}>
               <RatingItem rating={item.rating} ratingDesc={item.ratingDesc} />

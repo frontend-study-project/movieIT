@@ -27,10 +27,11 @@ const BoxTheater = () => {
     if (isLoading || !areaId || first.current) return;
     
     const defaultArea = theaterList.find((item) => item.id === parseInt(areaId));
+
+    if (!defaultArea) return;
     const defaultTheater = defaultArea.area_depth2.find((item) => item.id === parseInt(theaterId));
     
-    if (!defaultArea || !defaultTheater) return;
-    
+    if (!defaultTheater) return;
     handleClickTheater(defaultArea.id, defaultTheater.id, defaultTheater.txt)
 
     first.current = true;

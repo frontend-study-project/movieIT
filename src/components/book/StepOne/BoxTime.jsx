@@ -6,7 +6,7 @@ import TheatersIcon from "@mui/icons-material/Theaters";
 import { useDispatch, useSelector } from "react-redux";
 import { setBook, setPage } from "../../../store/slice/book";
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { useFetchSeatsLeftQuery } from "../../../hooks/useSeatsLeft";
 import { useFetchUserQuery } from "../../../hooks/useAuth";
 
@@ -19,6 +19,7 @@ const BoxTime = () => {
   
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const { pathname } = useLocation();
   const { date, movie, theater, hour : checkHour } = useSelector((state) => state.book.stepOne);
   const { data: user } = useFetchUserQuery();
@@ -112,7 +113,7 @@ const BoxTime = () => {
         시간<span className={styledCommon.screen_out}>선택</span>
       </h3>
       <SlideTime hour={hourCondition()} date={date} onChangeHour={onChangeHour} />
-      {!(movie.txt && theater.txt) ? (
+      {!searchParams.get('theater') ? (
         <div className={styled.area_empty}>
           <TheatersIcon fontSize="large" color="disabled" />
           <p>

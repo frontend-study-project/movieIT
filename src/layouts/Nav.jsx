@@ -1,11 +1,8 @@
 import { useNavigate } from "react-router";
 import styled from "./nav.module.css";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { reset } from "../store/slice/book";
 
 const Nav = ({ isSub }) => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const navList = [
     {
@@ -45,7 +42,9 @@ const Nav = ({ isSub }) => {
           return item.name === "" ? (
             <li key={item.id} className={`${styled.nav_item} ${styled.logo}`}>
               <Link to={item.href} onClick={() => {
-                if (item.id === 2) dispatch(reset())
+                if (item.id === 2) {
+                  navigate('/book')
+                }
                 }}>
                 <img src={`/images/logo${isSub ? '' : '-white'}.png`} />
               </Link>
