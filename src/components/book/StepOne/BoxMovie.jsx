@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setBook } from "../../../store/slice/book";
 import RatingItem from "../CommonItem/RatingItem";
@@ -7,11 +7,19 @@ import styledCommon from "../../../pages/Book/book.module.css";
 import styled from "./StepOne.module.css";
 import SkeletonBox from "../../common/Skeleton/Skeleton";
 import { useFetchMovieDetailQuery } from "../../../hooks/useMovie";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 const BoxMovie = () => {
-  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const movieId = searchParams.get('movie');
+  const areaId = searchParams.get('area');
+  const theaterId = searchParams.get('theater');
+  const first = useRef(false);
+
   const [movieList, setMovieList] = useState([]);
   const [selectedMovieId, setSelectedMovieId] = useState(null);
+  const dispatch = useDispatch();
   const {date, movie} = useSelector((state) => state.book.stepOne);
   const ratingList = {
     'ALL': '전체 관람가',
@@ -37,11 +45,35 @@ const BoxMovie = () => {
     setSelectedMovieId(movie.id); // [필요사항] 좌석선택 페이지로 넘어갔다가 이전버튼으로 돌아올 경우 선택된 영화가 선택된 상태로 보여지기 위해 필요함 
   }, [date, data]);
 
+  useEffect(() => {
+    if (!movieList.length || !movieId || first.current) return;
+
+    const defaultMovie = movieList.find((item) => item.id === parseInt(movieId));
+
+    if (!defaultMovie && !areaId && !theaterId) return;
+
+    handleClickMovie(defaultMovie);
+
+    if (theaterId) navigate(`/book?movie=${movieId}&area=${areaId}&theater=${theaterId}`, {
+      replace: true
+    })
+    else if (areaId) navigate(`/book?movie=${movieId}&area=${areaId}`, {
+      replace: true
+    })
+
+    first.current = true;
+  },[movieList, first])
+
+
   const handleClickMovie = (movie) => {
     setSelectedMovieId(movie.id);
 
     dispatch(setBook({ step: "stepOne", type: "movie", data: {id: movie.id, txt: movie.name} }));
     dispatch(setBook({ step: "stepOne", type: "rating", data: movie.rating }))
+
+    navigate(`/book?movie=${movie.id}`, {
+      replace: true,
+    });
   };
 
   return (

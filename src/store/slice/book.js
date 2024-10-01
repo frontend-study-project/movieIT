@@ -6,7 +6,6 @@ const initialState = {
     date: '',
     rating: '',
     movie: {id: '', txt: ''},
-    area: '',
     theater: {id: '', txt: ''},
     screen: '',
     hour: '',
