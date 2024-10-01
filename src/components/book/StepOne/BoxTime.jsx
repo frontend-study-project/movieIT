@@ -128,7 +128,7 @@ const BoxTime = () => {
               <li key={"hour" + idx}>
                 <button
                   type="button"
-                  onClick={() => handleHourClick(`${hourCondition()}:${ele}`, `${hourCondition() + 2}:${ele}`, idx + 1)}
+                  onClick={() => handleHourClick(`${hourCondition()}:${ele}`, `${hourCondition() + 2}:${ele}`, 11 - screenList.length + idx)}
                 >
                   <div className={styled.item_time}>
                     <span className={styled.emph_time}>
