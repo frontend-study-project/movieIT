@@ -16,9 +16,9 @@ const BoxSeat = () => {
 
   const dispatch = useDispatch();
   
-  const {rating, theater, movie, date, runningTime} = useSelector(state => state.book.stepOne);
+  const {rating, theater, movie, date, runningTime, screen} = useSelector(state => state.book.stepOne);
   const {selectedSeats} = useSelector(state => state.book.stepTwo);
-  
+
   const [count, setCount] = useState({
     adult: 0,
     teenager: 0,
@@ -146,7 +146,7 @@ const BoxSeat = () => {
         style={{ overflowY: total ? "scroll" : "hidden" }}
       >
         {total === 0 && <SeatDimmed />}
-        <SeatArrange occupiedSeatsList={occupiedSeatsList} challengedSeats={['A23', 'A24', 'A25', 'A26']} />
+        <SeatArrange occupiedSeatsList={occupiedSeatsList} screen={screen} />
       </div>
     </div>
   );

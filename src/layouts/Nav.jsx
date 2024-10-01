@@ -41,7 +41,11 @@ const Nav = ({ isSub }) => {
         {navList.map((item) => {
           return item.name === "" ? (
             <li key={item.id} className={`${styled.nav_item} ${styled.logo}`}>
-              <Link to={item.href}>
+              <Link to={item.href} onClick={() => {
+                if (item.id === 2) {
+                  navigate('/book')
+                }
+                }}>
                 <img src={`/images/logo${isSub ? '' : '-white'}.png`} />
               </Link>
             </li>

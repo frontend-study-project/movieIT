@@ -4,7 +4,6 @@ import SeatItem from "../SeatItem/SeatItem";
 import styled from "./StepTwo.module.css";
 import { setPage } from "../../../store/slice/book";
 import { useEffect, useState } from "react";
-import { setAlert } from "../../../store/slice/alert";
 import SkeletonBox from "../../common/Skeleton/Skeleton";
 import { useFetchMovieDetailQuery } from "../../../hooks/useMovie";
 import { useSaveBookingMutation } from "../../../hooks/useBook";
@@ -114,7 +113,7 @@ const BoxSeatInfo = () => {
       <div className={styled.item_info}>
         <div className={styled.inner_info}>
           {theater.txt} <br />
-          {screen}
+          {screen}관
           <br />
           {layoutDate} <br />
           <span className={styled.txt_time}>

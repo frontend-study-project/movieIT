@@ -1,48 +1,60 @@
 import styledCommon from "../../../pages/Book/book.module.css";
 import styled from "./StepOne.module.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setBook } from "../../../store/slice/book";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useFetchTheaterListQuery } from "../../../hooks/useTheater";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 const BoxTheater = () => {
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const movieId = searchParams.get('movie');
+  const areaId = searchParams.get('area');
+  const theaterId = searchParams.get('theater');
+  const first = useRef(false);
+
   const [theaterList, setTheaterList] = useState([]);
-  const { data } = useFetchTheaterListQuery();
+  const { isLoading, data } = useFetchTheaterListQuery();
+
   useEffect(() => {
     setTheaterList(data);
   }, [data]);
 
   const dispatch = useDispatch();
 
-  const {area, theater} = useSelector((state) => state.book.stepOne);
+  useEffect(()=> {
+    if (isLoading || !areaId || first.current) return;
+    
+    const defaultArea = theaterList.find((item) => item.id === parseInt(areaId));
 
-  const handleClickArea = (area) => {
-    dispatch(
-      setBook({
-        step: "stepOne",
-        type: "area",
-        data: area,
-      })
-    );
+    if (!defaultArea) return;
+    const defaultTheater = defaultArea.area_depth2.find((item) => item.id === parseInt(theaterId));
+    
+    if (!defaultTheater) return;
+    handleClickTheater(defaultArea.id, defaultTheater.id, defaultTheater.txt)
 
-    dispatch(
-      setBook({
-        step: "stepOne",
-        type: "theater",
-        data: {id: '', txt: ''},
-      })
-    );
+    first.current = true;
+  }, [theaterList, first]);
+
+  const handleClickArea = (id) => {
+    navigate(`/book?movie=${movieId}&area=${id}`, {
+      replace: true
+    })
   };
-  const handleClickTheater = (id, txt) => {
+  const handleClickTheater = (areaId, theaterId, theaterTxt) => {
 
     dispatch(
       setBook({
         step: "stepOne",
         type: "theater",
-        data: {id, txt},
+        data: {id: theaterId, txt: theaterTxt},
       })
     );
 
+    navigate(`/book?movie=${movieId}&area=${areaId}&theater=${theaterId}`, {
+      replace: true
+    })
   };
   return (
     <div className={styled.box_theater}>
@@ -55,10 +67,10 @@ const BoxTheater = () => {
             <li
               key={item.id}
               className={
-                area === item.area_depth1 ? `${styled.on}` : ""
+                parseInt(areaId) === item.id ? `${styled.on}` : ""
               }
             >
-              <button type="button" onClick={() => handleClickArea(item.area_depth1)}>
+              <button type="button" onClick={() => handleClickArea(item.id)}>
                 {item.area_depth1}
               </button>
               <ul className={`${styled.list_theater} ${styledCommon.scroll}`}>
@@ -66,12 +78,12 @@ const BoxTheater = () => {
                   <li
                     key={item2.id}
                     className={
-                      parseInt(theater.id) === parseInt(item2.id) ? `${styled.on}` : ""
+                      parseInt(theaterId) === parseInt(item2.id) ? `${styled.on}` : ""
                     }
                   >
                     <button
                       type="button"
-                      onClick={() => handleClickTheater(item2.id, item2.txt)}
+                      onClick={() => handleClickTheater(item.id, item2.id, item2.txt)}
                     >
                       {item2.txt}
                     </button>

@@ -74,3 +74,23 @@ button{
   left: 0;
   top: 0;
 }
+/* 초기화, 공유하기 버튼 */
+.box_header{
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.box_btns button{
+  padding: 5px 10px;
+  box-sizing: border-box;
+  line-height: 22px;
+  border: 1px solid #000;
+  border-radius: 15px;
+}
+.box_btns svg{
+  vertical-align: middle;
+  margin-right: 4px;
+}
+.btn_reset{
+  margin-right: 10px;
+}

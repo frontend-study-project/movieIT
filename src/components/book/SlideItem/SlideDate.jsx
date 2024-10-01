@@ -8,7 +8,7 @@ import { useFetchMovieDetailQuery } from "../../../hooks/useMovie";
 import { setAlert } from "../../../store/slice/alert";
 import { reset, setBook } from "../../../store/slice/book";
 
-const SlideDate = ({ list, year }) => {
+const SlideDate = ({ list }) => {
   const dispatch = useDispatch();
   const {data: movieList} = useFetchMovieDetailQuery();
   const {movie, date} = useSelector((state) => state.book.stepOne);
@@ -85,7 +85,6 @@ const SlideDate = ({ list, year }) => {
 
     selectDate(idx);
   }
-  console.log(date);
 
   return (
     <div className={styled.wrap_slide}>
